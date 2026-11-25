@@ -1,0 +1,2284 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="FIZ I – 1. kol.">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Fizika I – 1. kolokvij</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --panel2:#eef1f5; --fg:#1b2430; --muted:#5b6675; --border:#d5dbe3;
+  --accent:#2457c5; --accent-ink:#ffffff; --accent-soft:#e3ebfb;
+  --ok:#1b7f3b; --ok-bg:#e4f4e9; --bad:#c62828; --bad-bg:#fbe7e7;
+  --warn-bg:#fff5cc; --warn-fg:#5b4500; --warn-line:#e0b400;
+  --orange:#b85600; --orange-bg:#fdebd9; --badge-bg:#e1f1e5; --badge-ink:#1b6b35;
+  --gray-bg:#eceef1; --gray-fg:#6b7480;
+  --force:#c62828; --velocity:#1f5fd1; --accel:#2e7d32; --axis:#7a8696;
+  --yellow:#f2c200; --violet:#8e44ad;
+  --shadow:0 1px 3px rgba(0,0,0,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151b; --card:#1a2029; --panel2:#232b36; --fg:#e6eaf0; --muted:#9aa5b4; --border:#323c4a;
+    --accent:#6f9cff; --accent-ink:#0d1420; --accent-soft:#1f2c47;
+    --ok:#6fd38f; --ok-bg:#17301f; --bad:#ff7a72; --bad-bg:#3a1c1c;
+    --warn-bg:#3a3110; --warn-fg:#f5e3a1; --warn-line:#c9a227;
+    --orange:#ffab5e; --orange-bg:#3b2612; --badge-bg:#173022; --badge-ink:#8fe0a8;
+    --gray-bg:#262c35; --gray-fg:#8d96a3;
+    --force:#ff7a72; --velocity:#7fb0ff; --accel:#7ccf83; --axis:#8994a3;
+    --yellow:#e0b800; --violet:#c08be0;
+    --shadow:0 1px 3px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+    --bg:#11151b; --card:#1a2029; --panel2:#232b36; --fg:#e6eaf0; --muted:#9aa5b4; --border:#323c4a;
+    --accent:#6f9cff; --accent-ink:#0d1420; --accent-soft:#1f2c47;
+    --ok:#6fd38f; --ok-bg:#17301f; --bad:#ff7a72; --bad-bg:#3a1c1c;
+    --warn-bg:#3a3110; --warn-fg:#f5e3a1; --warn-line:#c9a227;
+    --orange:#ffab5e; --orange-bg:#3b2612; --badge-bg:#173022; --badge-ink:#8fe0a8;
+    --gray-bg:#262c35; --gray-fg:#8d96a3;
+    --force:#ff7a72; --velocity:#7fb0ff; --accel:#7ccf83; --axis:#8994a3;
+    --yellow:#e0b800; --violet:#c08be0;
+    --shadow:0 1px 3px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+a{color:var(--accent)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--border);background:var(--card);cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button.small{min-height:44px;padding:6px 12px;font-size:15px}
+button:disabled{opacity:.45;cursor:default}
+input[type=text],input[type=date],input[type=number],input:not([type]),select,textarea{min-height:44px;padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card);width:100%}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent);flex:0 0 auto;margin:0}
+label.chk{display:inline-flex;align-items:center;gap:10px;min-height:44px;cursor:pointer}
+
+/* zgornja vrstica */
+.top{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:10px;padding:8px 16px;padding-top:max(8px,env(safe-area-inset-top));background:var(--card);border-bottom:1px solid var(--border);min-height:61px}
+.top .ttl{flex:1;min-width:0;line-height:1.2}
+.top .ttl b{font-size:19px}
+.top .ttl .sub{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .cnt{font-size:15px;color:var(--muted);white-space:nowrap}
+.top .cnt b{color:var(--fg)}
+#menuBtn{display:none;white-space:nowrap}
+#themeBtn{white-space:nowrap}
+.wrap{display:flex;max-width:1400px;margin:0 auto}
+nav#side{width:270px;flex:0 0 auto;position:sticky;top:61px;height:calc(100vh - 61px);overflow:auto;padding:12px 10px 40px;border-right:1px solid var(--border)}
+nav#side a{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 10px;border-radius:10px;text-decoration:none;color:var(--fg)}
+nav#side a:hover{background:var(--panel2)}
+nav#side a.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+nav#side .sec{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:14px 10px 4px}
+nav#side .tick{margin-left:auto;color:var(--ok);font-weight:700}
+nav#side .tn{display:inline-block;min-width:22px;text-align:center;font-weight:700;color:var(--muted)}
+#backdrop{display:none}
+main{flex:1;min-width:0;padding:20px 24px 80px}
+.page{max-width:980px}
+@media (max-width:1023.98px){
+  #menuBtn{display:inline-flex;align-items:center}
+  nav#side{position:fixed;left:0;top:61px;z-index:35;background:var(--card);height:calc(100vh - 61px);transform:translateX(-105%);transition:transform .2s;box-shadow:var(--shadow);width:290px}
+  nav#side.open{transform:none}
+  #backdrop.show{display:block;position:fixed;inset:61px 0 0 0;background:rgba(0,0,0,.4);z-index:30}
+  main{padding:16px 16px 80px}
+  .top .cnt span.lbl{display:none}
+}
+@media (max-width:560px){ .top .ttl .sub{display:none} }
+
+h1{font-size:28px;line-height:1.25;margin:6px 0 4px}
+h2{font-size:21px;margin:30px 0 10px;padding-bottom:4px;border-bottom:2px solid var(--border)}
+h3{font-size:18px;margin:18px 0 8px}
+.meta{color:var(--muted);margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin:12px 0;box-shadow:var(--shadow)}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+table{border-collapse:collapse;width:100%;background:var(--card)}
+th,td{padding:10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+th{background:var(--panel2);font-size:15px}
+.tscroll{overflow-x:auto;border:1px solid var(--border);border-radius:12px;margin:10px 0}
+.tscroll table{min-width:560px}
+tr.click{cursor:pointer}
+tr.click:hover td{background:var(--accent-soft)}
+tr.click td{height:44px}
+.badge{display:inline-block;font-size:13px;padding:3px 10px;border-radius:999px;background:var(--badge-bg);color:var(--badge-ink);font-weight:600;line-height:1.4;vertical-align:middle}
+.badge.miss{background:var(--orange-bg);color:var(--orange)}
+.badge.gray{background:var(--gray-bg);color:var(--gray-fg)}
+.badge.cnt{background:var(--accent-soft);color:var(--accent)}
+.chip{display:inline-flex;align-items:center;min-height:44px;padding:4px 14px;border-radius:999px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-weight:600;font-size:15px}
+.chip:hover{border-color:var(--accent)}
+.fbox{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:6px 14px 10px;margin:10px 0}
+.fbox .katex-display{margin:.5em 0}
+.fbox .src{margin-top:2px}
+ol.proc li,ul.lst li{margin:6px 0}
+.ex{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin:14px 0;box-shadow:var(--shadow)}
+.ex blockquote{margin:8px 0;padding:8px 14px;border-left:4px solid var(--accent);background:var(--panel2);border-radius:0 10px 10px 0}
+.step{border-left:3px solid var(--accent);padding:6px 12px;margin:10px 0;background:var(--panel2);border-radius:0 10px 10px 0}
+.step .why{color:var(--muted);font-size:15px;margin-top:4px}
+.step .why b{color:var(--fg)}
+.result{border:2px solid var(--ok);background:var(--ok-bg);border-radius:12px;padding:10px 14px;margin:12px 0}
+.note{border:1px dashed var(--border);background:var(--gray-bg);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:15px}
+.warn-official{background:var(--warn-bg);color:var(--warn-fg);border:2px solid var(--warn-line);border-radius:12px;padding:10px 14px;margin:10px 0}
+.fig{margin:10px 0;text-align:center}
+.fig svg{max-width:100%;height:auto;display:inline-block}
+.fig .cap{font-size:14px;color:var(--muted);margin-top:4px}
+svg text{font-family:"Times New Roman",Times,serif;font-size:15px;fill:var(--fg)}
+svg text.i{font-style:italic}
+svg text.sm{font-size:12px}
+details{margin:10px 0}
+details>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600;list-style:none;gap:8px}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸";transition:transform .15s;display:inline-block}
+details[open]>summary::before{transform:rotate(90deg)}
+.calc{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin:12px 0;box-shadow:var(--shadow)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tabs button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.fld{margin:8px 0}
+.fld label{display:block;font-size:15px;margin-bottom:3px}
+.fld .conv{font-size:14px;min-height:1.4em;margin-top:2px;color:var(--muted)}
+.fld .conv.err,.err{color:var(--bad)}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:4px 14px}
+.out{margin-top:10px}
+.outblk{border-top:1px solid var(--border);padding:8px 0}
+.outblk .l{margin:2px 0;overflow-x:auto}
+.fb{margin-top:6px;padding:8px 12px;border-radius:10px;font-weight:600}
+.fb.ok{background:var(--ok-bg);color:var(--ok)}
+.fb.bad{background:var(--bad-bg);color:var(--bad)}
+.fb.or{background:var(--orange-bg);color:var(--orange)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.seg button{border:0;border-radius:0;min-height:44px}
+.seg button.on{background:var(--accent);color:var(--accent-ink)}
+.qtypes{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin:12px 0}
+.qtypes button{text-align:left}
+.qtypes button.right{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.qtypes button.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.timer{font-size:32px;font-variant-numeric:tabular-nums;font-weight:700}
+.timer.late{color:var(--bad)}
+.navbtns{display:flex;justify-content:space-between;gap:10px;margin-top:30px;flex-wrap:wrap}
+.toptick{float:right;margin-left:12px}
+.gray{opacity:.55}
+.grayblk{background:var(--gray-bg);color:var(--gray-fg);border-radius:12px;padding:8px 14px;margin:8px 0}
+.fmap h4{margin:14px 0 4px}
+.fmap .it{margin:4px 0 4px 10px}
+#storeWarn{display:none;position:fixed;bottom:8px;right:8px;z-index:50;font-size:13px;background:var(--warn-bg);color:var(--warn-fg);border:1px solid var(--warn-line);padding:6px 10px;border-radius:8px}
+#testOut .pass{color:var(--ok)} #testOut .fail{color:var(--bad);font-weight:700}
+.planday{display:flex;gap:12px;align-items:flex-start;border-bottom:1px solid var(--border);padding:8px 0}
+.planday .d{min-width:110px;font-weight:600}
+.planday.done .txt{text-decoration:line-through;opacity:.6}
+.kbd{font-family:ui-monospace,Menlo,monospace;font-size:14px;background:var(--panel2);padding:1px 6px;border-radius:6px}
+.katex{font-size:1.06em}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:2px 0}
+@media print{.top,nav#side{display:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <button id="menuBtn" aria-label="Meni" aria-controls="side" aria-expanded="false">☰ Meni</button>
+  <div class="ttl"><b>Fizika I</b><span class="sub">Mehanika in toplota · 1. kolokvij · vodič po tipih nalog</span></div>
+  <div class="cnt"><span class="lbl">Osvojeni tipi: </span><b id="cntZnam">0/8</b></div>
+  <button id="themeBtn" aria-label="Tema">🌓 Sistem</button>
+</header>
+<div id="backdrop"></div>
+<div class="wrap">
+  <nav id="side" aria-label="Vsebina"></nav>
+  <main id="main"><div class="page"><p class="muted">Nalagam …</p></div></main>
+</div>
+<div id="storeWarn">Napredek se ne shranjuje</div>
+<script>
+'use strict';
+/* =========================================================
+   KONSTANTE
+   ========================================================= */
+const CONST = {
+  g: 9.81,        // m/s^2 – formular (privzeto)
+  g_kol: 9.8,     // m/s^2 – vrednost, ki jo naloge 2022/3, 2023/3, 2023/4 podajo same
+  R_Z: 6.4e6,     // m – polmer Zemlje (formular in kolokviji: 6400 km)
+  G: 6.67e-11     // N m^2/kg^2 – formular
+};
+const DEG = Math.PI / 180;
+
+/* =========================================================
+   OBLIKOVANJE ŠTEVIL (decimalna vejica, 3 veljavna mesta)
+   ========================================================= */
+// vrne {m: mantisa kot niz s piko, e: eksponent ali null}
+function sigParts(x, sig) {
+  if (!isFinite(x)) return { m: String(x), e: null };
+  if (x === 0) return { m: (0).toFixed(Math.max(0, sig - 1)), e: null };
+  const ax = Math.abs(x);
+  let e = Math.floor(Math.log10(ax));
+  let mant = x / Math.pow(10, e);
+  let ms = mant.toFixed(sig - 1);
+  if (Math.abs(parseFloat(ms)) >= 10) { e += 1; mant = x / Math.pow(10, e); ms = mant.toFixed(sig - 1); }
+  if (e >= 4 || e <= -4) return { m: ms, e };
+  // navaden zapis
+  const dec = Math.max(0, sig - 1 - e);
+  if (dec === 0) return { m: Number(x.toPrecision(sig)).toFixed(0), e: null };
+  return { m: x.toFixed(dec), e: null };
+}
+function fmtN(x, sig = 3) {           // TeX
+  const p = sigParts(x, sig);
+  const m = p.m.replace('.', '{,}');
+  return p.e === null ? m : m + String.raw`\cdot 10^{` + p.e + '}';
+}
+function fmt3(x) { return fmtN(x, 3); }
+function fmtPlain(x, sig = 3) {       // navaden tekst
+  const p = sigParts(x, sig);
+  const m = p.m.replace('.', ',').replace('-', '−');
+  return p.e === null ? m : m + '·10^' + p.e;
+}
+// vhodne vrednosti v vrstici z vstavljenimi številkami: do 4 mest, brez odvečnih ničel
+function fmtIn(x) {
+  if (x === 0) return '0';
+  const ax = Math.abs(x);
+  if (ax >= 1e5 || ax < 1e-3) {
+    const p = sigParts(x, 4);
+    let m = p.m.replace(/\.?0+$/, '');
+    return m.replace('.', '{,}') + String.raw`\cdot 10^{` + p.e + '}';
+  }
+  let s = Number(x.toPrecision(4)).toString();
+  return s.replace('.', '{,}');
+}
+const T = (s) => String.raw`\(` + s + String.raw`\)`;   // inline TeX
+
+/* =========================================================
+   RAZČLENJEVALNIK KOLIČIN
+   ========================================================= */
+const DIMS = {
+  dolzina:  { ime: 'dolžino', npr: '15 m', si: 'm' },
+  cas:      { ime: 'čas', npr: '2 s', si: 's' },
+  hitrost:  { ime: 'hitrost', npr: '15 m/s', si: 'm/s' },
+  pospesek: { ime: 'pospešek', npr: '9,81 m/s^2', si: 'm/s^2' },
+  masa:     { ime: 'maso', npr: '2 kg', si: 'kg' },
+  sila:     { ime: 'silo', npr: '70 N', si: 'N' },
+  kot:      { ime: 'kot', npr: '30°', si: 'rad' },
+  kotna:    { ime: 'kotno hitrost', npr: '2 rad/s', si: 'rad/s' },
+  vztr:     { ime: 'vztrajnostni moment', npr: '6 kg m^2', si: 'kg\\,m^2' },
+  vrtilna:  { ime: 'vrtilno količino', npr: '12 kg m^2/s', si: 'kg\\,m^2/s' },
+  energija: { ime: 'energijo', npr: '12 J', si: 'J' },
+  brez:     { ime: 'brezdimenzijsko število', npr: '0,2', si: '' }
+};
+const UNITS = {
+  // dolžina
+  'mm': ['dolzina', 1e-3, 'mm'], 'cm': ['dolzina', 1e-2, 'cm'], 'dm': ['dolzina', 0.1, 'dm'], 'm': ['dolzina', 1, 'm'], 'km': ['dolzina', 1e3, 'km'],
+  // čas
+  'ms': ['cas', 1e-3, 'ms'], 's': ['cas', 1, 's'], 'min': ['cas', 60, 'min'], 'h': ['cas', 3600, 'h'],
+  // hitrost
+  'm/s': ['hitrost', 1, 'm/s'], 'km/h': ['hitrost', 1 / 3.6, 'km/h'], 'km/s': ['hitrost', 1e3, 'km/s'], 'cm/s': ['hitrost', 1e-2, 'cm/s'],
+  // pospešek
+  'm/s^2': ['pospesek', 1, 'm/s^2'], 'm/s2': ['pospesek', 1, 'm/s^2'], 'cm/s^2': ['pospesek', 1e-2, 'cm/s^2'],
+  // masa
+  'mg': ['masa', 1e-6, 'mg'], 'g': ['masa', 1e-3, 'g'], 'dag': ['masa', 1e-2, 'dag'], 'kg': ['masa', 1, 'kg'], 't': ['masa', 1e3, 't'],
+  // sila
+  'n': ['sila', 1, 'N'], 'kn': ['sila', 1e3, 'kN'], 'mn': ['sila', 1e-3, 'mN'], 'MN': ['sila', 1e6, 'MN'],
+  // kot
+  '°': ['kot', DEG, '^\\circ'], 'deg': ['kot', DEG, '^\\circ'], 'rad': ['kot', 1, 'rad'],
+  // kotna hitrost
+  'rad/s': ['kotna', 1, 'rad/s'], 'obr/min': ['kotna', 2 * Math.PI / 60, 'obr/min'], 'obr/s': ['kotna', 2 * Math.PI, 'obr/s'], '1/s': ['kotna', 1, '1/s'], 's^-1': ['kotna', 1, 's^{-1}'],
+  // vztrajnostni moment
+  'kgm^2': ['vztr', 1, 'kg\\,m^2'], 'gcm^2': ['vztr', 1e-7, 'g\\,cm^2'],
+  // vrtilna količina
+  'kgm^2/s': ['vrtilna', 1, 'kg\\,m^2/s'], 'js': ['vrtilna', 1, 'J\\,s'],
+  // energija
+  'j': ['energija', 1, 'J'], 'kj': ['energija', 1e3, 'kJ'], 'mj': ['energija', 1e-3, 'mJ']
+};
+function lookupUnit(u) {
+  if (u in UNITS) return UNITS[u];
+  // velike/male črke samo pri N, J (kN, mN, kJ …); MN ostane ločen
+  const lo = u.toLowerCase();
+  if (u[0] !== 'M' && u[0] !== 'K' && /^(k|m)?[nj]$/i.test(u) && lo in UNITS) return UNITS[lo];
+  if (/^js$/i.test(u)) return UNITS['js'];
+  return null;
+}
+// parseQty(str, dim) → {si, unitSI, ok, msg, val, unit}
+function parseQty(str, dim) {
+  const d = DIMS[dim] || DIMS.brez;
+  const bad = (msg) => ({ si: NaN, unitSI: d.si, ok: false, msg });
+  if (str == null) return bad('prazno polje');
+  let s = String(str).trim();
+  if (!s) return bad('prazno polje');
+  s = s.replace(/[−–]/g, '-').replace(/,/g, '.').replace(/²/g, '^2').replace(/³/g, '^3').replace(/ /g, ' ');
+  s = s.replace(/\s*[·×*x]\s*10\s*\^\s*\(?\s*([+-]?\d+)\s*\)?/i, 'e$1');   // 6,4·10^6
+  s = s.replace(/^\s*([+-]?)\s*/, '$1');
+  const m = s.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?)\s*(.*)$/i);
+  if (!m) return bad('ni število – vpiši npr. ' + d.npr);
+  const val = parseFloat(m[1]);
+  let u = m[2].trim().replace(/\s+|·|\*/g, '');
+  u = u.replace(/^stopinj[e]?$/i, '°').replace(/^o$/, '°');
+  if (!isFinite(val)) return bad('ni število');
+  if (u === '') {
+    if (dim === 'brez') return { si: val, unitSI: '', ok: true, msg: '', val, unit: '' };
+    if (dim === 'kot') return { si: val * DEG, unitSI: 'rad', ok: true, msg: 'brez enote → stopinje', val, unit: '^\\circ', assumed: true };
+    return { si: val, unitSI: d.si, ok: true, msg: 'brez enote → privzeto SI (' + d.si.replace(/\\,/g, ' ') + ')', val, unit: d.si, assumed: true };
+  }
+  const U = lookupUnit(u);
+  if (!U) return bad('neznana enota »' + m[2].trim() + '« – pričakujem ' + d.ime + ', npr. ' + d.npr);
+  if (U[0] !== dim) return bad('pričakujem ' + d.ime + ', npr. ' + d.npr);
+  return { si: val * U[1], unitSI: d.si, ok: true, msg: '', val, unit: U[2] };
+}
+function unitTex(u) {
+  if (!u) return '';
+  if (u === '^\\circ') return '^\\circ';
+  return String.raw`\,\mathrm{` + u + '}';
+}
+// TeX za pretvorbo pod poljem
+function convTex(p, dim) {
+  if (!p.ok) return '';
+  const left = fmtIn(p.val) + unitTex(p.unit);
+  if (dim === 'brez') return T(left);
+  const siV = p.si;
+  const right = fmt3(siV) + unitTex(p.unitSI);
+  if (p.unit === p.unitSI) return T(left) + (p.assumed ? ' <span class="small">(' + p.msg + ')</span>' : ' ✓');
+  return T(left + ' = ' + right) + (p.assumed ? ' <span class="small">(' + p.msg + ')</span>' : '');
+}
+
+/* Testi razčlenjevalnika (?test) */
+const PARSER_TESTS = [
+  ['72 km/h', 'hitrost', 20], ['3 km/s', 'hitrost', 3000], ['15 m/s', 'hitrost', 15], ['15 cm', 'dolzina', 0.15],
+  ['6400 km', 'dolzina', 6.4e6], ['100 km', 'dolzina', 1e5], ['2,5 kN', 'sila', 2500], ['70 N', 'sila', 70],
+  ['9 g', 'masa', 0.009], ['2 kg', 'masa', 2], ['1,5 t', 'masa', 1500], ['30°', 'kot', 0.523599], ['30 deg', 'kot', 0.523599],
+  ['0,5 rad', 'kot', 0.5], ['60 obr/min', 'kotna', 6.283185], ['1 m/s^2', 'pospesek', 1], ['9,81 m/s²', 'pospesek', 9.81],
+  ['250 ms', 'cas', 0.25], ['2 min', 'cas', 120], ['6,4·10^6 m', 'dolzina', 6.4e6], ['6.4e6 m', 'dolzina', 6.4e6],
+  ['0,2', 'brez', 0.2], ['  20  m/s ', 'hitrost', 20], ['15 kg', 'hitrost', 'ERR'], ['abc', 'dolzina', 'ERR'], ['-15 m/s', 'hitrost', -15],
+  ['1 m/s²', 'pospesek', 1], ['2 kg m^2', 'vztr', 2], ['12 J s', 'vrtilna', 12], ['5 mN', 'sila', 0.005]
+];
+function runParserTests() {
+  const res = [];
+  for (const [inp, dim, exp] of PARSER_TESTS) {
+    const p = parseQty(inp, dim);
+    let pass;
+    if (exp === 'ERR') pass = !p.ok;
+    else pass = p.ok && Math.abs(p.si - exp) <= 1e-6 * Math.max(1, Math.abs(exp));
+    res.push({ inp, dim, exp, got: p.ok ? p.si : p.msg, pass });
+  }
+  return res;
+}
+
+/* =========================================================
+   PRIMERJAVA »MOJ REZULTAT«
+   ========================================================= */
+// exp: pričakovana SI vrednost; alt: vrednost z drugim g (ali null)
+function checkResult(str, dim, exp, alt) {
+  const p = parseQty(str, dim);
+  if (!p.ok) return { cls: 'bad', msg: p.msg };
+  const u = p.si;
+  const rel = (a, b) => b === 0 ? Math.abs(a) : Math.abs(a - b) / Math.abs(b);
+  if (rel(u, exp) <= 0.01) return { cls: 'ok', msg: '✓ Ujema se' };
+  if (exp !== 0 && rel(-u, exp) <= 0.01) return { cls: 'or', msg: 'Napačen predznak – preveri smer osi' };
+  if (alt != null && isFinite(alt) && rel(u, alt) <= 0.01) return { cls: 'ok', msg: String.raw`✓ (razlika samo zaradi \(g\))` };
+  if (dim === 'kot' && exp !== 0 && (rel(u, exp / DEG) <= 0.01 || rel(u, exp * DEG) <= 0.01)) return { cls: 'or', msg: 'Preveri stopinje/radiane' };
+  if (exp !== 0 && u !== 0) {
+    const r = u / exp;
+    for (const k of [1, 2, 3, 6]) {
+      const f = Math.pow(10, k);
+      if (Math.abs(r / f - 1) <= 0.02 || Math.abs(r * f - 1) <= 0.02) return { cls: 'or', msg: 'Napaka za potenco 10 – preveri pretvorbo enot' };
+    }
+  }
+  return { cls: 'bad', msg: '✗ Ne ujema se', wrong: true };
+}
+
+/* =========================================================
+   SHRANJEVANJE
+   ========================================================= */
+const LS_KEY = 'fiz1k1.v1';
+let storeOK = true;
+function defaultState() {
+  return { znam: {}, plan: {}, moji: { datum: '', trajanje: '', tocke: '', formular: 'ni' }, kviz: [], sim: [], avd: {}, napake: [], pretvori: { ok: 0, vse: 0 }, theme: 'system' };
+}
+function loadState() {
+  let st = defaultState();
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) { const o = JSON.parse(raw); if (o && typeof o === 'object') st = Object.assign(st, o); }
+  } catch (e) { storeOK = false; }
+  return st;
+}
+const S = loadState();
+function save() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(S)); storeOK = true; }
+  catch (e) { storeOK = false; }
+  const w = document.getElementById('storeWarn');
+  if (w) w.style.display = storeOK ? 'none' : 'block';
+}
+
+/* =========================================================
+   POMOŽNE
+   ========================================================= */
+const $ = (sel, el = document) => el.querySelector(sel);
+const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+function renderMath(el) {
+  if (!el) return;
+  try {
+    if (typeof renderMathInElement === 'function') {
+      renderMathInElement(el, { delimiters: [{ left: '\\(', right: '\\)', display: false }, { left: '\\[', right: '\\]', display: true }], throwOnError: false });
+    }
+  } catch (e) { console.warn(e); }
+}
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function fmtDate(d) { return d.toLocaleDateString('sl-SI', { weekday: 'short', day: 'numeric', month: 'numeric' }); }
+function todayMid() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+function parseDateISO(s) { if (!s) return null; const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s); if (!m) return null; return new Date(+m[1], +m[2] - 1, +m[3]); }
+function fbadge(txt) { return '<span class="badge">Formular: ' + txt + '</span>'; }
+function mbadge(txt) { return '<span class="badge miss">' + txt + '</span>'; }
+const NEURADNO = '<span class="badge gray">rešitev ni uradna – preračunano</span>';
+// komponenta za morebitne uradne rešitve (trenutno se nikjer ne prikaže)
+function warnOfficial(uradno, preracunano) {
+  return '<div class="warn-official"><b>Uradno:</b> ' + uradno + ' · <b>Preračunano:</b> ' + preracunano + ' · <b>Preveri pri asistentu.</b></div>';
+}
+
+/* =========================================================
+   SVG SKICE (barve samo iz CSS spremenljivk)
+   ========================================================= */
+const C = { fg: 'var(--fg)', F: 'var(--force)', V: 'var(--velocity)', A: 'var(--accel)', ax: 'var(--axis)', mu: 'var(--muted)', acc: 'var(--accent)', bg: 'var(--card)', p2: 'var(--panel2)' };
+const r1 = (v) => Math.round(v * 10) / 10;
+function svgWrap(w, h, inner, cap) {
+  return '<div class="fig"><svg viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" role="img" xmlns="http://www.w3.org/2000/svg">' + inner + '</svg>' + (cap ? '<div class="cap">' + cap + '</div>' : '') + '</div>';
+}
+function ln(x1, y1, x2, y2, col = C.fg, w = 2, dash = '') {
+  return '<line x1="' + r1(x1) + '" y1="' + r1(y1) + '" x2="' + r1(x2) + '" y2="' + r1(y2) + '" style="stroke:' + col + ';stroke-width:' + w + (dash ? ';stroke-dasharray:' + dash : '') + '"/>';
+}
+function head(x2, y2, ux, uy, col, size = 10) {
+  const px = -uy, py = ux;
+  const bx = x2 - ux * size, by = y2 - uy * size;
+  return '<polygon points="' + r1(x2) + ',' + r1(y2) + ' ' + r1(bx + px * size * 0.45) + ',' + r1(by + py * size * 0.45) + ' ' + r1(bx - px * size * 0.45) + ',' + r1(by - py * size * 0.45) + '" style="fill:' + col + ';stroke:none"/>';
+}
+function arr(x1, y1, x2, y2, col = C.fg, w = 2.5, dash = '') {
+  const L = Math.hypot(x2 - x1, y2 - y1) || 1, ux = (x2 - x1) / L, uy = (y2 - y1) / L;
+  const sz = Math.min(11, L * 0.45);
+  return ln(x1, y1, x2 - ux * sz * 0.7, y2 - uy * sz * 0.7, col, w, dash) + head(x2, y2, ux, uy, col, sz);
+}
+function darr(x1, y1, x2, y2, col = C.mu) { // kota z dvema puščicama
+  const L = Math.hypot(x2 - x1, y2 - y1) || 1, ux = (x2 - x1) / L, uy = (y2 - y1) / L;
+  return ln(x1 + ux * 6, y1 + uy * 6, x2 - ux * 6, y2 - uy * 6, col, 1.3) + head(x2, y2, ux, uy, col, 8) + head(x1, y1, -ux, -uy, col, 8);
+}
+// mini oznake: v_0, v_{0x}, F^{*}
+function tx(x, y, s, o = {}) {
+  const parts = [];
+  const re = /_\{([^}]*)\}|_(.)|\^\{([^}]*)\}|\^(.)/g;
+  let last = 0, m, shift = 0;
+  const push = (t, dy, small) => { if (t === '') return; parts.push('<tspan' + (dy ? ' dy="' + dy + '"' : '') + (small ? ' font-size="0.72em"' : '') + '>' + esc(t) + '</tspan>'); };
+  while ((m = re.exec(s))) {
+    push(s.slice(last, m.index), -shift, false); shift = 0;
+    const sub = m[1] ?? m[2], sup = m[3] ?? m[4];
+    if (sub != null) { parts.push('<tspan dy="4" font-size="0.72em">' + esc(sub) + '</tspan>'); shift = 4; }
+    else { parts.push('<tspan dy="-6" font-size="0.72em">' + esc(sup) + '</tspan>'); shift = -6; }
+    last = re.lastIndex;
+  }
+  const rest = s.slice(last);
+  if (rest) push(rest, -shift, false); else if (shift) parts.push('<tspan dy="' + (-shift) + '"> </tspan>');
+  const cls = (o.it === false ? '' : 'i') + (o.sm ? ' sm' : '');
+  return '<text x="' + r1(x) + '" y="' + r1(y) + '" text-anchor="' + (o.a || 'start') + '" class="' + cls + '"' + (o.c ? ' style="fill:' + o.c + '"' : '') + (o.rot != null ? ' transform="rotate(' + o.rot + ' ' + r1(x) + ' ' + r1(y) + ')"' : '') + (o.w ? ' font-weight="700"' : '') + '>' + parts.join('') + '</text>';
+}
+function pt(x, y) { return { x, y }; }
+function poly(points, stroke = C.fg, fill = 'none', w = 2) {
+  return '<polygon points="' + points.map(p => r1(p.x) + ',' + r1(p.y)).join(' ') + '" style="stroke:' + stroke + ';fill:' + fill + ';stroke-width:' + w + '"/>';
+}
+function pathD(d, stroke = C.fg, w = 2, dash = '', fill = 'none') {
+  return '<path d="' + d + '" style="stroke:' + stroke + ';fill:' + fill + ';stroke-width:' + w + (dash ? ';stroke-dasharray:' + dash : '') + '"/>';
+}
+function circ(cx, cy, r, stroke = C.fg, fill = 'none', w = 2) {
+  return '<circle cx="' + r1(cx) + '" cy="' + r1(cy) + '" r="' + r + '" style="stroke:' + stroke + ';fill:' + fill + ';stroke-width:' + w + '"/>';
+}
+function rect(x, y, w, h, stroke = C.fg, fill = 'none', sw = 2) {
+  return '<rect x="' + r1(x) + '" y="' + r1(y) + '" width="' + r1(w) + '" height="' + r1(h) + '" style="stroke:' + stroke + ';fill:' + fill + ';stroke-width:' + sw + '"/>';
+}
+// lok kota: koti v stopinjah, matematična orientacija (y navzgor)
+function arcA(cx, cy, r, a1, a2, col = C.mu, w = 1.5) {
+  const p1 = pt(cx + r * Math.cos(a1 * DEG), cy - r * Math.sin(a1 * DEG));
+  const p2 = pt(cx + r * Math.cos(a2 * DEG), cy - r * Math.sin(a2 * DEG));
+  const large = Math.abs(a2 - a1) > 180 ? 1 : 0;
+  const sweep = a2 > a1 ? 0 : 1;
+  return pathD('M' + r1(p1.x) + ' ' + r1(p1.y) + ' A' + r + ' ' + r + ' 0 ' + large + ' ' + sweep + ' ' + r1(p2.x) + ' ' + r1(p2.y), col, w);
+}
+function ground(x1, x2, y, step = 14) {
+  let s = ln(x1, y, x2, y, C.fg, 2);
+  for (let x = x1 + 4; x < x2; x += step) s += ln(x, y, x - 8, y + 8, C.mu, 1);
+  return s;
+}
+// krožna puščica vrtenja (elipsa okoli navpične osi)
+function rotArrow(cx, y, rx, col = C.V, w = 2) {
+  const ry = rx * 0.28;
+  return pathD('M' + (cx - rx) + ' ' + y + ' A' + rx + ' ' + ry + ' 0 0 0 ' + (cx + rx) + ' ' + y, col, w) + head(cx + rx, y - 1, 0, -1, col, 9 + w);
+}
+
+/* ---- Osnove: vektor s komponentama ---- */
+function svgVektor() {
+  const O = pt(50, 170), L = 165, a = 35;
+  const E = pt(O.x + L * Math.cos(a * DEG), O.y - L * Math.sin(a * DEG));
+  let s = arr(O.x, O.y, 290, O.y, C.ax, 1.5) + tx(292, O.y + 18, 'x') + arr(O.x, O.y, O.x, 20, C.ax, 1.5) + tx(O.x - 16, 26, 'y');
+  s += ln(O.x, O.y, E.x, O.y, C.V, 2, '6 4') + ln(E.x, O.y, E.x, E.y, C.V, 2, '6 4');
+  s += arr(O.x, O.y, E.x, E.y, C.V, 3) + tx(O.x + 70, O.y - 66, 'v_0', { c: C.V });
+  s += arcA(O.x, O.y, 40, 0, a) + tx(O.x + 46, O.y - 10, 'φ');
+  s += tx((O.x + E.x) / 2, O.y + 20, 'v_{0x} = v_0 cos φ', { a: 'middle' }) + tx(E.x + 8, (O.y + E.y) / 2, 'v_{0y} = v_0 sin φ');
+  return svgWrap(340, 200, s);
+}
+
+/* ---- 2025/4: met proti steni ---- */
+function svgMetStena(sol = true) {
+  const k = 20, O = pt(50, 220), v0 = 20, ph = 40 * DEG, g = 9.81;
+  const X = (x) => O.x + x * k, Y = (y) => O.y - y * k;
+  let d = '';
+  for (let i = 0; i <= 40; i++) { const t = 0.97906 * i / 40; const x = v0 * Math.cos(ph) * t, y = v0 * Math.sin(ph) * t - g * t * t / 2; d += (i ? ' L' : 'M') + r1(X(x)) + ' ' + r1(Y(y)); }
+  const hitY = Y(7.8848);
+  let s = ground(20, 350, O.y);
+  // stena
+  s += rect(350, 20, 20, 200, C.fg, C.p2, 2);
+  for (let y = 30; y < 220; y += 14) s += ln(352, y + 8, 368, y, C.mu, 1);
+  s += arr(O.x, O.y, O.x, 150, C.ax, 1.5) + tx(O.x - 16, 158, 'y') + tx(O.x - 16, O.y + 4, 'O', { it: false });
+  s += pathD(d, C.fg, 1.6, '5 4');
+  const E = pt(O.x + 95 * Math.cos(ph), O.y - 95 * Math.sin(ph));
+  s += ln(O.x, O.y, E.x, O.y, C.V, 1.5, '5 4') + ln(E.x, O.y, E.x, E.y, C.V, 1.5, '5 4');
+  s += arr(O.x, O.y, E.x, E.y, C.V, 3) + tx(E.x - 30, E.y - 6, 'v_0', { c: C.V });
+  s += tx(E.x - 30, O.y + 16, 'v_{0x}', { c: C.V, sm: 1 }) + tx(E.x + 5, O.y - 30, 'v_{0y}', { c: C.V, sm: 1 });
+  s += arcA(O.x, O.y, 34, 0, 40) + tx(O.x + 38, O.y - 10, '40°', { it: false });
+  // hitrost ob zadetku (≈12°)
+  const b = 12 * DEG, tail = pt(350 - 58 * Math.cos(b), hitY + 58 * Math.sin(b));
+  s += ln(tail.x, tail.y, 348, tail.y, C.V, 1.3, '4 3') + ln(348, tail.y, 348, hitY, C.V, 1.3, '4 3');
+  s += arr(tail.x, tail.y, 348, hitY, C.V, 2.5) + tx(tail.x + 4, hitY - 8, 'v', { c: C.V });
+  s += tx(tail.x + 18, tail.y + 15, 'v_x', { c: C.V, sm: 1 }) + tx(332, tail.y - 2, 'v_y', { c: C.V, sm: 1, a: 'end' });
+  s += circ(349, hitY, 3.5, C.fg, C.fg, 1);
+  // kote
+  s += darr(O.x, 244, 350, 244) + tx(200, 260, sol ? 'd = 15 m' : 'd = 15 m', { a: 'middle' });
+  s += darr(392, O.y, 392, hitY) + tx(398, (O.y + hitY) / 2, sol ? 'y = 7,88 m' : 'y = ?');
+  return svgWrap(470, 270, s);
+}
+
+/* ---- 2024/4: vodoravni met s stolpa ---- */
+function svgMetStolp(sol = true) {
+  const k = 10, x0 = 70, y0 = 40, g = 9.81, tp = 2.019275;
+  let d = '';
+  for (let i = 0; i <= 40; i++) { const t = tp * i / 40; d += (i ? ' L' : 'M') + r1(x0 + 15 * t * k) + ' ' + r1(y0 + g * t * t / 2 * k); }
+  const I = pt(x0 + 30.289 * k, 240);
+  let s = ground(10, 440, 240) + rect(30, 40, 40, 200, C.fg, C.p2, 2);
+  s += pathD(d, C.fg, 1.6, '5 4');
+  s += arr(x0, y0, x0 + 60, y0, C.V, 3) + tx(x0 + 30, y0 - 8, 'v_0', { c: C.V });
+  const u = pt(15 / 24.8475, 19.8091 / 24.8475), L = 50, tl = pt(I.x - u.x * L, I.y - u.y * L);
+  s += ln(tl.x, tl.y, I.x, tl.y, C.V, 1.3, '4 3') + ln(I.x, tl.y, I.x, I.y, C.V, 1.3, '4 3');
+  s += arr(tl.x, tl.y, I.x, I.y, C.V, 2.5) + tx(tl.x - 14, tl.y + 26, 'v', { c: C.V });
+  s += tx((tl.x + I.x) / 2, tl.y - 5, 'v_x', { c: C.V, sm: 1, a: 'middle' }) + tx(I.x + 5, (tl.y + I.y) / 2 + 4, 'v_y', { c: C.V, sm: 1 });
+  s += arcA(tl.x, tl.y, 22, -52.87, 0) + tx(tl.x + 25, tl.y + 20, 'β');
+  s += darr(14, 40, 14, 240) + tx(8, 140, 'h = 20 m', { a: 'middle', rot: -90 });
+  s += darr(x0, 258, I.x, 258) + tx((x0 + I.x) / 2, 274, sol ? 'D = 30,3 m' : 'D = ?', { a: 'middle' });
+  return svgWrap(460, 285, s);
+}
+
+/* ---- 2022/1: tiri pri v0 = 50 m/s ---- */
+function svgMetTiri() {
+  const x0 = 55, y0 = 235, sc = 1.6, v0 = 50, g = 9.81;
+  let s = '';
+  s += arr(x0, y0, x0 + 430, y0, C.ax, 1.5) + tx(x0 + 432, y0 - 8, 'x [m]', { a: 'end' });
+  s += arr(x0, y0, x0, y0 - 215, C.ax, 1.5) + tx(x0 + 6, y0 - 205, 'y [m]');
+  for (let xm = 50; xm <= 250; xm += 50) { s += ln(x0 + xm * sc, y0, x0 + xm * sc, y0 + 5, C.ax, 1) + tx(x0 + xm * sc, y0 + 19, String(xm), { a: 'middle', it: false, sm: 1 }); }
+  for (let ym = 50; ym <= 100; ym += 50) { s += ln(x0 - 5, y0 - ym * sc, x0, y0 - ym * sc, C.ax, 1) + tx(x0 - 8, y0 - ym * sc + 4, String(ym), { a: 'end', it: false, sm: 1 }); }
+  s += tx(x0 - 8, y0 + 4, '0', { a: 'end', it: false, sm: 1 });
+  for (const a of [15, 30, 45, 60, 75]) {
+    const ph = a * DEG, D = v0 * v0 * Math.sin(2 * ph) / g;
+    let d = '';
+    for (let i = 0; i <= 50; i++) { const x = D * i / 50; const y = x * Math.tan(ph) - g * x * x / (2 * v0 * v0 * Math.cos(ph) ** 2); d += (i ? ' L' : 'M') + r1(x0 + x * sc) + ' ' + r1(y0 - y * sc); }
+    s += pathD(d, C.acc, 1.8);
+    s += arr(x0, y0, x0 + 34 * Math.cos(ph), y0 - 34 * Math.sin(ph), C.V, 2);
+    const hmax = (v0 * Math.sin(ph)) ** 2 / (2 * g);
+    s += tx(x0 + D / 2 * sc, y0 - hmax * sc - 6, a + '°', { a: 'middle', it: false, sm: 1 });
+  }
+  s += tx(x0 + 300, y0 - 190, 'v_0 = 50 m/s', { c: C.V });
+  return svgWrap(500, 260, s, 'Tira za 30° in 60° imata enak domet (\\(g = 9{,}81\\,\\mathrm{m/s^2}\\)).');
+}
+
+/* ---- 2023/3: navpični met ---- */
+function svgNavpicni(sol = true) {
+  const k = 15, x = 110, gY = 230, top = gY - 11.479592 * k, y1 = gY - 10.1 * k;
+  let s = ground(40, 200, gY);
+  s += arr(60, gY, 60, 30, C.ax, 1.5) + tx(48, 40, 'y');
+  s += ln(x, gY - 6, x, top, C.fg, 1.5, '5 4');
+  s += circ(x, gY - 5, 5, C.fg, C.fg, 1);
+  s += arr(x + 14, gY - 5, x + 14, gY - 55, C.V, 3) + tx(x + 20, gY - 30, 'v_0', { c: C.V });
+  s += circ(x, top, 4, C.fg, C.bg, 1.5) + tx(x + 10, top - 4, 'v = 0');
+  s += darr(84, gY, 84, top) + tx(76, (gY + top) / 2, sol ? 'h_{max} = 11,5 m' : 'h_{max}', { a: 'middle', sm: 1, rot: -90 });
+  s += circ(x, y1, 4.5, C.acc, C.bg, 2) + tx(x + 30, y1 + 14, 't = 1 s', { sm: 1 });
+  s += arr(x + 22, y1 + 8, x + 22, y1 - 10, C.V, 2) + tx(x + 28, y1 - 2, 'v', { c: C.V, sm: 1 });
+  // graf v(t)
+  const ox = 260, oy = 140, kt = 49, kv = 5.33;
+  s += arr(ox, oy, ox + 185, oy, C.ax, 1.5) + tx(ox + 185, oy + 18, 't [s]', { a: 'end' });
+  s += arr(ox, 225, ox, 45, C.ax, 1.5) + tx(ox + 6, 50, 'v [m/s]');
+  s += ln(ox, oy - 15 * kv, ox + 3.061224 * kt, oy + 15 * kv, C.V, 2.2);
+  s += tx(ox - 6, oy - 15 * kv + 4, '15', { a: 'end', it: false, sm: 1 }) + tx(ox - 6, oy + 15 * kv + 4, '−15', { a: 'end', it: false, sm: 1 });
+  s += ln(ox - 4, oy - 15 * kv, ox, oy - 15 * kv, C.ax, 1) + ln(ox - 4, oy + 15 * kv, ox, oy + 15 * kv, C.ax, 1);
+  const xd = ox + 1.530612 * kt, xp = ox + 3.061224 * kt;
+  s += circ(xd, oy, 3.5, C.fg, C.fg, 1) + tx(xd, oy - 8, 't_d', { a: 'middle', sm: 1 });
+  s += ln(xp, oy - 4, xp, oy + 4, C.ax, 1.5) + ln(xp, oy, xp, oy + 15 * kv, C.ax, 1, '3 3') + tx(xp + 4, oy - 6, 't_p', { sm: 1 });
+  return svgWrap(460, 255, s);
+}
+
+/* ---- 2024/3: zadnjih 10 m ---- */
+function svgDelPoti(sol = true) {
+  const x0 = 40, k = 3.8, y = 75, X = (m) => x0 + m * k;
+  let s = ln(x0, y, X(100), y, C.fg, 2);
+  s += ln(X(90), y, X(100), y, C.acc, 7);
+  s += ln(x0, y - 8, x0, y + 8, C.fg, 2) + ln(X(100), y - 12, X(100), y + 12, C.fg, 2) + ln(X(90), y - 7, X(90), y + 7, C.fg, 1.5);
+  s += tx(x0, y + 26, 'START', { a: 'middle', it: false, sm: 1, w: 1 }) + tx(X(100), y + 26, 'CILJ', { a: 'middle', it: false, sm: 1, w: 1 });
+  s += tx(x0, y + 42, 'x = 0', { a: 'middle', sm: 1 }) + tx(X(100), y + 42, '100 m', { a: 'middle', sm: 1 }) + tx(X(90), y + 42, '90 m', { a: 'middle', sm: 1 });
+  s += darr(X(90), y - 22, X(100), y - 22) + tx(X(95), y - 30, '10 m', { a: 'middle', sm: 1 });
+  s += arr(x0, y - 30, x0 + 55, y - 30, C.A, 3) + tx(x0 + 22, y - 38, 'a', { c: C.A });
+  s += tx(x0 + 70, y - 26, 'v_0 = 0', { sm: 1 });
+  return svgWrap(460, 130, s);
+}
+
+/* ---- 2023/4: satelit ---- */
+function svgSatelit(sol = true) {
+  const c = pt(150, 160), R = 55, Ro = 125, th = 35 * DEG;
+  let s = circ(c.x, c.y, R, C.fg, C.p2, 2) + circ(c.x, c.y, Ro, C.fg, 'none', 1.5).replace('stroke-width:1.5', 'stroke-width:1.5;stroke-dasharray:6 5');
+  s += circ(c.x, c.y, 2.5, C.fg, C.fg, 1) + tx(c.x - 14, c.y + 4, 'S', { it: false });
+  const sp = pt(c.x + Ro * Math.cos(th), c.y - Ro * Math.sin(th));
+  s += arr(sp.x, sp.y, sp.x - 62 * Math.sin(th), sp.y - 62 * Math.cos(th), C.V, 3) + tx(sp.x - 50, sp.y - 52, 'v', { c: C.V });
+  s += arr(sp.x, sp.y, sp.x - 45 * Math.cos(th), sp.y + 45 * Math.sin(th), C.F, 3) + tx(sp.x - 46, sp.y + 38, 'F_g', { c: C.F });
+  s += rect(sp.x - 7, sp.y - 5, 14, 10, C.fg, C.bg, 2);
+  // kote R in h
+  const t2 = -30 * DEG, e1 = pt(c.x + R * Math.cos(t2), c.y - R * Math.sin(t2)), e2 = pt(c.x + Ro * Math.cos(t2), c.y - Ro * Math.sin(t2));
+  s += darr(c.x, c.y, e1.x, e1.y) + tx((c.x + e1.x) / 2 + 2, (c.y + e1.y) / 2 + 18, 'R');
+  s += darr(e1.x, e1.y, e2.x, e2.y) + tx((e1.x + e2.x) / 2 + 4, (e1.y + e2.y) / 2 + 18, 'h');
+  s += tx(300, 40, 'ni v merilu', { it: false, sm: 1, c: C.mu });
+  return svgWrap(420, 300, s);
+}
+
+/* ---- 2022/3: dva planeta ---- */
+function svgPlaneta(sol = true) {
+  let s = circ(120, 150, 90, C.fg, C.p2, 2) + circ(330, 150, 6, C.fg, C.p2, 2);
+  s += tx(120, 155, 'M', { a: 'middle' }) + tx(345, 165, 'M');
+  s += tx(120, 268, 'Zemlja: R = 6400 km', { a: 'middle', sm: 1 }) + tx(330, 268, 'planet: R′ = 100 km', { a: 'middle', sm: 1 });
+  s += arr(120, 28, 120, 58, C.A, 3) + tx(128, 40, 'g_0', { c: C.A });
+  s += arr(330, 30, 330, 142, C.A, 3) + tx(338, 70, sol ? 'g′ = 4096 g_0' : 'g′ = ?', { c: C.A });
+  return svgWrap(440, 280, s);
+}
+
+/* ---- klanec: pomočniki ---- */
+function inclineGeom(base, ang) {
+  const u = pt(Math.cos(ang * DEG), -Math.sin(ang * DEG)), n = pt(-Math.sin(ang * DEG), -Math.cos(ang * DEG));
+  const P = (s, h = 0) => pt(base.x + s * u.x + h * n.x, base.y + s * u.y + h * n.y);
+  return { u, n, P };
+}
+function block(G, s, w, h, fill) {
+  return poly([G.P(s), G.P(s + w), G.P(s + w, h), G.P(s, h)], C.fg, fill || C.bg, 2);
+}
+
+/* ---- 2025/3: dve kladi na klancu ---- */
+function svgKladi(sol = true) {
+  const base = pt(30, 330), a = 30, G = inclineGeom(base, a);
+  const end = G.P(560);
+  let s = ln(base.x, base.y, end.x + 10, base.y, C.fg, 2) + ln(base.x, base.y, end.x, end.y, C.fg, 2);
+  s += arcA(base.x, base.y, 55, 0, a) + tx(base.x + 62, base.y - 8, '30°', { it: false });
+  const b1 = { s: 110, w: 80, h: 56 }, b2 = { s: 300, w: 96, h: 68 };
+  s += block(G, b1.s, b1.w, b1.h) + block(G, b2.s, b2.w, b2.h);
+  const c1 = G.P(b1.s + b1.w / 2, b1.h / 2), c2 = G.P(b2.s + b2.w / 2, b2.h / 2);
+  if (sol) {
+    const l1 = G.P(b1.s + 6, b1.h + 14), l2 = G.P(b2.s + 6, b2.h + 14);
+    s += tx(l1.x, l1.y, '2 kg', { it: false, rot: -a, sm: 1 }) + tx(l2.x, l2.y, '5 kg', { it: false, rot: -a, sm: 1 });
+  } else {
+    s += tx(c1.x, c1.y + 5, '2 kg', { a: 'middle', it: false, rot: -a });
+    s += tx(c2.x, c2.y + 5, '5 kg', { a: 'middle', it: false, rot: -a });
+  }
+  const r1p = G.P(b1.s + b1.w, 22), r2p = G.P(b2.s, 22);
+  s += ln(r1p.x, r1p.y, r2p.x, r2p.y, C.fg, 1.5);
+  const f1 = G.P(b2.s + b2.w, 34), f2 = G.P(b2.s + b2.w + 85, 34);
+  s += arr(f1.x, f1.y, f2.x, f2.y, C.fg, 2.5) + tx(f2.x - 30, f2.y - 16, '70 N', { it: false, rot: -a });
+  if (sol) {
+    const draw = (c, b, L, tDir, lab) => {
+      let q = '';
+      const ds = L * Math.sin(a * DEG), dc = L * Math.cos(a * DEG);
+      q += arr(c.x, c.y, c.x - G.u.x * ds, c.y - G.u.y * ds, C.F, 1.3, '4 3');
+      q += arr(c.x, c.y, c.x - G.n.x * dc, c.y - G.n.y * dc, C.F, 1.3, '4 3');
+      q += arr(c.x, c.y, c.x, c.y + L, C.F, 2.5) + tx(c.x + 6, c.y + L + 4, 'm' + lab + 'g', { c: C.F, sm: 1 });
+      q += arr(c.x, c.y, c.x + G.n.x * dc, c.y + G.n.y * dc, C.F, 2.5);
+      const nl = pt(c.x + G.n.x * dc, c.y + G.n.y * dc); q += tx(nl.x - 6, nl.y + 2, 'F_n', { c: C.F, sm: 1, a: 'end' });
+      const sp = G.P(b.s + b.w * 0.25, 0); const fe = pt(sp.x - G.u.x * 34, sp.y - G.u.y * 34);
+      q += arr(sp.x, sp.y, fe.x, fe.y, C.F, 2.5) + tx(fe.x + 2, fe.y + 20, 'F_t', { c: C.F, sm: 1, a: 'middle' });
+      const tp = G.P(tDir > 0 ? b.s + b.w : b.s, 22); const te = pt(tp.x + tDir * G.u.x * 34, tp.y + tDir * G.u.y * 34);
+      const tl = pt(te.x + G.n.x * 14, te.y + G.n.y * 14);
+      q += arr(tp.x, tp.y, te.x, te.y, C.F, 2.5) + tx(tl.x, tl.y, 'T', { c: C.F, sm: 1, a: 'middle' });
+      return q;
+    };
+    s += draw(c1, b1, 48, +1, '_1') + draw(c2, b2, 62, -1, '_2');
+    const a1 = G.P(180, 150), a2 = G.P(290, 150);
+    s += arr(a1.x, a1.y, a2.x, a2.y, C.A, 3) + tx((a1.x + a2.x) / 2 - 6, (a1.y + a2.y) / 2 - 12, 'a', { c: C.A });
+  }
+  return svgWrap(580, 350, s, sol ? 'Sile so v barvi sile; črtkano: komponenti teže \\(mg\\sin\\alpha\\) in \\(mg\\cos\\alpha\\).' : '');
+}
+
+/* ---- 2024/1: mejni kot ---- */
+function svgMejni(sol = true) {
+  const base = pt(40, 245), a = 25, G = inclineGeom(base, a), end = G.P(420);
+  let s = ln(base.x, base.y, end.x + 10, base.y, C.fg, 2) + ln(base.x, base.y, end.x, end.y, C.fg, 2);
+  s += arcA(base.x, base.y, 50, 0, a) + tx(base.x + 56, base.y - 6, sol ? 'α_m = 25°' : '25°', { it: !!sol, sm: 1 });
+  const b = { s: 190, w: 80, h: 50 };
+  s += block(G, b.s, b.w, b.h);
+  const c = G.P(b.s + b.w / 2, b.h / 2);
+  s += tx(c.x, c.y + 5, 'm', { a: 'middle', rot: -a });
+  if (sol) {
+    const L = 75, ds = L * Math.sin(a * DEG), dc = L * Math.cos(a * DEG);
+    s += arr(c.x, c.y, c.x, c.y + L, C.F, 2.5) + tx(c.x + 5, c.y + L + 4, 'mg', { c: C.F, sm: 1 });
+    s += arr(c.x, c.y, c.x - G.u.x * ds, c.y - G.u.y * ds, C.F, 1.3, '4 3');
+    const q = pt(c.x - G.u.x * ds, c.y - G.u.y * ds); s += tx(q.x - 6, q.y + 16, 'mg sin α', { c: C.F, sm: 1, a: 'end' });
+    s += arr(c.x, c.y, c.x - G.n.x * dc, c.y - G.n.y * dc, C.F, 1.3, '4 3');
+    const q2 = pt(c.x - G.n.x * dc, c.y - G.n.y * dc); s += tx(q2.x + 8, q2.y + 6, 'mg cos α', { c: C.F, sm: 1 });
+    s += arr(c.x, c.y, c.x + G.n.x * dc, c.y + G.n.y * dc, C.F, 2.5);
+    const q3 = pt(c.x + G.n.x * dc, c.y + G.n.y * dc); s += tx(q3.x - 6, q3.y, 'F_n', { c: C.F, sm: 1, a: 'end' });
+    const sp = G.P(b.s + b.w, 6), se = pt(sp.x + G.u.x * 45, sp.y + G.u.y * 45);
+    s += arr(sp.x, sp.y, se.x, se.y, C.F, 2.5) + tx(se.x + 4, se.y - 6, 'F_l', { c: C.F, sm: 1 });
+    // kot med mg in -n
+    s += arcA(c.x, c.y, 26, 270, 270 + a, C.mu) + tx(c.x + 5, c.y + 40, 'α', { sm: 1 });
+    // osi
+    const o = G.P(60, 0), ox = G.P(120, 0), oy = G.P(60, 55);
+    s += arr(o.x, o.y, ox.x, ox.y, C.ax, 1.5) + tx(ox.x, ox.y + 16, 'x', { c: C.ax });
+    s += arr(o.x, o.y, oy.x, oy.y, C.ax, 1.5) + tx(oy.x - 12, oy.y, 'y', { c: C.ax });
+  }
+  return svgWrap(460, 265, s);
+}
+
+/* ---- 2022/4: trk in ustavljanje ---- */
+function svgTrkKladi(sol = true) {
+  let s = tx(20, 22, 'Pred trkom', { it: false, w: 1, sm: 1 }) + ground(20, 440, 100);
+  s += rect(60, 56, 64, 44, C.fg, C.bg) + tx(92, 84, 'm_1', { a: 'middle' });
+  s += arr(128, 78, 190, 78, C.V, 3) + tx(150, 70, 'v_1', { c: C.V });
+  s += rect(240, 70, 32, 30, C.fg, C.bg) + tx(256, 90, 'm_2', { a: 'middle', sm: 1 }) + tx(280, 92, 'v_2 = 0', { sm: 1 });
+  s += tx(20, 142, 'Po trku', { it: false, w: 1, sm: 1 }) + ground(20, 440, 220);
+  s += rect(40, 176, 64, 44, C.fg, C.bg) + rect(104, 190, 32, 30, C.fg, C.bg) + tx(88, 204, 'm_1+m_2', { a: 'middle', sm: 1 });
+  s += arr(140, 196, 196, 196, C.V, 3) + tx(160, 188, 'v', { c: C.V });
+  s += arr(90, 226, 42, 226, C.F, 2.5) + tx(50, 244, 'F_t', { c: C.F, sm: 1 });
+  s += rect(340, 176, 64, 44, C.mu, 'none', 1.5).replace('stroke-width:1.5', 'stroke-width:1.5;stroke-dasharray:5 4') + rect(404, 190, 32, 30, C.mu, 'none', 1.5).replace('stroke-width:1.5', 'stroke-width:1.5;stroke-dasharray:5 4');
+  s += tx(388, 170, 'v = 0', { a: 'middle', sm: 1 });
+  s += darr(40, 262, 340, 262) + tx(190, 278, 's = 15 m', { a: 'middle' });
+  return svgWrap(460, 290, s);
+}
+
+/* ---- 2024/2: jahača na zračni klopi ---- */
+function track(y) {
+  let s = rect(20, y, 420, 14, C.fg, C.p2, 1.5);
+  for (let x = 35; x < 440; x += 22) s += circ(x, y + 7, 2, C.mu, C.mu, 1);
+  return s;
+}
+function svgJahaca(sol = true) {
+  let s = tx(20, 22, 'Pred trkom', { it: false, w: 1, sm: 1 }) + track(95);
+  s += rect(80, 63, 56, 32, C.fg, 'var(--yellow)') + arr(140, 78, 196, 78, C.V, 3) + tx(160, 70, 'v_0', { c: C.V });
+  s += rect(260, 63, 56, 32, C.fg, 'var(--violet)') + tx(326, 84, 'v = 0', { sm: 1 });
+  let h = 130;
+  if (sol) {
+    s += tx(20, 152, 'Po trku', { it: false, w: 1, sm: 1 }) + track(215);
+    s += rect(200, 183, 56, 32, C.fg, 'var(--yellow)') + tx(150, 204, 'v′_1 = 0', { sm: 1, a: 'middle' });
+    s += rect(260, 183, 56, 32, C.fg, 'var(--violet)') + arr(320, 198, 376, 198, C.V, 3) + tx(330, 190, 'v′_2 = v_0', { c: C.V, sm: 1 });
+    h = 245;
+  }
+  return svgWrap(460, h, s, 'rumeni (levo) in vijolični (desno) jahač, enaki masi');
+}
+
+/* ---- 2023/2: palica okoli krajiščne osi ---- */
+function svgPalicaKrajisce(sol = true) {
+  let s = ln(60, 14, 60, 112, C.ax, 1.5, '6 4') + rotArrow(60, 26, 26, C.V, 2);
+  s += rect(60, 60, 320, 10, C.fg, C.p2, 2) + circ(220, 65, 3.5, C.fg, C.fg, 1) + tx(220, 54, 'T', { a: 'middle', it: false });
+  s += darr(60, 92, 380, 92) + tx(220, 108, 'L', { a: 'middle' });
+  s += darr(60, 44, 216, 44) + tx(138, 38, 'L/2', { a: 'middle' });
+  // z kroglicama
+  s += ln(60, 132, 60, 222, C.ax, 1.5, '6 4') + rotArrow(60, 140, 26, C.V, 2);
+  s += rect(60, 172, 320, 10, C.fg, C.p2, 2);
+  s += circ(60, 177, 13, C.fg, C.bg, 2) + circ(380, 177, 13, C.fg, C.bg, 2);
+  s += tx(40, 208, 'm_1', { a: 'middle' }) + tx(380, 208, 'm_1', { a: 'middle' });
+  s += ln(380, 177, 393, 177, C.fg, 1.3) + tx(400, 172, 'R', { sm: 1 });
+  s += darr(60, 226, 380, 226) + tx(220, 242, 'L', { a: 'middle' });
+  return svgWrap(440, 250, s, 'Zgoraj: sama palica; spodaj: s kroglicama (središči v krajiščih palice).');
+}
+
+/* ---- 2025/1: palica, os na razdalji D ---- */
+function svgPalicaD(sol = true) {
+  const x = 200, top = 30, L = 300, D = 60;
+  let s = rect(x - 9, top, 18, L, C.fg, C.p2, 2);
+  s += circ(x, top + D, 8, C.fg, C.bg, 2) + circ(x, top + D, 2.5, C.fg, C.fg, 1) + tx(x - 14, top + D + 5, 'os', { a: 'end', it: false, sm: 1 });
+  s += circ(x, top + L / 2, 3.5, C.fg, C.fg, 1) + tx(x - 14, top + L / 2 + 5, 'T', { a: 'end', it: false });
+  s += darr(140, top, 140, top + L) + tx(132, top + L / 2 + 40, 'L', { a: 'end' });
+  s += darr(240, top, 240, top + D) + tx(248, top + D / 2 + 5, 'D');
+  s += darr(240, top + D, 240, top + L / 2) + tx(248, top + (D + L / 2) / 2 + 5, 'r* = L/2 − D', { sm: 1 });
+  s += ln(x + 9, top + D, 236, top + D, C.mu, 1, '3 3') + ln(x + 9, top + L / 2, 236, top + L / 2, C.mu, 1, '3 3');
+  if (sol) {
+    s += arr(330, top + D, 330, top + L + 5, C.ax, 1.5) + tx(338, top + L, 'x', { c: C.ax }) + tx(338, top + D + 5, 'x = 0', { sm: 1 });
+    s += rect(x - 9, top + 230, 18, 10, C.acc, C.acc, 1) + tx(x + 16, top + 240, 'dx', { sm: 1 });
+    s += tx(338, top + 18, 'x = −D', { sm: 1 }) + ln(326, top, 334, top, C.ax, 1.5);
+  }
+  return svgWrap(420, 350, s, 'Na fotografiji iz naloge visijo palice na klinih (fizično nihalo).');
+}
+
+/* ---- 2023/1: mož na vrtljivem stolu ---- */
+function figure(cx, out, w) {
+  let s = ln(cx, 30, cx, 280, C.ax, 1.3, '6 4');
+  s += rect(cx - 32, 190, 64, 8, C.fg, C.p2, 2) + ln(cx, 198, cx, 250, C.fg, 3) + ln(cx - 30, 255, cx + 30, 255, C.fg, 3);
+  s += circ(cx, 92, 12, C.fg, C.bg, 2) + ln(cx, 104, cx, 188, C.fg, 2.5);
+  s += ln(cx, 186, cx + 26, 190, C.fg, 2.5) + ln(cx + 26, 190, cx + 28, 232, C.fg, 2.5);
+  if (out) {
+    s += ln(cx - 70, 122, cx + 70, 122, C.fg, 2.5) + circ(cx - 74, 122, 8, C.fg, C.fg, 1) + circ(cx + 74, 122, 8, C.fg, C.fg, 1);
+  } else {
+    s += pathD('M' + (cx - 1) + ' 120 L' + (cx - 22) + ' 142 L' + (cx - 10) + ' 150', C.fg, 2.5) + pathD('M' + (cx + 1) + ' 120 L' + (cx + 22) + ' 142 L' + (cx + 10) + ' 150', C.fg, 2.5);
+    s += circ(cx - 12, 152, 8, C.fg, C.fg, 1) + circ(cx + 12, 152, 8, C.fg, C.fg, 1);
+  }
+  s += rotArrow(cx, 58, w > 2.5 ? 34 : 26, C.V, w);
+  return s;
+}
+function svgStol(sol = true) {
+  let s = figure(115, true, 1.8) + figure(345, false, 4);
+  s += tx(160, 50, 'ω_1', { c: C.V }) + tx(392, 50, 'ω_2', { c: C.V });
+  s += tx(115, 300, 'J_1, Γ_1', { a: 'middle' }) + tx(345, 300, 'J_2, Γ_2 = Γ_1', { a: 'middle' });
+  return svgWrap(460, 312, s);
+}
+
+/* ---- 2025/2: pogled od zgoraj ---- */
+function topView(cx, r, w, lab, rl) {
+  let s = circ(cx, 120, 40, C.fg, C.p2, 2);
+  s += circ(cx, 120, 6, C.fg, C.bg, 1.5) + ln(cx - 4, 116, cx + 4, 124, C.fg, 1.5) + ln(cx - 4, 124, cx + 4, 116, C.fg, 1.5);
+  s += ln(cx - r, 120, cx - 6, 120, C.fg, 2) + ln(cx + 6, 120, cx + r, 120, C.fg, 2);
+  s += circ(cx - r, 120, 10, C.fg, C.fg, 1) + circ(cx + r, 120, 10, C.fg, C.fg, 1);
+  // krožna puščica
+  const R = 62, a1 = 120, a2 = 60;
+  const p1 = pt(cx + R * Math.cos(a1 * DEG), 120 - R * Math.sin(a1 * DEG)), p2 = pt(cx + R * Math.cos(a2 * DEG), 120 - R * Math.sin(a2 * DEG));
+  s += pathD('M' + r1(p1.x) + ' ' + r1(p1.y) + ' A' + R + ' ' + R + ' 0 0 1 ' + r1(p2.x) + ' ' + r1(p2.y), C.V, w) + head(p2.x, p2.y, Math.sin(a2 * DEG), Math.cos(a2 * DEG), C.V, 9 + w);
+  s += tx(cx, 48, lab, { a: 'middle', c: C.V });
+  s += darr(cx, 172, cx + r, 172) + tx(cx + r / 2, 190, rl, { a: 'middle' });
+  return s;
+}
+function svgStolZgoraj(sol = true) {
+  let s = topView(115, 95, 1.6, 'ω_1', 'r_1') + topView(345, 52, 4, 'ω_2', 'r_2 < r_1');
+  return svgWrap(460, 205, s, 'Pogled od zgoraj; os je pravokotna na list. Pod sliko: \\(J_1\\omega_1=J_2\\omega_2\\).');
+}
+
+/* ---- 2022/2: voziček z utežjo na vrvici ---- */
+function cart(cx, alpha, sol) {
+  let s = rect(cx - 70, 175, 140, 30, C.fg, C.p2, 2) + circ(cx - 45, 214, 10, C.fg, C.bg, 2) + circ(cx + 45, 214, 10, C.fg, C.bg, 2);
+  s += ln(cx - 50, 175, cx - 50, 70, C.fg, 3) + ln(cx - 50, 70, cx + 25, 70, C.fg, 3);
+  const pv = pt(cx + 25, 70), Ls = 82;
+  const bob = pt(pv.x - Ls * Math.sin(alpha * DEG), pv.y + Ls * Math.cos(alpha * DEG));
+  s += ln(pv.x, pv.y, bob.x, bob.y, C.fg, 1.5) + circ(bob.x, bob.y, 8, C.fg, C.fg, 1);
+  if (alpha) {
+    s += ln(pv.x, pv.y, pv.x, pv.y + 95, C.mu, 1.2, '4 3') + arcA(pv.x, pv.y, 40, 270 - alpha, 270) + tx(pv.x - 9, pv.y + 56, 'α', { a: 'end', sm: 1 });
+    if (sol) {
+      const T = 55, ux = Math.sin(alpha * DEG), uy = -Math.cos(alpha * DEG);
+      s += arr(bob.x, bob.y, bob.x, bob.y + 48, C.F, 2.5) + tx(bob.x - 8, bob.y + 46, 'm_ug', { c: C.F, sm: 1, a: 'end' });
+      s += arr(bob.x, bob.y, bob.x + ux * T, bob.y + uy * T, C.F, 2.5) + tx(bob.x + ux * T + 6, bob.y + uy * T + 18, 'T', { c: C.F, sm: 1 });
+      s += arr(bob.x, bob.y, bob.x + ux * T, bob.y, C.F, 1.3, '4 3') + tx(bob.x + ux * T + 4, bob.y + 14, 'T sin α', { c: C.F, sm: 1 });
+      s += arr(bob.x, bob.y, bob.x, bob.y + uy * T, C.F, 1.3, '4 3') + tx(bob.x - 6, bob.y + uy * T + 6, 'T cos α', { c: C.F, sm: 1, a: 'end' });
+    }
+  }
+  return s;
+}
+function svgVozicek(sol = true) {
+  let s = ln(10, 225, 450, 225, C.fg, 2);
+  s += cart(110, 0, sol) + tx(110, 256, 'miruje', { a: 'middle', it: false, sm: 1 });
+  if (sol) {
+    s += cart(340, 22, sol) + arr(300, 34, 380, 34, C.A, 3) + tx(388, 40, 'a_0', { c: C.A });
+    s += tx(340, 256, 'pospešuje v desno', { a: 'middle', it: false, sm: 1 });
+  } else {
+    s += arr(200, 34, 280, 34, C.A, 3) + tx(288, 40, 'a_0', { c: C.A }) + tx(240, 60, '(pospešek med vožnjo)', { a: 'middle', it: false, sm: 1, c: C.mu });
+  }
+  return svgWrap(460, 268, s, sol ? 'Utež se nagne nazaj, nasproti pospešku.' : 'Na sliki voziček miruje.');
+}
+
+const SVGS = { svgMetStena, svgMetStolp, svgMetTiri, svgNavpicni, svgDelPoti, svgSatelit, svgPlaneta, svgKladi, svgMejni, svgTrkKladi, svgJahaca, svgPalicaKrajisce, svgPalicaD, svgStol, svgStolZgoraj, svgVozicek };
+function drawSvg(name, sol) { try { return SVGS[name] ? SVGS[name](sol) : ''; } catch (e) { console.error(e); return ''; } }
+
+/* =========================================================
+   NALOGE S KOLOKVIJEV (16) – nezaokrožene vrednosti
+   ========================================================= */
+const R = String.raw;
+const NALOGE = [
+/* ---------------- 2022 ---------------- */
+{ id: '2022/1', leto: 2022, st: 1, tip: 'met', simbolna: true, uradno: null, g: null, svg: 'svgMetTiri',
+  besedilo: R`Izpeljite (ab initio) izraz za domet krogle pri poševnem metu (v vakuumu) v odvisnosti od kota začetnega vektorja hitrosti (rdeči vektor na sliki) proti horizontali (kot \(\varphi\)). Velikost začetnega vektorja hitrosti je \(v_0\). Rezultat izrazite s simboli \(\varphi\) in \(v_0\) in ne numerično.`,
+  slikaOpomba: R`Skica je nadomestek fotografije iz naloge (začetni vektor hitrosti je tu v barvi hitrosti).`,
+  podatkiTab: [[R`v_0`, 'velikost začetne hitrosti (simbol)'], [R`\varphi`, 'kot meta proti vodoravnici (simbol)'], [R`\vec a=(0,-g)`, 'v vakuumu deluje samo teža']],
+  prviKorak: R`Razstavi \(\vec v_0\) na komponente, \(\vec a=(0,-g)\).`,
+  koraki: [
+    [R`a_x=0,\quad a_y=-g`, R`V vakuumu ni upora, deluje samo teža – »ab initio« pomeni, da začneš tu, ne pri formuli za domet.`],
+    [R`v_x=v_0\cos\varphi,\quad v_y=v_0\sin\varphi-gt`, R`Integriramo pospešek po času; začetni hitrosti sta komponenti \(\vec v_0\).`],
+    [R`x=v_0\cos\varphi\,t,\quad y=v_0\sin\varphi\,t-\dfrac{gt^2}{2}`, R`Integriramo še enkrat, z začetnima pogojema \(x(0)=y(0)=0\).`],
+    [R`y=0:\ t\left(v_0\sin\varphi-\dfrac{gt}{2}\right)=0\ \Rightarrow\ t_p=\dfrac{2v_0\sin\varphi}{g}`, R`Krogla pristane na isti višini; rešitev \(t=0\) je trenutek meta, zato jo zavržemo.`],
+    [R`D=x(t_p)=v_0\cos\varphi\cdot\dfrac{2v_0\sin\varphi}{g}=\dfrac{v_0^2\sin(2\varphi)}{g}`, R`Čas pristanka vstavimo v \(x(t)\) in uporabimo \(2\sin\varphi\cos\varphi=\sin 2\varphi\).`],
+    [R`D_{max}:\ \sin 2\varphi=1\ \Rightarrow\ \varphi=45^\circ`, R`Dodatek: domet je največji pri \(45^\circ\); kota \(30^\circ\) in \(60^\circ\) dasta enak domet.`]
+  ],
+  rezultatTex: R`\(D=\dfrac{v_0^2}{g}\sin(2\varphi)\)`,
+  opomba: R`Preverjeno simbolno (in numerično). Učbenik: str. 11–12 (izpeljava je enaka).`,
+  rezultati: [] },
+
+{ id: '2022/2', leto: 2022, st: 2, tip: 'vozicek', simbolna: true, uradno: null, g: null, svg: 'svgVozicek',
+  besedilo: R`Voziček se giblje s konstantnim pospeškom \(a_0\) po ravnem tiru (na sliki je prikazan v stanju mirovanja). Kolikšen je nagib vrvice ter s kakšno silo je napeta vrvica? Rezultat izrazite kot funkcijo pospeška \(a_0\) in mase uteži \(m_u\). Težo vrvice zanemarimo.`,
+  slikaOpomba: R`Skica je nadomestek fotografije iz naloge.`,
+  podatkiTab: [[R`a_0`, 'pospešek vozička (simbol)'], [R`m_u`, 'masa uteži (simbol)'], [R`g`, 'težni pospešek']],
+  prviKorak: R`Nariši sile na utež v mirujočem (laboratorijskem) sistemu.`,
+  koraki: [
+    [R`T\sin\alpha=m_ua_0`, R`Utež ima enak pospešek kot voziček, edina vodoravna sila je komponenta \(T\).`],
+    [R`T\cos\alpha-m_ug=0`, R`Navpično se utež ne giblje.`],
+    [R`\tan\alpha=\dfrac{a_0}{g}\ \Rightarrow\ \alpha=\arctan\dfrac{a_0}{g}`, R`Enačbi delimo, \(T\) se pokrajša. Vrvica je nagnjena <b>nasproti</b> smeri pospeška.`],
+    [R`T^2(\sin^2\alpha+\cos^2\alpha)=m_u^2(a_0^2+g^2)\ \Rightarrow\ T=m_u\sqrt{g^2+a_0^2}`, R`Enačbi kvadriramo in seštejemo, \(\sin^2+\cos^2=1\).`],
+    [R`a_0=0\ \Rightarrow\ \alpha=0,\ T=m_ug\ \checkmark`, R`Preverba z mejnim primerom.`]
+  ],
+  rezultatTex: R`\(\tan\alpha=\dfrac{a_0}{g}\) (od navpičnice, nazaj), \(T=m_u\sqrt{g^2+a_0^2}\)`,
+  opomba: R`Preverjeno simbolno (in numerično).`,
+  rezultati: [], calc: { mode: 'vz_naprej', ilustr: true, label: '2022/2 – ilustrativno: a₀ = 2 m/s², mᵤ = 0,1 kg', vals: { a0: '2 m/s^2', mu: '0,1 kg' }, g: 9.81 } },
+
+{ id: '2022/3', leto: 2022, st: 3, tip: 'grav', simbolna: false, uradno: null, g: 9.8, svg: 'svgPlaneta',
+  besedilo: R`Kolikšen bi bil težni pospešek na površini planeta, ki bi imel enako maso kot Zemlja, polmer pa samo 100 km? Polmer Zemlje je 6400 km, težni pospešek na površini je 9.8 m/s².`,
+  podatkiTab: [[R`M`, 'enaka kot Zemlja'], [R`R'=100\,\mathrm{km}=1{,}0\cdot10^{5}\,\mathrm{m}`, 'polmer planeta'], [R`R=6400\,\mathrm{km}=6{,}4\cdot10^{6}\,\mathrm{m}`, 'polmer Zemlje'], [R`g_0=9{,}8\,\mathrm{m/s^2}`, 'podano – uporabi to']],
+  prviKorak: R`Zapiši \(g_0=GM/R^2\) za oba.`,
+  koraki: [
+    [R`g'=G\dfrac{M}{R'^2},\qquad g_0=G\dfrac{M}{R^2}`, R`Težni pospešek na površju planeta z maso \(M\) in polmerom \(R\).`],
+    [R`\dfrac{g'}{g_0}=\left(\dfrac{R}{R'}\right)^2=\left(\dfrac{6400}{100}\right)^2=64^2=4096`, R`Enačbi delimo – \(G\) in \(M\) se pokrajšata (enaka masa). Razmerje polmerov je na <b>kvadrat</b>.`],
+    [R`g'=9{,}8\cdot4096=4{,}01\cdot10^{4}\,\mathrm{m/s^2}`, R`Pomnožimo s podanim \(g_0\).`]
+  ],
+  rezultatTex: R`\(g'=4{,}01\cdot10^{4}\,\mathrm{m/s^2}\) \((=4096\,g_0)\)`,
+  rezultati: [{ k: 'gp', label: R`g'`, vrednost: 40140.8, dim: 'pospesek', enota: 'm/s^2' }],
+  calc: { mode: 'gr_planet', vals: { g0: '9,8 m/s^2', R: '6400 km', Rp: '100 km', h: '' }, g: 9.8 } },
+
+{ id: '2022/4', leto: 2022, st: 4, tip: 'trki', simbolna: false, uradno: null, g: 9.81, svg: 'svgTrkKladi',
+  besedilo: R`Klada z maso \(m_1 = 2\,\mathrm{kg}\) se na ravni podlagi s hitrostjo \(v_1 = 15\,\mathrm{m/s}\) zaleti v mirujočo klado z maso \(m_2 = 1\,\mathrm{kg}\). Kladi se pri trku sprimeta. Zaradi trenja s podlago se nato ustavita na razdalji 15 m. Kolikšen je koeficient trenja med kladama in podlago?`,
+  podatkiTab: [[R`m_1=2\,\mathrm{kg}`, ''], [R`v_1=15\,\mathrm{m/s}`, ''], [R`m_2=1\,\mathrm{kg}`, ''], [R`v_2=0`, 'miruje'], [R`s=15\,\mathrm{m}`, 'pot ustavljanja'], [R`g=9{,}81\,\mathrm{m/s^2}`, 'ni podan → formular']],
+  prviKorak: R`Ohranitev \(G\) pri neelastičnem trku.`,
+  koraki: [
+    [R`m_1v_1=(m_1+m_2)v\ \Rightarrow\ v=\dfrac{2\cdot15}{3}=10{,}0\,\mathrm{m/s}`, R`Sprimeta se → popolnoma neelastičen trk, ohrani se samo \(G\).`],
+    [R`F_t=k_t(m_1+m_2)g\ \Rightarrow\ a=-k_tg`, R`Trenje je edina vodoravna sila, masa se pokrajša.`],
+    [R`0=v^2-2k_tgs\ \Rightarrow\ k_t=\dfrac{v^2}{2gs}=\dfrac{100}{2\cdot9{,}81\cdot15}=0{,}340`, R`Poznamo začetno hitrost, končno (0) in pot, ne pa časa → \(v^2=v_0^2+2as\).`]
+  ],
+  rezultatTex: R`\(k_t=0{,}340\) (z \(g=9{,}8\): \(0{,}340\))`,
+  rezultati: [{ k: 'kt', label: R`k_t`, vrednost: 0.339789, dim: 'brez', enota: '' }],
+  calc: { mode: 'tr_trk', vals: { m1: '2 kg', v1: '15 m/s', m2: '1 kg', v2: '0 m/s', vrsta: 'neel' }, g: 9.81, extra: { mode: 'tr_ust', vals: { v: '10 m/s', s: '15 m', kt: '' }, g: 9.81 } } },
+
+/* ---------------- 2023 ---------------- */
+{ id: '2023/1', leto: 2023, st: 1, tip: 'vrtilna', simbolna: true, uradno: null, g: null, svg: 'svgStol',
+  besedilo: R`Mož sedi na vrtljivem stolu in se vrti s kotno hitrostjo \(\omega_1\) ter ima odročene roke, v katerih drži uteži. Skupna začetna vrtilna količina stola, moža in uteži je \(\Gamma_1\). Kolikšna je skupna vrtilna kinetična energija? Vrtilno kinetično energijo izrazite kot funkcijo \(\omega_1\) in \(\Gamma_1\). Nato mož pokrči obe roki in njegova kotna hitrost se poveča na \(\omega_2\). Kolikšna je sedaj skupna vrtilna kinetična energija? Vpliv trenja v ležajih in sile upora zanemarimo. Vsi rezultati morajo biti zapisani kot funkcije \(\Gamma_1\), \(\omega_1\) in \(\omega_2\).`,
+  podatkiTab: [[R`\omega_1`, 'začetna kotna hitrost'], [R`\Gamma_1`, 'začetna vrtilna količina'], [R`\omega_2`, 'kotna hitrost po pokrčenju']],
+  prviKorak: R`\(J_1=\Gamma_1/\omega_1\)`,
+  koraki: [
+    [R`J_1=\dfrac{\Gamma_1}{\omega_1}`, R`\(\Gamma=J\omega\), \(J_1\) ni podan.`],
+    [R`W_{k1}=\dfrac{J_1\omega_1^2}{2}=\dfrac{\Gamma_1\omega_1}{2}`, R`Vstavimo \(J_1\).`],
+    [R`\Gamma_2=\Gamma_1`, R`Ni zunanjega navora: trenje v ležajih in upor sta zanemarjena, sile rok so notranje.`],
+    [R`J_2=\dfrac{\Gamma_1}{\omega_2}\ \Rightarrow\ W_{k2}=\dfrac{J_2\omega_2^2}{2}=\dfrac{\Gamma_1\omega_2}{2}`, R`Enako kot v koraku 2, z isto \(\Gamma\).`],
+    [R`\dfrac{W_{k2}}{W_{k1}}=\dfrac{\omega_2}{\omega_1}>1`, R`Razlaga smisla: energija se poveča zaradi dela mišic.`]
+  ],
+  rezultatTex: R`\(W_{k1}=\dfrac{\Gamma_1\omega_1}{2}\), \(W_{k2}=\dfrac{\Gamma_1\omega_2}{2}\)`,
+  opomba: R`Preverjeno simbolno (in numerično).`,
+  rezultati: [], calc: { mode: 'vr', ilustr: true, label: '2023/1 – ilustrativno: J₁ = 6 kg m², ω₁ = 2 rad/s, J₂ = 2 kg m²', vals: { J1: '6 kg m^2', G1: '', w1: '2 rad/s', J2: '2 kg m^2', w2: '' }, g: null } },
+
+{ id: '2023/2', leto: 2023, st: 2, tip: 'steiner', simbolna: true, uradno: null, g: null, svg: 'svgPalicaKrajisce',
+  besedilo: R`Vztrajnostni moment tanke palice mase \(m\) in dolžine \(L\) okrog težiščne osi je \(mL^2/12\). S pomočjo Steinerjevega pravila izračunajte vztrajnostni moment palice okoli krajiščne osi (glejte sliko). Kolikšen je vztrajnostni moment palice okoli krajiščne osi, če pritrdimo na obeh koncih palice še majhni svinčeni kroglici (vsaka z maso \(m_1\)), kjer obravnavamo kroglici kot točkasti telesi? Kolikšen pa je izračunani vztrajnostni moment palice okoli krajiščne osi palice, če obravnavamo kroglici kot končno veliki kroglici s polmerom \(R\)? Vztrajnostni moment homogene krogle z maso \(m_1\) in polmerom \(R\), ki se vrti okoli težiščne osi, je \(2m_1R^2/5\).`,
+  podatkiTab: [[R`m,\ L`, 'masa in dolžina palice'], [R`J^*=\tfrac{mL^2}{12}`, 'podano'], [R`m_1,\ R`, 'masa in polmer kroglice'], [R`J^*_{kr}=\tfrac25m_1R^2`, 'podano']],
+  prviKorak: R`Steiner: razdalja težišča od osi je \(L/2\).`,
+  koraki: [
+    [R`J_p=J^*+m\left(\tfrac L2\right)^2=\dfrac{mL^2}{12}+\dfrac{mL^2}{4}=\dfrac{mL^2}{3}`, R`Razdalja težišča palice od krajiščne osi je \(L/2\).`],
+    [R`J=\dfrac{mL^2}{3}+m_1\cdot0^2+m_1L^2=\dfrac{mL^2}{3}+m_1L^2`, R`Točka prispeva \(m_1r^2\): leva kroglica je na osi (\(r=0\)), desna na razdalji \(L\).`],
+    [R`J=\dfrac{mL^2}{3}+\left(\tfrac25m_1R^2+0\right)+\left(\tfrac25m_1R^2+m_1L^2\right)=\dfrac{mL^2}{3}+m_1L^2+\dfrac45m_1R^2`, R`Krogla okoli osi, ki ne gre skozi njeno središče: \(J=J^*+m_1d^2\) (Steiner še za kroglo).`]
+  ],
+  rezultatTex: R`\(J_p=\dfrac{mL^2}{3}\); s točkastima kroglicama \(J=\dfrac{mL^2}{3}+m_1L^2\); s končnima \(J=\dfrac{mL^2}{3}+m_1L^2+\dfrac45m_1R^2\)`,
+  predpostavka: R`Rezultat predpostavlja, da sta središči kroglic v krajiščih palice. Če bi kroglici nataknili <i>zunaj</i> krajišč (središči na \(-R\) in \(L+R\)), bi dobili \(\dfrac{mL^2}{3}+m_1L^2+2m_1LR+\dfrac{14}{5}m_1R^2\). Zapiši predpostavko na kolokviju!`,
+  rezultati: [], calc: { mode: 'st', ilustr: true, label: '2023/2 – ilustrativno: m = 1 kg, L = 1 m, m₁ = 0,1 kg, R = 0,02 m', vals: { m: '1 kg', L: '1 m', D: '0 m', m1: '0,1 kg', R: '0,02 m' }, g: null } },
+
+{ id: '2023/3', leto: 2023, st: 3, tip: 'premo', simbolna: false, uradno: null, g: 9.8, svg: 'svgNavpicni',
+  besedilo: R`Kamen vržemo s tal navpično navzgor z začetno hitrostjo \(v_0 = 15\,\mathrm{m/s}\). Zračni upor zanemarimo. Težnostni pospešek \(g_0 = 9{,}8\,\mathrm{m/s^2}\).<br>– Koliko časa potrebuje, da doseže najvišjo lego?<br>– Kako visoko nad tlemi je najvišja lega?<br>– Koliko časa potrebuje, da pade nazaj na tla?<br>– Kolikšni sta višina in hitrost kamna po 1 s od meta? Ali se kamen takrat dviguje ali pada?`,
+  podatkiTab: [[R`v_0=15\,\mathrm{m/s}`, ''], [R`g_0=9{,}8\,\mathrm{m/s^2}`, 'podano – uporabi to!'], [R`t=1\,\mathrm{s}`, 'trenutek za zadnje vprašanje']],
+  prviKorak: R`Na vrhu \(v=0\).`,
+  koraki: [
+    [R`v=v_0-gt=0\ \Rightarrow\ t_d=\dfrac{v_0}{g}=\dfrac{15}{9{,}8}=1{,}53\,\mathrm{s}`, R`V najvišji legi je hitrost nič.`],
+    [R`h=\dfrac{v_0^2}{2g}=\dfrac{225}{19{,}6}=11{,}5\,\mathrm{m}`, R`Iz \(v^2=v_0^2-2gh\) z \(v=0\).`],
+    [R`y=v_0t-\dfrac{gt^2}{2}=0\ \Rightarrow\ t_p=\dfrac{2v_0}{g}=3{,}06\,\mathrm{s}`, R`Brez upora je pot simetrična, padanje traja toliko kot dviganje.`],
+    [R`y(1\,\mathrm{s})=15\cdot1-\dfrac{9{,}8\cdot1^2}{2}=10{,}1\,\mathrm{m},\quad v(1\,\mathrm{s})=15-9{,}8\cdot1=5{,}20\,\mathrm{m/s}`, R`Vstavimo \(t\) v \(y(t)\) in \(v(t)\).`],
+    [R`v>0\ \ (1\,\mathrm{s}\lt t_d)\ \Rightarrow\ \text{kamen se še dviga}`, R`Pozitiven predznak pomeni gibanje navzgor.`]
+  ],
+  rezultatTex: R`\(t_d=1{,}53\,\mathrm{s}\), \(h=11{,}5\,\mathrm{m}\), \(t_p=3{,}06\,\mathrm{s}\), \(y(1\,\mathrm{s})=10{,}1\,\mathrm{m}\), \(v(1\,\mathrm{s})=5{,}20\,\mathrm{m/s}\) navzgor (dviga se)`,
+  opomba: R`Z \(g=9{,}81\) se rezultati na 3 mesta ne spremenijo, razen \(v(1\,\mathrm{s})=5{,}19\,\mathrm{m/s}\).`,
+  rezultati: [
+    { k: 'td', label: R`t_d`, vrednost: 1.530612, dim: 'cas', enota: 's' },
+    { k: 'h', label: R`h`, vrednost: 11.479592, dim: 'dolzina', enota: 'm' },
+    { k: 'tp', label: R`t_p`, vrednost: 3.061224, dim: 'cas', enota: 's' },
+    { k: 'yt', label: R`y(1\,\mathrm{s})`, vrednost: 10.1, dim: 'dolzina', enota: 'm' },
+    { k: 'vt', label: R`v(1\,\mathrm{s})`, vrednost: 5.2, dim: 'hitrost', enota: 'm/s' }],
+  calc: { mode: 'pr_navp', vals: { v0: '15 m/s', t: '1 s' }, g: 9.8 } },
+
+{ id: '2023/4', leto: 2023, st: 4, tip: 'grav', simbolna: false, uradno: null, g: 9.8, svg: 'svgSatelit',
+  besedilo: R`Na kolikšni višini kroži okoli Zemlje satelit, ki kroži s hitrostjo 3 km/s? Polmer Zemlje je 6400 km, težni pospešek na površini Zemlje \(g_0 = 9{,}8\,\mathrm{m/s^2}\).`,
+  podatkiTab: [[R`v=3\,\mathrm{km/s}=3000\,\mathrm{m/s}`, ''], [R`R=6400\,\mathrm{km}=6{,}4\cdot10^{6}\,\mathrm{m}`, 'km → m!'], [R`g_0=9{,}8\,\mathrm{m/s^2}`, 'podano']],
+  prviKorak: R`\(g(h)=v^2/(R+h)\)`,
+  koraki: [
+    [R`g(h)=a_r:\quad g_0\dfrac{R^2}{(R+h)^2}=\dfrac{v^2}{R+h}`, R`Edina sila je gravitacija, ta skrbi za kroženje.`],
+    [R`R+h=\dfrac{g_0R^2}{v^2}=\dfrac{9{,}8\cdot(6{,}4\cdot10^{6})^2}{(3000)^2}=4{,}46\cdot10^{7}\,\mathrm{m}`, R`Krajšamo \((R+h)\) in izrazimo.`],
+    [R`h=4{,}46\cdot10^{7}-6{,}4\cdot10^{6}=3{,}82\cdot10^{7}\,\mathrm{m}\approx38\,200\,\mathrm{km}`, R`Sprašujejo po višini nad površjem.`]
+  ],
+  rezultatTex: R`\(h=3{,}82\cdot10^{7}\,\mathrm{m}\) (≈ 38 200 km)`,
+  opomba: R`Smisel: satelit je počasnejši od ≈ 7,9 km/s pri površju, zato kroži višje (red velikosti geostacionarnih tirov).`,
+  rezultati: [{ k: 'h', label: R`h`, vrednost: 3.820089e7, dim: 'dolzina', enota: 'm' }],
+  calc: { mode: 'gr_sat', vals: { v: '3 km/s', h: '', R: '6400 km', g0: '9,8 m/s^2' }, g: 9.8 } },
+
+/* ---------------- 2024 ---------------- */
+{ id: '2024/1', leto: 2024, st: 1, tip: 'klanec', simbolna: false, uradno: null, g: null, svg: 'svgMejni',
+  besedilo: R`Mejni kot, pri katerem zdrsi klada mase \(m\) po klancu navzdol, je 25 stopinj. Izračunajte (zahtevana je celotna izpeljava), kolikšen je koeficient lepenja med klado in podlago.`,
+  podatkiTab: [[R`\alpha_m=25^\circ`, 'mejni kot'], [R`m`, 'masa (se pokrajša)']],
+  prviKorak: R`Sile na klado, \(a=0\) tik pred zdrsom.`,
+  koraki: [
+    [R`a=0,\quad F_l=k_lF_n`, R`Tik pred zdrsom klada še miruje, lepenje je največje.`],
+    [R`F_n=mg\cos\alpha_m`, R`Pravokotno na klanec ni pospeška.`],
+    [R`mg\sin\alpha_m-k_lmg\cos\alpha_m=0`, R`Vzdolž klanca: dolvzdolžna komponenta teže je enaka največji sili lepenja.`],
+    [R`k_l=\tan\alpha_m=\tan25^\circ=0{,}466`, R`Masa in \(g\) se pokrajšata.`]
+  ],
+  rezultatTex: R`\(k_l=0{,}466\)`,
+  rezultati: [{ k: 'kl', label: R`k_l`, vrednost: 0.466308, dim: 'brez', enota: '' }],
+  calc: { mode: 'kl_mejni', vals: { am: '25°', kl: '' }, g: null } },
+
+{ id: '2024/2', leto: 2024, st: 2, tip: 'trki', simbolna: true, uradno: null, g: null, svg: 'svgJahaca',
+  besedilo: R`Na zračni klopi (trenje zanemarimo) trčita dva jahača, ki imata enako maso. Hitrost rumenega jahača pred trkom je \(v_0\) v smeri proti desni, hitrost vijoličnega jahača pred trkom pa je nič. Izpeljite kakšni sta hitrosti obeh jahačev po trku.`,
+  podatkiTab: [[R`m_1=m_2=m`, 'enaki masi'], [R`v_1=v_0,\ v_2=0`, 'pred trkom'], [R`\text{trenje}=0`, 'zračna klop']],
+  prviKorak: R`Ohranitev \(G\) in \(W_k\).`,
+  koraki: [
+    [R`\text{prožen trk}`, R`Zračna klop + jahača s prožnima vzmetema → ohrani se \(G\) <b>in</b> \(W_k\).`],
+    [R`mv_0=mv_1'+mv_2'\ \Rightarrow\ v_0=v_1'+v_2'`, R`Ohranitev gibalne količine, \(m\) se pokrajša.`],
+    [R`\tfrac12mv_0^2=\tfrac12mv_1'^2+\tfrac12mv_2'^2\ \Rightarrow\ v_0^2=v_1'^2+v_2'^2`, R`Ohranitev kinetične energije.`],
+    [R`v_0^2=v_1'^2+2v_1'v_2'+v_2'^2\ \Rightarrow\ v_1'v_2'=0`, R`Prvo enačbo kvadriramo in odštejemo drugo.`],
+    [R`v_1'=0,\quad v_2'=v_0`, R`\(v_2'=0\) bi pomenilo, da trka ni bilo (rumeni bi šel skozi vijoličnega), zato to rešitev zavržemo.`]
+  ],
+  rezultatTex: R`rumeni jahač obmiruje (\(v_1'=0\)), vijolični odpelje s \(v_2'=v_0\) v desno`,
+  opomba: R`Preverjeno simbolno: rešitvi sistema sta \((0,v_0)\) in \((v_0,0)\).`,
+  rezultati: [], calc: { mode: 'tr_trk', ilustr: true, label: '2024/2 – ilustrativno: m₁ = m₂ = 1 kg, v₀ = 1 m/s (simbolna naloga)', vals: { m1: '1 kg', v1: '1 m/s', m2: '1 kg', v2: '0 m/s', vrsta: 'proz' }, g: null } },
+
+{ id: '2024/3', leto: 2024, st: 3, tip: 'premo', simbolna: false, uradno: null, g: null, svg: 'svgDelPoti',
+  besedilo: R`Točkasto telo, ki je v začetku mirovalo, se začne gibati premo s pospeškom \(1\,\mathrm{m/s^2}\) proti 100 m oddaljenemu cilju. Koliko časa potrebuje za zadnjih 10 m poti?`,
+  podatkiTab: [[R`a=1\,\mathrm{m/s^2}`, ''], [R`s=100\,\mathrm{m}`, ''], [R`\Delta s=10\,\mathrm{m}`, 'zadnjih 10 m'], [R`v_0=0`, 'iz mirovanja']],
+  prviKorak: R`\(t=\sqrt{2s/a}\) za 100 m in 90 m.`,
+  koraki: [
+    [R`t_{100}=\sqrt{\dfrac{2\cdot100}{1}}=14{,}14\,\mathrm{s}`, R`Iz mirovanja: \(s=\tfrac{at^2}{2}\Rightarrow t=\sqrt{2s/a}\); čas do cilja.`],
+    [R`t_{90}=\sqrt{\dfrac{2\cdot90}{1}}=13{,}42\,\mathrm{s}`, R`Čas do začetka zadnjih 10 m.`],
+    [R`\Delta t=t_{100}-t_{90}=0{,}726\,\mathrm{s}`, R`Razlika obeh časov. Pozor: \(\sqrt{2\cdot10/a}\) bi bil čas za <b>prvih</b> 10 m!`]
+  ],
+  rezultatTex: R`\(\Delta t=0{,}726\,\mathrm{s}\)`,
+  rezultati: [{ k: 'dt', label: R`\Delta t`, vrednost: 0.725728, dim: 'cas', enota: 's' }],
+  calc: { mode: 'pr_del', vals: { a: '1 m/s^2', s: '100 m', ds: '10 m' }, g: null } },
+
+{ id: '2024/4', leto: 2024, st: 4, tip: 'met', simbolna: false, uradno: null, g: 9.81, svg: 'svgMetStolp',
+  besedilo: R`Kamen vržemo v vodoravni smeri s 20 m visokega stolpa z začetno hitrostjo 15 m/s. Koliko časa potrebuje, da pade na tla? Kakšno razdaljo prepotuje v vodoravni smeri (domet)? S kolikšno hitrostjo in pod kakšnim kotom pade na tla?`,
+  podatkiTab: [[R`h=20\,\mathrm{m}`, ''], [R`v_0=15\,\mathrm{m/s}`, 'vodoravno'], [R`g=9{,}81\,\mathrm{m/s^2}`, 'ni podan → formular']],
+  prviKorak: R`\(t_p\) iz navpičnega padca.`,
+  koraki: [
+    [R`t_p=\sqrt{\dfrac{2h}{g}}=\sqrt{\dfrac{40}{9{,}81}}=2{,}02\,\mathrm{s}`, R`Navpično je to prosti pad z višine \(h\) (\(v_{0y}=0\)).`],
+    [R`D=v_0t_p=15\cdot2{,}019=30{,}3\,\mathrm{m}`, R`Vodoravno je gibanje enakomerno.`],
+    [R`v_y=-gt_p=-19{,}8\,\mathrm{m/s}`, R`Navpična hitrost ob dotiku (navzdol).`],
+    [R`v=\sqrt{15^2+19{,}81^2}=24{,}8\,\mathrm{m/s}`, R`Hitrost sestavimo iz komponent (lahko tudi \(\sqrt{v_0^2+2gh}\)).`],
+    [R`\beta=\arctan\dfrac{19{,}81}{15}=52{,}9^\circ\ \text{pod vodoravnico}`, R`Kot med \(\vec v\) in vodoravnico: \(\arctan(|v_y|/v_x)\).`]
+  ],
+  rezultatTex: R`\(t=2{,}02\,\mathrm{s}\), \(D=30{,}3\,\mathrm{m}\), \(v=24{,}8\,\mathrm{m/s}\), \(\beta=52{,}9^\circ\) pod vodoravnico`,
+  opomba: R`Z \(g=9{,}8\) so rezultati na 3 mesta enaki.`,
+  rezultati: [
+    { k: 'tp', label: R`t_p`, vrednost: 2.019275, dim: 'cas', enota: 's' },
+    { k: 'D', label: R`D`, vrednost: 30.289, dim: 'dolzina', enota: 'm' },
+    { k: 'v', label: R`v`, vrednost: 24.8475, dim: 'hitrost', enota: 'm/s' },
+    { k: 'beta', label: R`\beta`, vrednost: 52.866 * DEG, dim: 'kot', enota: 'deg' }],
+  calc: { mode: 'met_vod', vals: { h: '20 m', v0: '15 m/s' }, g: 9.81 } },
+
+/* ---------------- 2025 ---------------- */
+{ id: '2025/1', leto: 2025, st: 1, tip: 'steiner', simbolna: true, uradno: null, g: null, svg: 'svgPalicaD',
+  besedilo: R`Izpeljite vztrajnostni moment homogene palice s konstantnim presekom okoli osi, ki je za razdaljo \(D\) oddaljena od enega krajišča (\(D\) je manjši od \(L/2\)). Dolžina palice je \(L\), masa palice pa \(m\).`,
+  podatkiTab: [[R`m,\ L`, 'masa in dolžina palice'], [R`D\lt L/2`, 'razdalja osi od krajišča']],
+  prviKorak: R`Razdalja osi od težišča \(L/2-D\).`,
+  koraki: [
+    [R`r^*=\dfrac L2-D`, R`Težišče je \(L/2\) od krajišča, os je \(D\) od istega krajišča.`],
+    [R`J=\dfrac{mL^2}{12}+m\left(\dfrac L2-D\right)^2=\dfrac{mL^2}{3}-mLD+mD^2`, R`Pot A (Steiner): začnemo od težiščnega \(J^*=mL^2/12\).`],
+    [R`J=\int_{-D}^{L-D}x^2\,\frac{m}{L}\,dx=\frac{m}{3L}\left[(L-D)^3+D^3\right]=\frac{mL^2}{3}-mLD+mD^2`, R`Pot B (integral, če zahtevajo »izpeljite«): os v izhodišču, palica od \(x=-D\) do \(x=L-D\), \(dm=\tfrac mL dx\).`],
+    [R`D=0\Rightarrow\tfrac{mL^2}{3}\ \checkmark,\qquad D=\tfrac L2\Rightarrow\tfrac{mL^2}{12}\ \checkmark`, R`Preverba z mejnima primeroma.`]
+  ],
+  rezultatTex: R`\(J=m\left(\dfrac{L^2}{3}-LD+D^2\right)=\dfrac{mL^2}{12}+m\left(\dfrac L2-D\right)^2\)`,
+  opomba: R`Preverjeno simbolno, obe poti se ujemata.`,
+  rezultati: [], calc: { mode: 'st', ilustr: true, label: '2025/1 – ilustrativno: m = 1 kg, L = 1 m, D = 0,2 m', vals: { m: '1 kg', L: '1 m', D: '0,2 m', m1: '', R: '' }, g: null } },
+
+{ id: '2025/2', leto: 2025, st: 2, tip: 'vrtilna', simbolna: true, uradno: null, g: null, svg: 'svgStolZgoraj',
+  besedilo: R`Študent se vrti na vrtljivem stolu in ima v roki dve uteži (glejte sliko). Stopala študenta so na cevi, ki je pritrjena na sedišče stola in se vrti skupaj s stolom. Študenta zavrtimo, ko ima roke z utežmi iztegnjene, tako kot prikazuje slika. Potem študent pokrči obe roki in jih potegne k telesu. Posledično se spremeni kotna hitrost vrtenja študenta (skupaj s stolom in utežmi). Ali se kotna hitrost poveča ali zmanjša? Odgovor argumentirajte z ustreznimi enačbami in spremljajočim tekstom (brez ustrezne utemeljitve z enačbami in spremljajočega teksta dobite za odgovor nič točk tudi v primeru, če je odgovor pravilen). Trenje v ležaju stola zanemarimo.`,
+  podatkiTab: [[R`r_2\lt r_1`, 'uteži se približajo osi'], [R`M_{zun}=0`, 'trenje v ležaju zanemarimo']],
+  prviKorak: R`\(M_{zun}=0\Rightarrow\Gamma\) konst.`,
+  vzorcni: true,
+  koraki: [
+    [R`\text{sistem: študent + stol + cev + uteži}`, R`Os vrtenja je navpična skozi stol.`],
+    [R`\dfrac{d\Gamma}{dt}=M_{zun}=0\ \Rightarrow\ \Gamma=J\omega=\text{konst.}`, R`Izrek o vrtilni količini. Trenje v ležaju zanemarimo, teža in sila podlage nimata navora okoli navpične osi.`],
+    [R`J=\sum m_ir_i^2,\quad J_u=2m_ur^2\ \Rightarrow\ J_2\lt J_1`, R`Ko študent potegne uteži k telesu, se \(r\) zmanjša.`],
+    [R`J_1\omega_1=J_2\omega_2\ \Rightarrow\ \omega_2=\omega_1\dfrac{J_1}{J_2}>\omega_1`, R`Iz ohranitve \(\Gamma\).`]
+  ],
+  rezultatTex: R`kotna hitrost se <b>poveča</b>`,
+  rezultati: [], calc: { mode: 'vr', ilustr: true, label: '2025/2 – ilustrativno: J₁ = 6 kg m², ω₁ = 2 rad/s, J₂ = 2 kg m²', vals: { J1: '6 kg m^2', G1: '', w1: '2 rad/s', J2: '2 kg m^2', w2: '' }, g: null } },
+
+{ id: '2025/3', leto: 2025, st: 3, tip: 'klanec', simbolna: false, uradno: null, g: 9.81, svg: 'svgKladi',
+  besedilo: R`Dve kladi z masama 2 kg in 5 kg sta povezani z zelo lahko neraztegljivo vrvico. S silo 70 N ju vlečemo navzgor po klancu z nagibom 30° tako, kot kaže slika. Koeficient trenja med kladama in podlago je 0,2. S kolikšno silo je napeta vrvica med kladama? S kolikšnim pospeškom se kladi gibljeta?`,
+  podatkiTab: [[R`m_1=2\,\mathrm{kg}`, 'spodnja klada'], [R`m_2=5\,\mathrm{kg}`, 'zgornja klada'], [R`F=70\,\mathrm{N}`, 'vzporedno s klancem, na zgornjo klado'], [R`\alpha=30^\circ`, ''], [R`k=0{,}2`, 'koeficient trenja'], [R`g=9{,}81\,\mathrm{m/s^2}`, 'ni podan → formular']],
+  prviKorak: R`Sile na vsako klado, \(F_n=mg\cos\alpha\).`,
+  koraki: [
+    [R`F_{n,i}=m_ig\cos\alpha\ \Rightarrow\ F_{t,i}=k\,m_ig\cos\alpha`, R`Pravokotno na klanec ni pospeška.`],
+    [R`F-(m_1+m_2)g\sin\alpha-k(m_1+m_2)g\cos\alpha=(m_1+m_2)a`, R`Sistem (obe kladi): napetost vrvice deluje na obe kladi nasprotno, zato se v sistemu odšteje.`],
+    [R`a=\dfrac{70-7\cdot9{,}81\,(0{,}5+0{,}2\cdot0{,}866)}{7}=\dfrac{70-46{,}23}{7}=3{,}40\,\mathrm{m/s^2}`, R`\(a>0\), torej se res gibljeta navzgor.`],
+    [R`T-m_1g\sin\alpha-km_1g\cos\alpha=m_1a\ \Rightarrow\ T=m_1\big(a+g\sin\alpha+kg\cos\alpha\big)`, R`Na spodnjo klado vleče samo vrvica.`],
+    [R`T=\dfrac{m_1}{m_1+m_2}F=\dfrac{2}{7}\cdot70=20{,}0\,\mathrm{N}`, R`Vstavimo \(a\) iz koraka 2: členi s \(\sin\) in \(\cos\) se pokrajšajo, \(T\) je neodvisen od \(\alpha\), \(k\) in \(g\) (dobra kontrola!).`]
+  ],
+  rezultatTex: R`\(T=20{,}0\,\mathrm{N}\), \(a=3{,}40\,\mathrm{m/s^2}\) (z \(g=9{,}8\): \(3{,}40\,\mathrm{m/s^2}\))`,
+  rezultati: [
+    { k: 'T', label: R`T`, vrednost: 20, dim: 'sila', enota: 'N' },
+    { k: 'a', label: R`a`, vrednost: 3.39586, dim: 'pospesek', enota: 'm/s^2' }],
+  calc: { mode: 'kl_kladi', vals: { m1: '2 kg', m2: '5 kg', F: '70 N', al: '30°', k: '0,2' }, g: 9.81 } },
+
+{ id: '2025/4', leto: 2025, st: 4, tip: 'met', simbolna: false, uradno: null, g: 9.81, svg: 'svgMetStena',
+  besedilo: R`Kamen vržemo z začetno hitrostjo 20 m/s pod kotom 40° poševno navzgor glede na vodoravnico proti 15 m oddaljeni zelo visoki navpični steni. Na kolikšni višini kamen zadene steno? S kolikšno hitrostjo kamen zadane steno?`,
+  podatkiTab: [[R`v_0=20\,\mathrm{m/s}`, ''], [R`\varphi=40^\circ`, ''], [R`d=15\,\mathrm{m}`, 'oddaljenost stene'], [R`g=9{,}81\,\mathrm{m/s^2}`, 'ni podan → formular']],
+  prviKorak: R`Čas iz \(x=d\).`,
+  koraki: [
+    [R`v_{0x}=v_0\cos\varphi=20\cos40^\circ=15{,}32\,\mathrm{m/s},\quad v_{0y}=v_0\sin\varphi=20\sin40^\circ=12{,}86\,\mathrm{m/s}`, R`Vodoravno in navpično gibanje računamo ločeno.`],
+    [R`x=v_{0x}t=d\ \Rightarrow\ t=\dfrac{d}{v_0\cos\varphi}=\dfrac{15}{15{,}32}=0{,}979\,\mathrm{s}`, R`Vodoravno ni pospeška, pogoj zadetka je \(x=d\), zato čas dobimo iz \(x\).`],
+    [R`y=v_{0y}t-\dfrac{gt^2}{2}=12{,}86\cdot0{,}979-\dfrac{9{,}81\cdot0{,}979^2}{2}=7{,}88\,\mathrm{m}`, R`Isti čas vstavimo v navpično gibanje. (Enako dobiš direktno iz enačbe parabole leta s formularja z \(x=d\).)`],
+    [R`v_y=v_{0y}-gt=12{,}86-9{,}81\cdot0{,}979=3{,}25\,\mathrm{m/s}`, R`Predznak pove smer: pozitivno → kamen se še dviga (vrh bi dosegel pri \(t=v_{0y}/g=1{,}31\,\mathrm{s}\)).`],
+    [R`v=\sqrt{v_x^2+v_y^2}=\sqrt{15{,}32^2+3{,}25^2}=15{,}7\,\mathrm{m/s},\quad \beta=\arctan\dfrac{3{,}25}{15{,}32}=12{,}0^\circ`, R`Hitrost je vektor, sestavimo jo iz komponent; kot je nad vodoravnico.`]
+  ],
+  rezultatTex: R`\(y=7{,}88\,\mathrm{m}\), \(v=15{,}7\,\mathrm{m/s}\) (pod kotom \(12{,}0^\circ\) navzgor)`,
+  opomba: R`Z \(g=9{,}8\) dobiš \(y=7{,}89\,\mathrm{m}\), \(v=15{,}7\,\mathrm{m/s}\) – razlika samo zaradi \(g\).`,
+  rezultati: [
+    { k: 'y', label: R`y`, vrednost: 7.8848, dim: 'dolzina', enota: 'm' },
+    { k: 'v', label: R`v`, vrednost: 15.6621, dim: 'hitrost', enota: 'm/s' }],
+  calc: { mode: 'met_stena', vals: { v0: '20 m/s', phi: '40°', d: '15 m' }, g: 9.81 } }
+];
+const NAL = Object.fromEntries(NALOGE.map(n => [n.id, n]));
+
+/* =========================================================
+   TIPI NALOG
+   ========================================================= */
+const ORANZNO = (t) => mbadge('Ni na formularju – ' + t);
+const TIPI = [
+{ id: 'met', ime: 'Met v dveh dimenzijah (vodoravni / poševni)', kratko: 'Met v 2D', n: 3, naloge: ['2025/4', '2024/4', '2022/1'],
+  kljucna: R`\(x=v_0\cos\varphi\,t,\ y=v_0\sin\varphi\,t-\tfrac{gt^2}{2}\)`, naForm: 'da – GIBANJE: Vodoravni met, Poševni met', okvir: 'GIBANJE – Poševni met / Vodoravni met',
+  prepoznas: [R`telo vržemo z začetno hitrostjo, ki ima vodoravno komponento (»vodoravno«, »pod kotom … poševno navzgor«),`, R`sprašujejo po dometu, času leta, višini zadetka v steno, hitrosti ali kotu ob udarcu,`, R`zračni upor zanemarimo.`],
+  intuicija: R`Gibanje razstaviš na dve neodvisni gibanji. Vodoravno ni sile, zato je \(v_x\) ves čas konstanten (enakomerno gibanje). Navpično deluje samo teža, zato je to navpični met s pospeškom \(-g\). Skupen jima je samo <b>čas</b>. Čas zato najprej izračunaš iz tiste smeri, kjer poznaš pogoj (tla \(y=0\) ali stena \(x=d\)), nato ga vstaviš v drugo smer. Hitrost ob udarcu sestaviš iz komponent.`,
+  formule: [
+    [R`v_{0x}=v_0\cos\varphi,\quad v_{0y}=v_0\sin\varphi`, fbadge('GIBANJE – Poševni met')],
+    [R`x=v_0\cos\varphi\,t,\quad y=v_0\sin\varphi\,t-\dfrac{gt^2}{2}`, mbadge(R`Ni na formularju v tej obliki – dobiš z integracijo \(v_x\), \(v_y\)`)],
+    [R`v_x=v_0\cos\varphi,\quad v_y=v_0\sin\varphi-gt`, fbadge('GIBANJE – Poševni met')],
+    [R`D=\dfrac{v_0^2}{g}\sin(2\varphi)`, fbadge('GIBANJE – Poševni met (domet)') + ' <span class="small muted">(ampak 2022/1 zahteva izpeljavo!)</span>'],
+    [R`y=x\tan\varphi-\dfrac{gx^2}{2v_0^2\cos^2\varphi}`, fbadge('GIBANJE – Poševni met (enačba parabole leta)')],
+    [R`t_p=\sqrt{\dfrac{2h}{g}},\quad x=v_0\sqrt{\dfrac{2h}{g}}\quad\text{(vodoravni met z višine }h)`, fbadge('GIBANJE – Vodoravni met')],
+    [R`v=\sqrt{v_x^2+v_y^2},\quad \tan\beta=\dfrac{|v_y|}{v_x}`, ORANZNO('Pitagora in definicija tangensa')]
+  ],
+  postopek: [R`Nariši koordinatni sistem z izhodiščem v točki meta, \(y\) navzgor.`, R`Razstavi \(\vec v_0\) na \(v_{0x}\), \(v_{0y}\).`, R`Zapiši \(x(t)\), \(y(t)\), \(v_x(t)\), \(v_y(t)\).`, R`Iz znanega pogoja (\(y=0\) ali \(y=-h\) ali \(x=d\)) izrazi čas.`, R`Čas vstavi v drugo koordinato oz. v hitrosti.`, R`Velikost in kot hitrosti iz komponent. Preveri predznak \(v_y\) (navzgor ali navzdol).`],
+  pasti: [R`Kalkulator v DEG/RAD (\(\cos 40\) v radianih je \(-0{,}667\)).`, R`Pri vodoravnem metu je \(v_{0y}=0\), ne \(v_0\).`, R`Kot ob udarcu je kot med \(\vec v\) in vodoravnico: \(\arctan(|v_y|/v_x)\), ne \(\arctan(v_x/v_y)\).`, R`Hitrosti ob udarcu ne smeš seštevati kot skalarja (\(v_x+v_y\)). Velikost je \(\sqrt{v_x^2+v_y^2}\).`, R`Pri steni preveri, ali kamen steno sploh doseže, preden pade (\(D>d\)), in ali je že čez vrh (predznak \(v_y\)).`, R`Formule za domet \(D=\tfrac{v_0^2}{g}\sin 2\varphi\) ne uporabljaj, če met ne konča na isti višini.`, R`Pri »ab initio« moraš začeti iz \(\vec a=(0,-g)\), ne iz formule za domet.`],
+  ucbenik: [R`vodoravni met (str. 9–10)`, R`poševni met, enačba parabole in domet (str. 11–12)`],
+  extraLoads: [{ label: '2022/1 – ilustrativno: v₀ = 50 m/s, φ = 30° (kot na skici)', mode: 'met_pos', vals: { v0: '50 m/s', phi: '30°' }, g: 9.81, ilustr: true }] },
+
+{ id: 'premo', ime: 'Premo gibanje s konstantnim pospeškom (navpični met)', kratko: 'Premo gibanje', n: 2, naloge: ['2023/3', '2024/3'],
+  kljucna: R`\(s=v_0t+\tfrac{at^2}{2},\ v=v_0+at\)`, naForm: 'da – GIBANJE: Enakomerno pospešeno, Navpični met', okvir: 'GIBANJE – Enakomerno pospešeno / Navpični met',
+  prepoznas: [R`gibanje po eni premici (navpično navzgor/navzdol ali premo proti cilju),`, R`dan je konstanten pospešek (\(a\) ali \(g\)),`, R`sprašujejo po času, višini, hitrosti ob določenem času ali na delu poti.`],
+  intuicija: R`Pri konstantnem pospešku hitrost linearno narašča (ali pada), pot pa kvadratno. Pri navpičnem metu kamen izgublja \(9{,}8\,\mathrm{m/s}\) hitrosti vsako sekundo, na vrhu ima hitrost 0, pot navzdol pa je simetrična poti navzgor. Za del poti (npr. »zadnjih 10 m«) izračunaj čas do konca in čas do začetka tega dela, nato odštej.`,
+  formule: [
+    [R`s=v_0t+\dfrac{at^2}{2},\quad v=v_0+at,\quad v^2=v_0^2+2as`, fbadge('GIBANJE – Enakomerno pospešeno')],
+    [R`y=v_0t-\dfrac{gt^2}{2};\quad \text{vrh: } t=\dfrac{v_0}{g},\ h=\dfrac{v_0^2}{2g}`, fbadge('GIBANJE – Navpični met')],
+    [R`t_p=\dfrac{2v_0}{g}\quad\text{(nazaj na izhodišče)}`, ORANZNO(R`dobiš iz \(y=0\) (ali 2 × čas do vrha)`)],
+    [R`t=\sqrt{\dfrac{2s}{a}}\quad\text{(iz mirovanja)}`, ORANZNO(R`izraziš iz \(s=\tfrac{at^2}{2}\)`)]
+  ],
+  postopek: [R`Izberi pozitivno smer (navzgor) in izhodišče.`, R`Zapiši znane količine s predznaki (\(a=-g\)).`, R`Izberi enačbo, ki vsebuje iskano količino in same znane.`, R`Izrazi simbolno, nato vstavi.`, R`Preveri predznak (dviga/pada).`],
+  pasti: [R`\(a=-g\) pri metu navzgor (predznak!).`, R`Pri »zadnjih« metrih ne računaj časa za te metre iz mirovanja: \(\Delta t\neq\sqrt{2\cdot10/a}\) (to bi bil čas za prvih 10 m!).`, R`\(t_p=2t_d\) velja samo, če kamen pade na isto višino.`, R`Uporabi podani \(g=9{,}8\), ne \(9{,}81\).`],
+  ucbenik: [R`premo enakomerno pospešeno gibanje in izpeljava \(v^2=v_0^2+2as\) (str. 6–7)`, R`prosti pad (str. 8–9)`, R`navpični met (str. 10–11)`] },
+
+{ id: 'grav', ime: R`Gravitacija: g na planetu / višini, satelit`, imeTex: R`Gravitacija: \(g\) na planetu / višini, satelit`, kratko: 'Gravitacija', n: 2, naloge: ['2023/4', '2022/3'],
+  kljucna: R`\(g_0=G\tfrac{M}{R^2},\ \tfrac{v^2}{R+h}=g_0\tfrac{R^2}{(R+h)^2}\)`, naForm: 'da – SILA: Gravitacijski zakon, *satelit okoli planeta', okvir: 'SILA – Gravitacijski zakon / *satelit okoli planeta',
+  prepoznas: [R`planet, polmer Zemlje 6400 km, satelit, krožna hitrost, višina nad Zemljo,`, R`\(g\) ni več konstanten.`],
+  intuicija: R`Težni pospešek pada s kvadratom razdalje od središča. Planet z enako maso, a 64-krat manjšim polmerom ima na površju \(64^2=4096\)-krat večji \(g\). Pri satelitu na krožnici gravitacija ravno priskrbi centripetalni pospešek: \(g(h)=v^2/(R+h)\). Počasnejši satelit kroži višje.`,
+  formule: [
+    [R`g_0=G\dfrac{M}{R^2}`, fbadge('SILA – Gravitacijski zakon')],
+    [R`g(h)=g_0\dfrac{R^2}{(R+h)^2}`, fbadge('SILA – Gravitacijski zakon')],
+    [R`g=a_r=\dfrac{v^2}{R+h}`, fbadge('SILA – *satelit okoli planeta')],
+    [R`\dfrac{g'}{g_0}=\left(\dfrac{R}{R'}\right)^2\quad\text{(enaka masa)}`, ORANZNO(R`dobiš iz \(g_0=GM/R^2\) z razmerjem`)],
+    [R`R+h=\dfrac{g_0R^2}{v^2}`, ORANZNO('dobiš z izenačitvijo zgornjih dveh')]
+  ],
+  postopek: [R`Pretvori km → m.`, R`Zapiši \(g\) prek \(GM\) in ga izrazi z \(g_0R^2\) (\(GM=g_0R^2\)).`, R`Pri satelitu izenači gravitacijski in centripetalni pospešek.`, R`Izrazi neznanko.`, R`Pri satelitu na koncu odštej \(R\), ker sprašujejo po višini nad površjem.`],
+  pasti: [R`Pozabljena pretvorba km → m (napaka \(10^6\)!).`, R`\(r=R+h\), ne \(h\). Na koncu odštej \(R\).`, R`Razmerje polmerov je na <b>kvadrat</b>.`, R`Uporabi podani \(g_0=9{,}8\).`],
+  ucbenik: [R`gravitacijska sila in \(g(h)\) (str. 22–23)`, R`gravitacijska potencialna energija (str. 58–61)`] },
+
+{ id: 'klanec', ime: 'Klanec in trenje (Newton po komponentah)', kratko: 'Klanec in trenje', n: 2, naloge: ['2025/3', '2024/1'],
+  kljucna: R`\(k_l=\tan\alpha\); \(\sum F=ma\) vzdolž klanca`, naForm: 'delno – SILA: Trenje in lepenje, Sile na klancu', okvir: 'SILA – Sile na klancu / Trenje in lepenje',
+  prepoznas: [R`klanec z nagibom, koeficient trenja ali lepenja,`, R`»mejni kot«, »zdrsne«,`, R`klade povezane z vrvico, vlečna sila vzdolž klanca.`],
+  intuicija: R`Silo teže razstavi na del vzdolž klanca (\(mg\sin\alpha\), vleče navzdol) in del pravokotno nanj (\(mg\cos\alpha\), ki ga uravnoteži podlaga). Trenje je sorazmerno sili podlage in nasprotuje gibanju. Pri mejnem kotu sta dolvzdolžna komponenta teže in največja sila lepenja ravno enaki. Pri dveh kladah na isti vrvici imata obe enak pospešek: najprej obravnavaš sistem kot celoto (dobiš \(a\)), nato eno klado posebej (dobiš napetost vrvice).`,
+  formule: [
+    [R`F_d=F_g\sin\alpha,\quad F_n=F_g\cos\alpha`, fbadge('SILA – Sile na klancu')],
+    [R`F_t=k_tF_n`, fbadge('SILA – Trenje in lepenje')],
+    [R`k_l=\tan\alpha\quad\text{(ko telo zdrsne)}`, fbadge('SILA – Trenje in lepenje') + ' <span class="small muted">(2024/1 zahteva izpeljavo!)</span>'],
+    [R`a=g(\sin\varphi-k_{tr}\cos\varphi)\quad\text{(prosto drsenje navzdol)}`, fbadge('SILA – Sile na klancu')],
+    [R`a=\dfrac{F-(m_1+m_2)g(\sin\alpha+k\cos\alpha)}{m_1+m_2}`, ORANZNO(R`dobiš iz \(\sum F=ma\) za sistem`)],
+    [R`T=\dfrac{m_1}{m_1+m_2}F`, ORANZNO(R`dobiš iz \(\sum F=ma\) za spodnjo klado`)]
+  ],
+  postopek: [R`Nariši vse sile na vsako telo (teža, podlaga, trenje, vrvica, vlečna sila).`, R`Os \(x\) vzdolž klanca v smeri gibanja, \(y\) pravokotno.`, R`\(\sum F_y=0\Rightarrow F_n=mg\cos\alpha\).`, R`\(\sum F_x=ma\) za sistem → \(a\).`, R`\(\sum F_x=ma\) za eno telo → \(T\).`, R`Preveri, ali je \(a>0\) (sicer se sistem ne giblje in trenje je lepenje).`],
+  pasti: [R`\(F_n=mg\cos\alpha\), ne \(mg\).`, R`Trenje vedno nasprotuje gibanju (pri vleki navzgor kaže navzdol).`, R`Pri sistemu napetosti vrvice ne vključiš.`, R`Za \(T\) obravnavaj tisto klado, na katero deluje samo vrvica (spodnja), drugače moraš upoštevati še \(F\).`, R`»Celotna izpeljava« pomeni skico sil in obe enačbi, ne samo \(\tan 25^\circ\).`],
+  ucbenik: [R`drsenje klade po klancu navzdol in mejni kot (str. 33)`, R`klada na zračni klopi z utežjo – sistem dveh teles na vrvici (str. 34)`] },
+
+{ id: 'trki', ime: 'Trki: ohranitev gibalne količine', kratko: 'Trki', n: 2, naloge: ['2022/4', '2024/2'],
+  kljucna: R`\(m_1v_1+m_2v_2=m_1v_1'+m_2v_2'\)`, naForm: 'da – GIBALNA KOLIČINA', okvir: 'GIBALNA KOLIČINA',
+  prepoznas: [R`»trčita«, »zaleti v«, »sprimeta« (neelastični),`, R`zračna klop ali jahača (brez trenja, prožen trk),`, R`hitrosti pred trkom in po njem.`],
+  intuicija: R`Med kratkim trkom so zunanji sunki zanemarljivi, zato se <b>skupna gibalna količina ohrani</b> vedno. Pri popolnoma neelastičnem trku (sprimeta se) se del kinetične energije izgubi, zato zadostuje samo ohranitev \(G\). Pri prožnem trku se ohrani tudi \(W_k\), zato imaš dve enačbi za dve neznani hitrosti. Pri enakih masah si telesi hitrosti »zamenjata«. Če se po trku nekaj ustavlja s trenjem, je to nova, ločena naloga (kinematika ali energija).`,
+  formule: [
+    [R`G=mv,\quad G_1=G_2\quad\text{(sunek zunanje sile = 0)}`, fbadge('GIBALNA KOLIČINA')],
+    [R`m_1v_1+0=(m_1+m_2)v`, fbadge('GIBALNA KOLIČINA – popolnoma neelastični trk')],
+    [R`m_1v_1+m_2v_2=m_1v_1'+m_2v_2'`, fbadge('GIBALNA KOLIČINA – popolnoma elastični trk')],
+    [R`\tfrac12m_1v_1^2+\tfrac12m_2v_2^2=\tfrac12m_1v_1'^2+\tfrac12m_2v_2'^2`, fbadge('ENERGIJA – Kinetična energija') + ' <span class="small muted">(ohranitev zapišeš sam)</span>'],
+    [R`v_1'=v_1\dfrac{m_1-m_2}{m_1+m_2},\quad v_2'=v_1\dfrac{2m_1}{m_1+m_2}\quad(v_2=0)`, ORANZNO('izpeljava v učbeniku str. 66')],
+    [R`v^2=2as,\ a=k_tg\quad\text{ali}\quad\tfrac12(m_1+m_2)v^2=k_t(m_1+m_2)gs`, fbadge('GIBANJE – Enakomerno pospešeno') + ' ' + fbadge('SILA – Trenje in lepenje')]
+  ],
+  postopek: [R`Določi pozitivno smer.`, R`Zapiši \(G\) pred trkom in po njem.`, R`Neelastičen → ena enačba; prožen → dodaj ohranitev \(W_k\).`, R`Reši (pri prožnem zavrzi rešitev »ni trka«, tj. \(v_1'=v_1\)).`, R`Če sledi ustavljanje, uporabi hitrost po trku kot začetno.`],
+  pasti: [R`Pri neelastičnem trku <b>ne</b> velja ohranitev \(W_k\) (dobiš napačnih \(v=\sqrt{2/3}\cdot15\)).`, R`Hitrost po trku je hitrost <b>obeh</b> klad.`, R`Pri trenju po trku je masa \(m_1+m_2\), a se pokrajša.`, R`Pri prožnem trku zavrzi nefizikalno rešitev.`, R`Predznaki hitrosti, ko se telesi gibljeta druga proti drugi.`],
+  namig: R`Se telesi sprimeta? → samo ohranitev \(G\). Prožen trk → ohranitev \(G\) <b>in</b> \(W_k\).`,
+  ucbenik: [R`neprožen trk dveh vozičkov na zračni blazini (str. 34–35)`, R`izrek o sunku sile in ohranitev gibalne količine (str. 31–32)`, R`popolnoma prožen centralni trk (str. 65–66)`] },
+
+{ id: 'steiner', ime: 'Vztrajnostni moment in Steinerjev izrek', kratko: 'Steinerjev izrek', n: 2, naloge: ['2023/2', '2025/1'],
+  kljucna: R`\(J=J^*+mr^{*2}\)`, naForm: 'da – NAVOR: Vztrajnostni moment', okvir: 'NAVOR – Vztrajnostni moment (Steinerjev izrek)',
+  prepoznas: [R`»vztrajnostni moment«, palica, krogla,`, R`»okoli krajiščne osi«, os na razdalji \(D\), »Steinerjevo pravilo«,`, R`točkaste mase na koncih.`],
+  intuicija: R`Vztrajnostni moment meri, kako težko telo zavrtimo okoli <b>dane</b> osi. Odvisen je od tega, kako daleč od osi je masa (\(r^2\)). Najmanjši je okoli težiščne osi. Za vsako vzporedno os dodaš \(m\cdot(\text{razdalja})^2\) (Steiner). Vztrajnostni momenti delov, ki se vrtijo okoli iste osi, se seštevajo. Točkasta masa na razdalji \(r\) prispeva \(mr^2\). Krogla končne velikosti prispeva še svoj \(\tfrac25m_1R^2\).`,
+  formule: [
+    [R`J=J^*+mr^{*2}`, fbadge('NAVOR – Vztrajnostni moment (Steinerjev izrek)')],
+    [R`\text{palica: } J^*=\dfrac{ml^2}{12},\quad \text{krajišče: } J=\dfrac{ml^2}{3}`, fbadge('NAVOR – Vztrajnostni moment (Palica)')],
+    [R`\text{točka: } J=mr^2,\quad \text{krogla: } J^*=\tfrac25mr^2`, fbadge('NAVOR – Vztrajnostni moment')],
+    [R`J=\int r^2\,dm,\quad dm=\dfrac{m}{L}dx`, ORANZNO('definicija, učbenik str. 45 in 48 (za »izpeljite«)')],
+    [R`J_{sk}=\sum J_i\quad\text{(okoli iste osi)}`, ORANZNO('aditivnost')]
+  ],
+  postopek: [R`Nariši os in označi težišče vsakega dela.`, R`Za vsak del izmeri razdaljo njegovega težišča od osi.`, R`\(J_i=J_i^*+m_id_i^2\).`, R`Seštej.`, R`Preveri mejne primere (npr. \(D=0\) mora dati \(mL^2/3\)).`],
+  pasti: [R`Steiner vedno začne od <b>težiščnega</b> \(J^*\) (ne od \(mL^2/3\)).`, R`Razdalja je med osjo in težiščem, ne med osjo in koncem.`, R`Kroglica na osi prispeva 0 (točkasta) oz. samo \(\tfrac25m_1R^2\) (končna).`, R`Pri končni kroglici ne pozabi Steinerja zanjo.`, R`Kvadrat razdalje!`],
+  ucbenik: [R`vztrajnostni moment krožeče točke \(J=mr^2\) (str. 40–41)`, R`vztrajnostni tenzor in \(J=\int R^2dm\) (str. 44–46)`, R`valj okoli geometrijske osi z integracijo (str. 48)`, R`Steinerjev izrek in zgled valja ob plašču (str. 51–52)`] },
+
+{ id: 'vrtilna', ime: 'Ohranitev vrtilne količine (vrtljivi stol)', kratko: 'Vrtilna količina', n: 2, naloge: ['2023/1', '2025/2'],
+  kljucna: R`\(\Gamma=J\omega=\text{konst.}\), \(W_k=\tfrac{J\omega^2}{2}\)`, naForm: 'delno – NAVOR, ENERGIJA', okvir: 'NAVOR / ENERGIJA – Kinetična energija',
+  prepoznas: [R`vrtljivi stol, uteži v rokah, »pokrči roke«,`, R`»trenje v ležajih zanemarimo«,`, R`vprašanje o \(\omega\) ali vrtilni kinetični energiji pred in po.`],
+  intuicija: R`Ko ni zunanjega navora (trenje v ležaju zanemarimo, sile med rokami in telesom so notranje), se vrtilna količina \(\Gamma=J\omega\) ohranja. Ko mož potegne uteži k sebi, se masa približa osi in \(J\) se zmanjša, zato se mora \(\omega\) povečati (kot drsalka pri piruetah). Kinetična energija se pri tem <b>poveča</b>: \(W_k=\tfrac12\Gamma\omega\), \(\Gamma\) je enak, \(\omega\) večji. Dodatno energijo prispeva delo mišic.`,
+  formule: [
+    [R`\Gamma=J\omega`, fbadge('NAVOR')],
+    [R`\int M\,dt=\Delta\Gamma=\Gamma_2-\Gamma_1\ \to\ M=0\Rightarrow\Gamma_1=\Gamma_2`, fbadge('NAVOR')],
+    [R`W_k=\dfrac{J\omega^2}{2}`, fbadge('ENERGIJA – Kinetična energija')],
+    [R`W_k=\dfrac{\Gamma\omega}{2}=\dfrac{\Gamma^2}{2J}`, ORANZNO(R`dobiš z vstavitvijo \(J=\Gamma/\omega\)`)],
+    [R`\omega_2=\omega_1\dfrac{J_1}{J_2}`, ORANZNO(R`iz ohranitve \(\Gamma\)`)]
+  ],
+  postopek: [R`Sistem = stol + človek + uteži.`, R`Utemelji, da je zunanji navor 0 (os navpična, trenje zanemarjeno).`, R`\(J_1\omega_1=J_2\omega_2\).`, R`Primerjaj \(J_1\) in \(J_2\) (kje je masa glede na os).`, R`Energija iz \(W_k=\Gamma\omega/2\).`],
+  pasti: [R`\(W_k\) se <b>ne</b> ohranja (pogosta napačna trditev).`, R`Pri 2025/2 brez enačb dobiš 0 točk – zapiši izrek o vrtilni količini in \(J=\sum mr^2\).`, R`Pri 2023/1 odgovor mora vsebovati samo \(\Gamma_1, \omega_1, \omega_2\) (ne \(J\)).`, R`\(\Gamma\) ni \(G\) (gibalna količina).`],
+  ucbenik: [R`izrek o vrtilni količini za točkasto telo in sistem (str. 39–42)`, R`\(\Gamma_\omega=J\omega\) za vpeto togo telo in ohranitev (str. 46–47)`, R`<b>človek na vrtljivem stolu z utežmi</b> (str. 47–48, prav ta situacija)`, R`rotacijska kinetična energija (str. 62–64)`] },
+
+{ id: 'vozicek', ime: 'Newton v pospešenem vozičku (nagib vrvice)', kratko: 'Pospešen voziček', n: 1, naloge: ['2022/2'],
+  kljucna: R`\(\tan\alpha=\tfrac{a_0}{g}\), \(T=m_u\sqrt{g^2+a_0^2}\)`, naForm: R`ne – samo \(\sum F=ma\)`, okvir: 'SILA – Drugi Newtnov zakon',
+  prepoznas: [R`utež visi na vrvici v vozilu, vagonu ali vozičku, ki se giblje s konstantnim pospeškom \(a_0\),`, R`sprašujejo po kotu vrvice glede na navpičnico in po napetosti.`],
+  intuicija: R`V laboratorijskem (mirujočem) sistemu ima utež enak pospešek \(a_0\) kot voziček. Tega ji lahko da samo vodoravna komponenta napetosti vrvice, zato se vrvica nagne <b>nazaj</b>, nasproti pospešku. Navpična komponenta napetosti uravnoteži težo. V vozičku pa si lahko predstavljaš, da na utež deluje še sistemska sila \(-m_ua_0\) (»vrže jo nazaj«).`,
+  formule: [
+    [R`\sum\vec F=m\vec a`, fbadge('SILA – Drugi Newtnov zakon')],
+    [R`T\sin\alpha=m_ua_0,\quad T\cos\alpha=m_ug`, ORANZNO('učbenik str. 23–25 (enačbi (10), (11))')],
+    [R`\tan\alpha=\dfrac{a_0}{g},\quad T=m_u\sqrt{g^2+a_0^2}`, ORANZNO('deliš oz. kvadriraš in sešteješ zgornji enačbi')]
+  ],
+  postopek: [R`Izberi laboratorijski sistem.`, R`Sile na utež: teža \(m_ug\) navzdol, napetost \(T\) vzdolž vrvice.`, R`Vodoravno \(\sum F_x=m_ua_0\), navpično \(\sum F_y=0\).`, R`Deli → kot; kvadriraj in seštej → \(T\).`],
+  pasti: [R`Smer nagiba je <b>nasproti</b> pospešku.`, R`\(T\ne m_ug\), ko voziček pospešuje.`, R`Kot je merjen od navpičnice (\(\tan\alpha=a_0/g\)), ne od vodoravnice.`, R`V vozičku (neinercialni sistem) brez sistemske sile II. Newtonov zakon ne velja.`],
+  ucbenik: [R`opazovalec v pospešenem vagonu, kroglica na nitki, sistemska sila \(F_s=-ma_0\) (str. 23–25)`],
+  extraLoads: [] }
+];
+const TIP = Object.fromEntries(TIPI.map(t => [t.id, t]));
+const tipIme = (t) => t.imeTex || t.ime;
+
+/* razlikovalni namigi za kviz */
+const NAMIGI = {
+  'met|premo': R`Ali ima hitrost vodoravno komponento? Da → met v 2D (dve neodvisni gibanji). Ne, vse se dogaja na eni premici → premo gibanje.`,
+  'premo|trki': R`Najprej trk (ohranitev \(G\)), šele potem ustavljanje s trenjem. Če ne začneš s trkom, ne poznaš hitrosti po trku.`,
+  'steiner|vrtilna': R`Sprašujejo po \(J\) okoli osi, kjer telo nima težišča → Steiner. Sprašujejo, kaj se zgodi z \(\omega\) ali \(W_k\), ko se telo »skrči« → ohranitev \(\Gamma\).`,
+  'klanec|vozicek': R`Ali se giblje podlaga ali vozilo s pospeškom, utež pa visi? → voziček (\(\tan\alpha=a_0/g\)). Ali telo drsi oz. ga vlečemo po nagnjeni podlagi? → klanec.`,
+  'grav|met': R`Če je višina primerljiva z \(R=6400\,\mathrm{km}\) ali gre za planet ali satelit, \(g\) ni konstanten → gravitacija.`
+};
+function namigZa(a, b) { const k = [a, b].sort().join('|'); return NAMIGI[k] || null; }
+
+/* =========================================================
+   NAJPOGOSTEJŠE NAPAKE (razširljiv array)
+   ========================================================= */
+const NAPAKE = [
+  { tip: 'vse', napaka: R`<b>Pretvorbe enot:</b> km → m pri satelitu/planetu (napaka \(10^3\) oz. \(10^6\) pri kvadratu); km/h → m/s (÷ 3,6).`, kakoSeIzognes: R`Vse podatke najprej prepiši v SI.` },
+  { tip: 'vse', napaka: R`<b>Stopinje/radiani:</b> kalkulator v RAD namesto DEG (\(\cos 40\) v radianih je \(-0{,}667\)).`, kakoSeIzognes: R`Pred prvim računom preveri DEG.` },
+  { tip: 'vse', napaka: R`<b>Predznaki in smeri:</b> \(a=-g\) pri metu navzgor; trenje nasprotuje gibanju; nagib vrvice nasproti pospešku; pri trku hitrosti, ki gredo druga proti drugi, z nasprotnim predznakom.`, kakoSeIzognes: R`Na skico vedno nariši pozitivno smer osi.` },
+  { tip: 'klanec', napaka: R`\(F_n=mg\cos\alpha\), ne \(mg\) (klanec).`, kakoSeIzognes: R`Zapiši \(\sum F_y=0\) pravokotno na klanec.` },
+  { tip: 'trki', napaka: R`<b>Napačna izbira ohranitve:</b> pri neelastičnem trku ni ohranitve \(W_k\); pri vrtljivem stolu se \(W_k\) ne ohranja, ohranja se \(\Gamma\).`, kakoSeIzognes: R`Najprej zapiši, kaj se ohranja in zakaj (ni zunanjega sunka / navora).` },
+  { tip: 'steiner', napaka: R`<b>Steiner od težiščnega \(J^*\)</b> in z razdaljo <b>težišče–os</b> (ne krajišče–os); kvadrat razdalje.`, kakoSeIzognes: R`Na skici označi težišče in razdaljo \(r^*\) do osi.` },
+  { tip: 'grav', napaka: R`<b>Satelit:</b> \(r=R+h\), ne \(h\); na koncu odštej \(R\).`, kakoSeIzognes: R`Preveri red velikosti (višina tirov: tisoči do desettisoči km).` },
+  { tip: 'premo', napaka: R`<b>»Zadnjih 10 m«</b> ni isto kot prvih 10 m.`, kakoSeIzognes: R`Izračunaj dva časa iz mirovanja in ju odštej.` },
+  { tip: 'met', napaka: R`<b>Hitrost ob udarcu</b> je vektor: \(\sqrt{v_x^2+v_y^2}\), kot \(\arctan(|v_y|/v_x)\).`, kakoSeIzognes: R`Nariši trikotnik hitrosti v točki udarca.` },
+  { tip: 'klanec', napaka: R`<b>Napetost vrvice med kladama:</b> za \(T\) obravnavaj eno klado posebej (ne sistema).`, kakoSeIzognes: R`Sistem → \(a\); spodnja klada sama → \(T\).` },
+  { tip: 'vse', napaka: R`<b>Izpeljave brez skice in brez besedila:</b> pri »izpeljite« in »argumentirajte« se točkuje postopek (2025/2: brez enačb in teksta 0 točk).`, kakoSeIzognes: R`Skica + enačba + en stavek, zakaj velja.` },
+  { tip: 'vse', napaka: R`<b>Uporabi podani \(g\)</b> (9,8, kjer ga naloga poda), sicer 9,81 s formularja.`, kakoSeIzognes: R`Podčrtaj \(g\) v besedilu naloge.` },
+  { tip: 'vse', napaka: R`<b>Simbolni rezultat</b> mora vsebovati samo zahtevane simbole (2023/1: samo \(\Gamma_1,\omega_1,\omega_2\); 2022/2: samo \(a_0, m_u\) in \(g\)).`, kakoSeIzognes: R`Na koncu preveri, ali v rezultatu ni pomožnih količin (\(J\), \(T\) …).` }
+];
+
+/* RECEPT */
+const RECEPT = [
+  R`<b>Podatke pretvori v SI</b> (km → m, km/h → m/s, g → kg, kN → N). Kote pusti v stopinjah, a kalkulator naj bo v DEG.`,
+  R`<b>Nariši skico:</b> telo, vse sile (teža, podlaga, trenje, vrvica, vlečna sila) ali hitrosti, os vrtenja, <b>koordinatni sistem s pozitivno smerjo</b>.`,
+  R`<b>Prepoznaj situacijo in kaj iščeš:</b> met / premo / gravitacija / klanec / trk / Steiner / vrtilna količina / pospešen voziček. Kaj je znano, kaj neznano? Kaj se ohranja (\(G\), \(\Gamma\), \(W\))?`,
+  R`<b>Poišči okvir na formularju</b> (GIBANJE, SILA, GIBALNA KOLIČINA, NAVOR, ENERGIJA). Česar ni na formularju, izpelješ iz \(\sum F=ma\), ohranitve ali definicije.`,
+  R`<b>Formulo zapiši s simboli in izrazi neznanko</b>, šele nato vstavi številke (z enotami).`,
+  R`<b>Preveri enoto, predznak in smisel</b> (red velikosti, mejni primer: \(a_0=0\), \(D=0\), \(v_y>0\) dviga se …). Zaokroži na 3 veljavna mesta.`
+];
+
+/* =========================================================
+   KALKULATORJI
+   ========================================================= */
+// izhod: {k, lab, f (simbolno), n (s številkami), val (SI), dim, u (TeX enota), deg:bool, sig}
+const o = (k, lab, f, n, val, dim, u, extra = {}) => Object.assign({ k, lab, f, n, val, dim, u }, extra);
+const dg = (rad) => fmtIn(rad / DEG) + '^\\circ';
+const MODES = {
+  /* ---------- met ---------- */
+  met_pos: { tip: 'met', ime: 'Poševni met – domet', usesG: true,
+    inputs: [{ k: 'v0', lab: R`v_0`, dim: 'hitrost', ph: '50 m/s' }, { k: 'phi', lab: R`\varphi`, dim: 'kot', ph: '30°' }],
+    compute(V, g) {
+      const { v0, phi } = V, s = Math.sin(phi);
+      if (!(v0 > 0) || !(phi > 0 && phi < Math.PI / 2)) return { err: R`Potrebujem \(v_0>0\) in \(0^\circ\lt \varphi\lt 90^\circ\).` };
+      return { outs: [
+        o('tp', R`t_p`, R`\dfrac{2v_0\sin\varphi}{g}`, R`\dfrac{2\cdot ${fmtIn(v0)}\cdot\sin ${dg(phi)}}{${fmtIn(g)}}`, 2 * v0 * s / g, 'cas', 's'),
+        o('D', R`D`, R`\dfrac{v_0^2}{g}\sin(2\varphi)`, R`\dfrac{${fmtIn(v0)}^2}{${fmtIn(g)}}\sin(2\cdot ${dg(phi)})`, v0 * v0 * Math.sin(2 * phi) / g, 'dolzina', 'm'),
+        o('hmax', R`h_{max}`, R`\dfrac{v_0^2\sin^2\varphi}{2g}`, R`\dfrac{${fmtIn(v0)}^2\sin^2 ${dg(phi)}}{2\cdot ${fmtIn(g)}}`, v0 * v0 * s * s / (2 * g), 'dolzina', 'm')] };
+    } },
+  met_vod: { tip: 'met', ime: 'Vodoravni met s višine', usesG: true,
+    inputs: [{ k: 'h', lab: R`h`, dim: 'dolzina', ph: '20 m' }, { k: 'v0', lab: R`v_0`, dim: 'hitrost', ph: '15 m/s' }],
+    compute(V, g) {
+      const { h, v0 } = V;
+      if (!(h > 0) || !(v0 >= 0)) return { err: R`Potrebujem \(h>0\) in \(v_0\ge 0\).` };
+      const tp = Math.sqrt(2 * h / g), vy = -g * tp, v = Math.hypot(v0, vy), b = Math.atan2(Math.abs(vy), v0);
+      return { outs: [
+        o('tp', R`t_p`, R`\sqrt{\dfrac{2h}{g}}`, R`\sqrt{\dfrac{2\cdot ${fmtIn(h)}}{${fmtIn(g)}}}`, tp, 'cas', 's'),
+        o('D', R`D`, R`v_0t_p`, R`${fmtIn(v0)}\cdot ${fmtIn(tp)}`, v0 * tp, 'dolzina', 'm'),
+        o('vy', R`v_y`, R`-gt_p`, R`-${fmtIn(g)}\cdot ${fmtIn(tp)}`, vy, 'hitrost', 'm/s'),
+        o('v', R`v`, R`\sqrt{v_0^2+v_y^2}`, R`\sqrt{${fmtIn(v0)}^2+${fmtIn(Math.abs(vy))}^2}`, v, 'hitrost', 'm/s'),
+        o('beta', R`\beta`, R`\arctan\dfrac{|v_y|}{v_0}`, R`\arctan\dfrac{${fmtIn(Math.abs(vy))}}{${fmtIn(v0)}}`, b, 'kot', '', { deg: true, note: 'pod vodoravnico' })] };
+    } },
+  met_stena: { tip: 'met', ime: 'Met proti steni', usesG: true,
+    inputs: [{ k: 'v0', lab: R`v_0`, dim: 'hitrost', ph: '20 m/s' }, { k: 'phi', lab: R`\varphi`, dim: 'kot', ph: '40°' }, { k: 'd', lab: R`d`, dim: 'dolzina', ph: '15 m' }],
+    compute(V, g) {
+      const { v0, phi, d } = V;
+      if (!(v0 > 0) || !(phi > -Math.PI / 2 && phi < Math.PI / 2) || !(d > 0)) return { err: R`Potrebujem \(v_0>0\), \(d>0\) in \(|\varphi|\lt 90^\circ\).` };
+      const vx = v0 * Math.cos(phi), v0y = v0 * Math.sin(phi), t = d / vx, y = v0y * t - g * t * t / 2, vy = v0y - g * t, v = Math.hypot(vx, vy), b = Math.atan(vy / vx);
+      const res = { outs: [
+        o('t', R`t`, R`\dfrac{d}{v_0\cos\varphi}`, R`\dfrac{${fmtIn(d)}}{${fmtIn(v0)}\cos ${dg(phi)}}`, t, 'cas', 's'),
+        o('y', R`y`, R`v_0\sin\varphi\,t-\dfrac{gt^2}{2}`, R`${fmtIn(v0)}\sin ${dg(phi)}\cdot ${fmtIn(t)}-\dfrac{${fmtIn(g)}\cdot ${fmtIn(t)}^2}{2}`, y, 'dolzina', 'm'),
+        o('vy', R`v_y`, R`v_0\sin\varphi-gt`, R`${fmtIn(v0y)}-${fmtIn(g)}\cdot ${fmtIn(t)}`, vy, 'hitrost', 'm/s', { note: vy > 0 ? 'še se dviga' : (vy < 0 ? 'že pada' : 'na vrhu') }),
+        o('v', R`v`, R`\sqrt{v_x^2+v_y^2}`, R`\sqrt{${fmtIn(vx)}^2+${fmtIn(vy)}^2}`, v, 'hitrost', 'm/s'),
+        o('beta', R`\beta`, R`\arctan\dfrac{v_y}{v_x}`, R`\arctan\dfrac{${fmtIn(vy)}}{${fmtIn(vx)}}`, b, 'kot', '', { deg: true, note: b >= 0 ? 'nad vodoravnico' : 'pod vodoravnico' })] };
+      if (y < 0) res.warn = R`Pozor: \(y\lt 0\) – kamen pade na tla, preden doseže steno (\(D\lt d\)), če sta točka meta in tla na isti višini.`;
+      return res;
+    } },
+  /* ---------- premo ---------- */
+  pr_navp: { tip: 'premo', ime: 'Navpični met', usesG: true,
+    inputs: [{ k: 'v0', lab: R`v_0`, dim: 'hitrost', ph: '15 m/s' }, { k: 't', lab: R`t\ \text{(poljuben trenutek)}`, dim: 'cas', ph: '1 s' }],
+    compute(V, g) {
+      const { v0, t } = V;
+      if (!(v0 > 0)) return { err: R`Potrebujem \(v_0>0\).` };
+      const td = v0 / g, h = v0 * v0 / (2 * g), tp = 2 * v0 / g;
+      const outs = [
+        o('td', R`t_d`, R`\dfrac{v_0}{g}`, R`\dfrac{${fmtIn(v0)}}{${fmtIn(g)}}`, td, 'cas', 's'),
+        o('h', R`h`, R`\dfrac{v_0^2}{2g}`, R`\dfrac{${fmtIn(v0)}^2}{2\cdot ${fmtIn(g)}}`, h, 'dolzina', 'm'),
+        o('tp', R`t_p`, R`\dfrac{2v_0}{g}`, R`\dfrac{2\cdot ${fmtIn(v0)}}{${fmtIn(g)}}`, tp, 'cas', 's')];
+      if (t != null && t >= 0) {
+        const yt = v0 * t - g * t * t / 2, vt = v0 - g * t;
+        outs.push(o('yt', R`y(t)`, R`v_0t-\dfrac{gt^2}{2}`, R`${fmtIn(v0)}\cdot ${fmtIn(t)}-\dfrac{${fmtIn(g)}\cdot ${fmtIn(t)}^2}{2}`, yt, 'dolzina', 'm', { note: yt < 0 ? 'kamen je že na tleh (formula velja le do t_p)' : '' }));
+        outs.push(o('vt', R`v(t)`, R`v_0-gt`, R`${fmtIn(v0)}-${fmtIn(g)}\cdot ${fmtIn(t)}`, vt, 'hitrost', 'm/s', { note: Math.abs(vt) < 1e-9 ? 'na vrhu' : (vt > 0 ? 'dviga se' : 'pada') }));
+      }
+      return { outs };
+    } },
+  pr_del: { tip: 'premo', ime: 'Del poti iz mirovanja', usesG: false,
+    inputs: [{ k: 'a', lab: R`a`, dim: 'pospesek', ph: '1 m/s^2' }, { k: 's', lab: R`s`, dim: 'dolzina', ph: '100 m' }, { k: 'ds', lab: R`\Delta s\ \text{(zadnji del)}`, dim: 'dolzina', ph: '10 m' }],
+    compute(V) {
+      const { a, s, ds } = V;
+      if (!(a > 0) || !(s > 0) || !(ds > 0 && ds <= s)) return { err: R`Potrebujem \(a>0\), \(s>0\) in \(0\lt \Delta s\le s\).` };
+      const t1 = Math.sqrt(2 * s / a), t2 = Math.sqrt(2 * (s - ds) / a);
+      return { outs: [
+        o('ts', R`t_s`, R`\sqrt{\dfrac{2s}{a}}`, R`\sqrt{\dfrac{2\cdot ${fmtIn(s)}}{${fmtIn(a)}}}`, t1, 'cas', 's'),
+        o('ts2', R`t_{s-\Delta s}`, R`\sqrt{\dfrac{2(s-\Delta s)}{a}}`, R`\sqrt{\dfrac{2\cdot ${fmtIn(s - ds)}}{${fmtIn(a)}}}`, t2, 'cas', 's'),
+        o('dt', R`\Delta t`, R`t_s-t_{s-\Delta s}`, R`${fmtIn(t1)}-${fmtIn(t2)}`, t1 - t2, 'cas', 's')] };
+    } },
+  /* ---------- gravitacija ---------- */
+  gr_planet: { tip: 'grav', ime: R`g na drugem planetu / višini`, imeTex: R`\(g\) na drugem planetu / višini`, usesG: false, gField: 'g0',
+    inputs: [{ k: 'g0', lab: R`g_0`, dim: 'pospesek', ph: '9,8 m/s^2' }, { k: 'R', lab: R`R`, dim: 'dolzina', ph: '6400 km' }, { k: 'Rp', lab: R`R'\ \text{(polmer planeta) ali}`, dim: 'dolzina', ph: '100 km', opt: true }, { k: 'h', lab: R`h\ \text{(višina)}`, dim: 'dolzina', ph: '', opt: true }],
+    compute(V) {
+      const { g0, R: Rz, Rp, h } = V;
+      if (!(g0 > 0) || !(Rz > 0)) return { err: R`Potrebujem \(g_0\) in \(R\).` };
+      if (Rp != null && Rp > 0) {
+        const gp = g0 * (Rz / Rp) ** 2;
+        return { outs: [
+          o('gp', R`g'`, R`g_0\left(\dfrac{R}{R'}\right)^2`, R`${fmtIn(g0)}\cdot\left(\dfrac{${fmtIn(Rz)}}{${fmtIn(Rp)}}\right)^2`, gp, 'pospesek', 'm/s^2'),
+          o('ratio', R`g'/g_0`, R`\left(\dfrac{R}{R'}\right)^2`, R`\left(\dfrac{${fmtIn(Rz)}}{${fmtIn(Rp)}}\right)^2`, gp / g0, 'brez', '', { sig: 4 })] };
+      }
+      if (h != null && h >= 0) {
+        const gh = g0 * Rz * Rz / (Rz + h) ** 2;
+        return { outs: [
+          o('gp', R`g(h)`, R`g_0\dfrac{R^2}{(R+h)^2}`, R`${fmtIn(g0)}\cdot\dfrac{(${fmtIn(Rz)})^2}{(${fmtIn(Rz)}+${fmtIn(h)})^2}`, gh, 'pospesek', 'm/s^2'),
+          o('ratio', R`g(h)/g_0`, R`\dfrac{R^2}{(R+h)^2}`, R`\dfrac{(${fmtIn(Rz)})^2}{(${fmtIn(Rz + h)})^2}`, gh / g0, 'brez', '')] };
+      }
+      return { err: R`Vpiši \(R'\) <b>ali</b> \(h\).` };
+    } },
+  gr_sat: { tip: 'grav', ime: 'Satelit', usesG: false, gField: 'g0',
+    inputs: [{ k: 'v', lab: R`v\ \text{ali}`, dim: 'hitrost', ph: '3 km/s', opt: true }, { k: 'h', lab: R`h`, dim: 'dolzina', ph: '', opt: true }, { k: 'R', lab: R`R`, dim: 'dolzina', ph: '6400 km' }, { k: 'g0', lab: R`g_0`, dim: 'pospesek', ph: '9,8 m/s^2' }],
+    compute(V) {
+      const { v, h, R: Rz, g0 } = V;
+      if (!(g0 > 0) || !(Rz > 0)) return { err: R`Potrebujem \(g_0\) in \(R\).` };
+      if (v != null && v > 0) {
+        const Rh = g0 * Rz * Rz / (v * v), hh = Rh - Rz, t0 = 2 * Math.PI * Rh / v;
+        const r = { outs: [
+          o('Rh', R`R+h`, R`\dfrac{g_0R^2}{v^2}`, R`\dfrac{${fmtIn(g0)}\cdot(${fmtIn(Rz)})^2}{(${fmtIn(v)})^2}`, Rh, 'dolzina', 'm'),
+          o('h', R`h`, R`(R+h)-R`, R`${fmtIn(Rh)}-${fmtIn(Rz)}`, hh, 'dolzina', 'm'),
+          o('t0', R`t_0`, R`\dfrac{2\pi(R+h)}{v}`, R`\dfrac{2\pi\cdot ${fmtIn(Rh)}}{${fmtIn(v)}}`, t0, 'cas', 's', { note: '= ' + fmtPlain(t0 / 3600) + ' h' })] };
+        if (hh < 0) r.warn = R`\(h\lt 0\): s to hitrostjo satelit ne more krožiti nad površjem (prehiter za ta tir je nemogoč – potreboval bi \(R+h\lt R\)).`;
+        return r;
+      }
+      if (h != null && h >= 0) {
+        const vv = Math.sqrt(g0 * Rz * Rz / (Rz + h)), t0 = 2 * Math.PI * (Rz + h) / vv;
+        return { outs: [
+          o('v', R`v`, R`\sqrt{\dfrac{g_0R^2}{R+h}}`, R`\sqrt{\dfrac{${fmtIn(g0)}\cdot(${fmtIn(Rz)})^2}{${fmtIn(Rz + h)}}}`, vv, 'hitrost', 'm/s'),
+          o('t0', R`t_0`, R`\dfrac{2\pi(R+h)}{v}`, R`\dfrac{2\pi\cdot ${fmtIn(Rz + h)}}{${fmtIn(vv)}}`, t0, 'cas', 's', { note: '= ' + fmtPlain(t0 / 3600) + ' h' })] };
+      }
+      return { err: R`Vpiši \(v\) <b>ali</b> \(h\).` };
+    } },
+  /* ---------- klanec ---------- */
+  kl_mejni: { tip: 'klanec', ime: 'Mejni kot ↔ koeficient lepenja', usesG: false,
+    inputs: [{ k: 'am', lab: R`\alpha_m\ \text{ali}`, dim: 'kot', ph: '25°', opt: true }, { k: 'kl', lab: R`k_l`, dim: 'brez', ph: '', opt: true }],
+    compute(V) {
+      const { am, kl } = V;
+      if (am != null && am > 0 && am < Math.PI / 2) return { outs: [o('kl', R`k_l`, R`\tan\alpha_m`, R`\tan ${dg(am)}`, Math.tan(am), 'brez', '')] };
+      if (kl != null && kl > 0) return { outs: [o('am', R`\alpha_m`, R`\arctan k_l`, R`\arctan ${fmtIn(kl)}`, Math.atan(kl), 'kot', '', { deg: true })] };
+      return { err: R`Vpiši \(\alpha_m\) (\(0^\circ\)–\(90^\circ\)) <b>ali</b> \(k_l>0\).` };
+    } },
+  kl_kladi: { tip: 'klanec', ime: 'Dve kladi na klancu z vlečno silo', usesG: true,
+    inputs: [{ k: 'm1', lab: R`m_1\ \text{(spodnja)}`, dim: 'masa', ph: '2 kg' }, { k: 'm2', lab: R`m_2\ \text{(zgornja)}`, dim: 'masa', ph: '5 kg' }, { k: 'F', lab: R`F`, dim: 'sila', ph: '70 N' }, { k: 'al', lab: R`\alpha`, dim: 'kot', ph: '30°' }, { k: 'k', lab: R`k\ \text{(trenje)}`, dim: 'brez', ph: '0,2' }],
+    compute(V, g) {
+      const { m1, m2, F, al, k } = V;
+      if (!(m1 > 0 && m2 > 0) || F == null || al == null || k == null) return { err: 'Izpolni vsa polja.' };
+      const M = m1 + m2, s = Math.sin(al), c = Math.cos(al);
+      const a = (F - M * g * (s + k * c)) / M, T = m1 * (a + g * s + k * g * c);
+      const r = { outs: [
+        o('a', R`a`, R`\dfrac{F-(m_1+m_2)g(\sin\alpha+k\cos\alpha)}{m_1+m_2}`, R`\dfrac{${fmtIn(F)}-${fmtIn(M)}\cdot ${fmtIn(g)}\,(\sin ${dg(al)}+${fmtIn(k)}\cos ${dg(al)})}{${fmtIn(M)}}`, a, 'pospesek', 'm/s^2'),
+        o('T', R`T`, R`\dfrac{m_1}{m_1+m_2}F`, R`\dfrac{${fmtIn(m1)}}{${fmtIn(M)}}\cdot ${fmtIn(F)}`, T, 'sila', 'N')] };
+      if (a <= 0) r.warn = 'Sila je premajhna, sistem miruje – računaj z lepenjem (zgornji rezultati tedaj ne veljajo).';
+      return r;
+    } },
+  /* ---------- trki ---------- */
+  tr_trk: { tip: 'trki', ime: 'Trk', usesG: false,
+    inputs: [{ k: 'm1', lab: R`m_1`, dim: 'masa', ph: '2 kg' }, { k: 'v1', lab: R`v_1\ \text{(s predznakom)}`, dim: 'hitrost', ph: '15 m/s' }, { k: 'm2', lab: R`m_2`, dim: 'masa', ph: '1 kg' }, { k: 'v2', lab: R`v_2\ \text{(s predznakom)}`, dim: 'hitrost', ph: '0 m/s' },
+      { k: 'vrsta', lab: R`\text{vrsta trka}`, sel: [['neel', 'popolnoma neelastičen (sprimeta se)'], ['proz', 'prožen']] }],
+    compute(V) {
+      const { m1, v1, m2, v2, vrsta } = V;
+      if (!(m1 > 0 && m2 > 0) || v1 == null || v2 == null) return { err: 'Izpolni mase in hitrosti.' };
+      const M = m1 + m2, W0 = m1 * v1 * v1 / 2 + m2 * v2 * v2 / 2;
+      if (vrsta === 'proz') {
+        const a = ((m1 - m2) * v1 + 2 * m2 * v2) / M, b = ((m2 - m1) * v2 + 2 * m1 * v1) / M;
+        const W1 = m1 * a * a / 2 + m2 * b * b / 2;
+        return { outs: [
+          o('v1p', R`v_1'`, R`\dfrac{(m_1-m_2)v_1+2m_2v_2}{m_1+m_2}`, R`\dfrac{(${fmtIn(m1)}-${fmtIn(m2)})\cdot ${fmtIn(v1)}+2\cdot ${fmtIn(m2)}\cdot ${fmtIn(v2)}}{${fmtIn(M)}}`, a, 'hitrost', 'm/s'),
+          o('v2p', R`v_2'`, R`\dfrac{(m_2-m_1)v_2+2m_1v_1}{m_1+m_2}`, R`\dfrac{(${fmtIn(m2)}-${fmtIn(m1)})\cdot ${fmtIn(v2)}+2\cdot ${fmtIn(m1)}\cdot ${fmtIn(v1)}}{${fmtIn(M)}}`, b, 'hitrost', 'm/s'),
+          o('dW', R`\Delta W_k`, R`W_k'-W_k`, R`${fmtIn(W1)}-${fmtIn(W0)}`, W1 - W0, 'energija', 'J', { note: 'prožen trk: energija se ohrani' })] };
+      }
+      const v = (m1 * v1 + m2 * v2) / M, W1 = M * v * v / 2;
+      return { outs: [
+        o('v', R`v`, R`\dfrac{m_1v_1+m_2v_2}{m_1+m_2}`, R`\dfrac{${fmtIn(m1)}\cdot ${fmtIn(v1)}+${fmtIn(m2)}\cdot ${fmtIn(v2)}}{${fmtIn(M)}}`, v, 'hitrost', 'm/s'),
+        o('dW', R`\Delta W_k`, R`\tfrac12(m_1+m_2)v^2-\left(\tfrac12m_1v_1^2+\tfrac12m_2v_2^2\right)`, R`${fmtIn(W1)}-${fmtIn(W0)}`, W1 - W0, 'energija', 'J', { note: 'izguba kinetične energije' })] };
+    } },
+  tr_ust: { tip: 'trki', ime: 'Ustavljanje s trenjem po trku', usesG: true,
+    inputs: [{ k: 'v', lab: R`v\ \text{(po trku)}`, dim: 'hitrost', ph: '10 m/s' }, { k: 's', lab: R`s\ \text{ali}`, dim: 'dolzina', ph: '15 m', opt: true }, { k: 'kt', lab: R`k_t`, dim: 'brez', ph: '', opt: true }],
+    compute(V, g) {
+      const { v, s, kt } = V;
+      if (v == null) return { err: R`Vpiši \(v\).` };
+      if (s != null && s > 0) return { outs: [o('kt', R`k_t`, R`\dfrac{v^2}{2gs}`, R`\dfrac{${fmtIn(v)}^2}{2\cdot ${fmtIn(g)}\cdot ${fmtIn(s)}}`, v * v / (2 * g * s), 'brez', '')] };
+      if (kt != null && kt > 0) return { outs: [o('s', R`s`, R`\dfrac{v^2}{2k_tg}`, R`\dfrac{${fmtIn(v)}^2}{2\cdot ${fmtIn(kt)}\cdot ${fmtIn(g)}}`, v * v / (2 * kt * g), 'dolzina', 'm')] };
+      return { err: R`Vpiši \(s\) <b>ali</b> \(k_t\).` };
+    } },
+  /* ---------- steiner ---------- */
+  st: { tip: 'steiner', ime: 'Palica + kroglici', usesG: false,
+    inputs: [{ k: 'm', lab: R`m\ \text{(palica)}`, dim: 'masa', ph: '1 kg' }, { k: 'L', lab: R`L`, dim: 'dolzina', ph: '1 m' }, { k: 'D', lab: R`D\ \text{(os od krajišča)}`, dim: 'dolzina', ph: '0 m', opt: true }, { k: 'm1', lab: R`m_1\ \text{(kroglica, prazno = 0)}`, dim: 'masa', ph: '', opt: true }, { k: 'R', lab: R`R\ \text{(kroglica, prazno = 0)}`, dim: 'dolzina', ph: '', opt: true }],
+    compute(V) {
+      const m = V.m, L = V.L, D = V.D || 0, m1 = V.m1 || 0, Rk = V.R || 0;
+      if (!(m > 0 && L > 0) || D < 0 || D > L) return { err: R`Potrebujem \(m>0\), \(L>0\) in \(0\le D\le L\).` };
+      const rs = L / 2 - D, Jp = m * L * L / 12 + m * rs * rs;
+      const outs = [o('Jp', R`J_p`, R`\dfrac{mL^2}{12}+m\left(\dfrac L2-D\right)^2`, R`\dfrac{${fmtIn(m)}\cdot ${fmtIn(L)}^2}{12}+${fmtIn(m)}\cdot ${fmtIn(rs)}^2`, Jp, 'vztr', 'kg\\,m^2')];
+      if (m1 > 0) {
+        const Jt = Jp + m1 * (D * D + (L - D) ** 2);
+        outs.push(o('Jt', R`J_{\text{točk.}}`, R`J_p+m_1D^2+m_1(L-D)^2`, R`${fmtIn(Jp)}+${fmtIn(m1)}\cdot ${fmtIn(D)}^2+${fmtIn(m1)}\cdot ${fmtIn(L - D)}^2`, Jt, 'vztr', 'kg\\,m^2'));
+        if (Rk > 0) {
+          const Jk = Jt + 2 * 0.4 * m1 * Rk * Rk;
+          outs.push(o('Jk', R`J_{\text{konč.}}`, R`J_{\text{točk.}}+2\cdot\tfrac25m_1R^2`, R`${fmtIn(Jt)}+\tfrac45\cdot ${fmtIn(m1)}\cdot ${fmtIn(Rk)}^2`, Jk, 'vztr', 'kg\\,m^2', { sig: 6, note: 'prikaz na 6 mest, ker je prispevek kroglic majhen' }));
+        }
+      }
+      return { outs, info: R`Kroglici imata središči v krajiščih palice (na razdaljah \(D\) in \(L-D\) od osi).` };
+    } },
+  /* ---------- vrtilna ---------- */
+  vr: { tip: 'vrtilna', ime: 'Ohranitev vrtilne količine', usesG: false,
+    inputs: [{ k: 'J1', lab: R`J_1\ \text{ali}`, dim: 'vztr', ph: '6 kg m^2', opt: true }, { k: 'G1', lab: R`\Gamma_1`, dim: 'vrtilna', ph: '', opt: true }, { k: 'w1', lab: R`\omega_1`, dim: 'kotna', ph: '2 rad/s' }, { k: 'J2', lab: R`J_2\ \text{ali}`, dim: 'vztr', ph: '2 kg m^2', opt: true }, { k: 'w2', lab: R`\omega_2`, dim: 'kotna', ph: '', opt: true }],
+    compute(V) {
+      const { w1 } = V;
+      if (!(w1 > 0)) return { err: R`Vpiši \(\omega_1>0\).` };
+      let J1 = V.J1, G;
+      const outs = [];
+      if (J1 != null && J1 > 0) { G = J1 * w1; outs.push(o('G', R`\Gamma`, R`J_1\omega_1`, R`${fmtIn(J1)}\cdot ${fmtIn(w1)}`, G, 'vrtilna', 'kg\\,m^2/s')); }
+      else if (V.G1 != null && V.G1 > 0) { G = V.G1; J1 = G / w1; outs.push(o('J1', R`J_1`, R`\dfrac{\Gamma_1}{\omega_1}`, R`\dfrac{${fmtIn(G)}}{${fmtIn(w1)}}`, J1, 'vztr', 'kg\\,m^2')); }
+      else return { err: R`Vpiši \(J_1\) <b>ali</b> \(\Gamma_1\).` };
+      let w2;
+      if (V.J2 != null && V.J2 > 0) { w2 = G / V.J2; outs.push(o('w2', R`\omega_2`, R`\omega_1\dfrac{J_1}{J_2}`, R`${fmtIn(w1)}\cdot\dfrac{${fmtIn(J1)}}{${fmtIn(V.J2)}}`, w2, 'kotna', 'rad/s')); }
+      else if (V.w2 != null && V.w2 > 0) { w2 = V.w2; outs.push(o('J2', R`J_2`, R`\dfrac{\Gamma}{\omega_2}`, R`\dfrac{${fmtIn(G)}}{${fmtIn(w2)}}`, G / w2, 'vztr', 'kg\\,m^2')); }
+      else return { err: R`Vpiši \(J_2\) <b>ali</b> \(\omega_2\).` };
+      const W1 = G * w1 / 2, W2 = G * w2 / 2;
+      outs.push(o('W1', R`W_{k1}`, R`\dfrac{\Gamma\omega_1}{2}`, R`\dfrac{${fmtIn(G)}\cdot ${fmtIn(w1)}}{2}`, W1, 'energija', 'J'));
+      outs.push(o('W2', R`W_{k2}`, R`\dfrac{\Gamma\omega_2}{2}`, R`\dfrac{${fmtIn(G)}\cdot ${fmtIn(w2)}}{2}`, W2, 'energija', 'J'));
+      outs.push(o('dW', R`\Delta W_k`, R`W_{k2}-W_{k1}`, R`${fmtIn(W2)}-${fmtIn(W1)}`, W2 - W1, 'energija', 'J', { note: W2 > W1 ? 'energija se poveča (delo mišic)' : '' }));
+      return { outs };
+    } },
+  /* ---------- voziček ---------- */
+  vz_naprej: { tip: 'vozicek', ime: R`a₀ → nagib in napetost`, imeTex: R`\(a_0\) → nagib in napetost`, usesG: true,
+    inputs: [{ k: 'a0', lab: R`a_0`, dim: 'pospesek', ph: '2 m/s^2' }, { k: 'mu', lab: R`m_u`, dim: 'masa', ph: '0,1 kg' }],
+    compute(V, g) {
+      const { a0, mu } = V;
+      if (a0 == null || !(mu > 0)) return { err: R`Vpiši \(a_0\) in \(m_u>0\).` };
+      const al = Math.atan(a0 / g), T = mu * Math.sqrt(g * g + a0 * a0);
+      return { outs: [
+        o('alpha', R`\alpha`, R`\arctan\dfrac{a_0}{g}`, R`\arctan\dfrac{${fmtIn(a0)}}{${fmtIn(g)}}`, al, 'kot', '', { deg: true, note: '= ' + fmtPlain(al) + ' rad, od navpičnice nazaj' }),
+        o('T', R`T`, R`m_u\sqrt{g^2+a_0^2}`, R`${fmtIn(mu)}\cdot\sqrt{${fmtIn(g)}^2+${fmtIn(a0)}^2}`, T, 'sila', 'N'),
+        o('Tx', R`T\sin\alpha`, R`m_ua_0`, R`${fmtIn(mu)}\cdot ${fmtIn(a0)}`, mu * a0, 'sila', 'N'),
+        o('Ty', R`T\cos\alpha`, R`m_ug`, R`${fmtIn(mu)}\cdot ${fmtIn(g)}`, mu * g, 'sila', 'N')] };
+    } },
+  vz_obratno: { tip: 'vozicek', ime: R`α → a₀`, imeTex: R`\(\alpha\) → \(a_0\)`, usesG: true,
+    inputs: [{ k: 'al', lab: R`\alpha\ \text{(od navpičnice)}`, dim: 'kot', ph: '11,5°' }],
+    compute(V, g) {
+      const { al } = V;
+      if (!(al >= 0 && al < Math.PI / 2)) return { err: R`Vpiši \(0^\circ\le\alpha\lt 90^\circ\).` };
+      return { outs: [o('a0', R`a_0`, R`g\tan\alpha`, R`${fmtIn(g)}\cdot\tan ${dg(al)}`, g * Math.tan(al), 'pospesek', 'm/s^2')] };
+    } }
+};
+const MODES_BY_TIP = {};
+for (const [id, m] of Object.entries(MODES)) { m.id = id; (MODES_BY_TIP[m.tip] = MODES_BY_TIP[m.tip] || []).push(id); }
+
+function fmtOut(x) { return (x.deg ? fmtN(x.val / DEG, x.sig || 3) + '^\\circ' : fmtN(x.val, x.sig || 3) + unitTex(x.u)); }
+
+// izračun načina iz nizov (za teste in simulacijo)
+function computeFromStrings(modeId, vals, g) {
+  const M = MODES[modeId], V = {};
+  for (const inp of M.inputs) {
+    const s = vals[inp.k];
+    if (inp.sel) { V[inp.k] = s || inp.sel[0][0]; continue; }
+    if (s == null || String(s).trim() === '') { V[inp.k] = null; continue; }
+    const p = parseQty(s, inp.dim);
+    if (!p.ok) return { err: inp.k + ': ' + p.msg };
+    V[inp.k] = p.si;
+  }
+  return M.compute(V, g);
+}
+function otherG(g) { return Math.abs(g - 9.8) < 1e-9 ? 9.81 : (Math.abs(g - 9.81) < 1e-9 ? 9.8 : null); }
+// vrednost z drugim g (za »razlika samo zaradi g«)
+function altValue(modeId, vals, g, k) {
+  const M = MODES[modeId];
+  let r;
+  if (M.gField) {
+    const p = parseQty(vals[M.gField] || '', 'pospesek'); if (!p.ok) return null;
+    const og = otherG(p.si); if (og == null) return null;
+    r = computeFromStrings(modeId, Object.assign({}, vals, { [M.gField]: String(og) + ' m/s^2' }), og);
+  } else if (M.usesG) {
+    const og = otherG(g); if (og == null) return null;
+    r = computeFromStrings(modeId, vals, og);
+  } else return null;
+  const x = r && r.outs && r.outs.find(q => q.k === k);
+  return x ? x.val : null;
+}
+
+/* ---- UI kalkulatorja ---- */
+const CALC = {}; // stanje po tipih: {mode, vals:{mode:{k:str}}, g}
+function calcLoads(tipId) {
+  const L = [];
+  for (const n of NALOGE) {
+    if (n.tip !== tipId || !n.calc) continue;
+    L.push({ id: n.id, label: n.calc.label || (n.id + ' – podatki s kolokvija'), mode: n.calc.mode, vals: n.calc.vals, g: n.calc.g, ilustr: !!n.calc.ilustr });
+    if (n.calc.extra) L.push({ id: n.id + '+', label: n.id + ' – ustavljanje po trku (v = 10 m/s iz prvega dela)', mode: n.calc.extra.mode, vals: n.calc.extra.vals, g: n.calc.extra.g, ilustr: false });
+  }
+  for (const e of (TIP[tipId].extraLoads || [])) L.push(Object.assign({ id: 'x' + L.length }, e));
+  return L;
+}
+function calcState(tipId) {
+  if (!CALC[tipId]) {
+    const modes = MODES_BY_TIP[tipId];
+    CALC[tipId] = { mode: modes[0], vals: {}, g: CONST.g, ilustr: false };
+  }
+  return CALC[tipId];
+}
+function calcHTML(tipId) {
+  const st = calcState(tipId), M = MODES[st.mode], modes = MODES_BY_TIP[tipId];
+  const loads = calcLoads(tipId);
+  const vals = st.vals[st.mode] || {};
+  let h = '<div class="calc" id="calc">';
+  if (modes.length > 1) h += '<div class="tabs" role="tablist">' + modes.map(m => '<button data-mode="' + m + '" class="' + (m === st.mode ? 'on' : '') + '">' + (MODES[m].imeTex || MODES[m].ime) + '</button>').join('') + '</div>';
+  else h += '<h3 style="margin-top:0">' + (M.imeTex || M.ime) + '</h3>';
+  h += '<div class="row" style="margin-bottom:8px"><select id="calcLoadSel" style="flex:1;min-width:220px" aria-label="Izberi nalogo">' + loads.map((l, i) => '<option value="' + i + '"' + (i === loads.findIndex(x => x.mode === st.mode) ? ' selected' : '') + '>' + esc(l.label) + '</option>').join('') + '</select><button id="calcLoad">Naloži podatke s kolokvija</button></div>';
+  if (st.ilustr) h += '<div class="note">števila so ilustrativna (simbolna naloga)</div>';
+  if (M.usesG || M.gField) {
+    const gv = M.gField ? (parseQty(vals[M.gField] || '', 'pospesek').si) : st.g;
+    h += '<div class="row small" style="margin:6px 0"><span>Težni pospešek: </span><span class="seg"><button data-g="9.81" class="' + (Math.abs(gv - 9.81) < 1e-9 ? 'on' : '') + '">\\(g = 9{,}81\\)</button><button data-g="9.8" class="' + (Math.abs(gv - 9.8) < 1e-9 ? 'on' : '') + '">\\(9{,}8\\)</button></span></div>';
+  }
+  h += '<div class="fgrid">';
+  for (const inp of M.inputs) {
+    if (inp.sel) {
+      h += '<div class="fld"><label>\\(' + inp.lab + '\\)</label><select data-k="' + inp.k + '">' + inp.sel.map(([v, t]) => '<option value="' + v + '"' + ((vals[inp.k] || inp.sel[0][0]) === v ? ' selected' : '') + '>' + t + '</option>').join('') + '</select></div>';
+    } else {
+      h += '<div class="fld"><label>\\(' + inp.lab + '\\)' + (inp.opt ? ' <span class="small muted">(izbirno)</span>' : '') + '</label><input type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" data-k="' + inp.k + '" data-dim="' + inp.dim + '" placeholder="npr. ' + esc(inp.ph || DIMS[inp.dim].npr) + '" value="' + esc(vals[inp.k] || '') + '"><div class="conv"></div></div>';
+    }
+  }
+  h += '</div><div class="row" style="margin-top:8px"><button class="primary" id="calcGo">Izračunaj</button></div><div class="out" id="calcOut"></div>';
+  h += '<div class="card" style="margin-top:12px;box-shadow:none"><b>Moj rezultat</b><div class="row" style="margin-top:6px"><select id="myK" style="flex:0 1 220px"></select><input type="text" id="myV" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="npr. 7,88 m" style="flex:1;min-width:140px"><button id="myGo">Preveri</button></div><div id="myFb"></div></div>';
+  h += '</div>';
+  return h;
+}
+function bindCalc(root, tipId) {
+  const st = calcState(tipId);
+  const box = $('#calc', root);
+  if (!box) return;
+  const M = MODES[st.mode];
+  const vals = st.vals[st.mode] = st.vals[st.mode] || {};
+  const rerender = () => { box.outerHTML = calcHTML(tipId); const nb = $('#calc', root); renderMath(nb); bindCalc(root, tipId); };
+  $$('.tabs button', box).forEach(b => b.onclick = () => { st.mode = b.dataset.mode; st.ilustr = false; rerender(); });
+  $$('.seg button', box).forEach(b => b.onclick = () => {
+    const gv = parseFloat(b.dataset.g);
+    if (M.gField) vals[M.gField] = String(gv).replace('.', ',') + ' m/s^2'; else st.g = gv;
+    rerender(); if (box.dataset.ran) $('#calcGo', root).click();
+  });
+  $('#calcLoad', box).onclick = () => {
+    const L = calcLoads(tipId)[+$('#calcLoadSel', box).value];
+    loadCalc(root, tipId, L);
+  };
+  $$('input[data-k]', box).forEach(inp => {
+    const upd = () => {
+      vals[inp.dataset.k] = inp.value;
+      const cv = inp.nextElementSibling;
+      if (!inp.value.trim()) { cv.innerHTML = ''; cv.classList.remove('err'); return; }
+      const p = parseQty(inp.value, inp.dataset.dim);
+      cv.classList.toggle('err', !p.ok);
+      cv.innerHTML = p.ok ? convTex(p, inp.dataset.dim) : esc(p.msg);
+      renderMath(cv);
+    };
+    inp.addEventListener('input', upd); upd();
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') $('#calcGo', root).click(); });
+  });
+  $$('select[data-k]', box).forEach(sel => sel.onchange = () => { vals[sel.dataset.k] = sel.value; });
+  let last = null;
+  $('#calcGo', box).onclick = () => {
+    const out = $('#calcOut', box);
+    const gUse = M.gField ? null : st.g;
+    const r = computeFromStrings(st.mode, vals, gUse);
+    box.dataset.ran = '1';
+    if (!r || r.err) { out.innerHTML = '<div class="fb bad">' + (r ? r.err : 'Napaka') + '</div>'; renderMath(out); last = null; fillMy(); return; }
+    last = r;
+    let h = '';
+    if (r.warn) h += '<div class="fb or">' + r.warn + '</div>';
+    if (r.info) h += '<div class="small muted">' + r.info + '</div>';
+    for (const x of r.outs) {
+      h += '<div class="outblk"><div class="l">\\(' + x.lab + '=' + x.f + '\\)</div><div class="l">\\(' + x.lab + '=' + x.n + '\\)</div><div class="l"><b>\\(' + x.lab + '=' + fmtOut(x) + '\\)</b>' + (x.note ? ' <span class="small muted">(' + x.note + ')</span>' : '') + '</div></div>';
+    }
+    out.innerHTML = h; renderMath(out); fillMy();
+  };
+  const fillMy = () => {
+    const sel = $('#myK', box), prev = sel.value;
+    sel.innerHTML = last ? last.outs.map(x => '<option value="' + x.k + '">' + esc(x.lab.replace(/\\[a-zA-Z]+/g, m => ({ '\\beta': 'β', '\\alpha': 'α', '\\Gamma': 'Γ', '\\omega': 'ω', '\\Delta': 'Δ', '\\varphi': 'φ', '\\mathrm': '', '\\sqrt': '√' }[m] ?? '')).replace(/[{}\\]/g, '').replace(/\s+/g, ' ')) + '</option>').join('') : '<option value="">najprej »Izračunaj«</option>';
+    if (prev && last && last.outs.some(x => x.k === prev)) sel.value = prev;
+  };
+  fillMy();
+  $('#myGo', box).onclick = () => {
+    const fb = $('#myFb', box);
+    if (!last) { $('#calcGo', box).click(); }
+    if (!last) { fb.innerHTML = '<div class="fb bad">Najprej izpolni podatke in klikni »Izračunaj«.</div>'; return; }
+    const k = $('#myK', box).value, x = last.outs.find(q => q.k === k);
+    const alt = altValue(st.mode, vals, M.gField ? null : st.g, k);
+    const r = checkResult($('#myV', box).value, x.dim, x.val, alt);
+    fb.innerHTML = '<div class="fb ' + r.cls + '">' + r.msg + (r.wrong ? ' <button class="small" id="myShow">Pokaži</button>' : '') + '</div>';
+    renderMath(fb);
+    const sb = $('#myShow', fb);
+    if (sb) sb.onclick = () => { sb.outerHTML = '<span>pravilno: \\(' + fmtOut(x) + '\\)</span>'; renderMath(fb); };
+  };
+  $('#myV', box).addEventListener('keydown', e => { if (e.key === 'Enter') $('#myGo', box).click(); });
+}
+function loadCalc(root, tipId, L) {
+  const st = calcState(tipId);
+  st.mode = L.mode; st.vals[L.mode] = Object.assign({}, L.vals); st.ilustr = !!L.ilustr;
+  if (L.g) st.g = L.g;
+  const box = $('#calc', root);
+  box.outerHTML = calcHTML(tipId);
+  const nb = $('#calc', root); renderMath(nb); bindCalc(root, tipId);
+  const loads = calcLoads(tipId), idx = loads.findIndex(x => x.label === L.label);
+  if (idx >= 0) $('#calcLoadSel', nb).value = idx;
+  $('#calcGo', nb).click();
+}
+
+/* JS test kalkulatorjev: »Naloži podatke« mora dati natanko rezultate iz §3 */
+const CALC_EXPECT = [
+  ['2025/4', 'met_stena', { t: 0.97906, y: 7.8848, vy: 3.2512, v: 15.6621, beta: 11.981 * DEG }],
+  ['2024/4', 'met_vod', { tp: 2.019275, D: 30.289, vy: -19.8091, v: 24.8475, beta: 52.866 * DEG }],
+  ['2023/3', 'pr_navp', { td: 1.530612, h: 11.479592, tp: 3.061224, yt: 10.1, vt: 5.2 }],
+  ['2024/3', 'pr_del', { ts: 14.142136, ts2: 13.416408, dt: 0.725728 }],
+  ['2022/3', 'gr_planet', { gp: 40140.8, ratio: 4096 }],
+  ['2023/4', 'gr_sat', { Rh: 4.460089e7, h: 3.820089e7 }],
+  ['2024/1', 'kl_mejni', { kl: 0.466308 }],
+  ['2025/3', 'kl_kladi', { a: 3.39586, T: 20 }],
+  ['2022/4', 'tr_trk', { v: 10 }],
+  ['2022/4+', 'tr_ust', { kt: 0.339789 }],
+  ['2024/2', 'tr_trk', { v1p: 0, v2p: 1 }],
+  ['2025/1', 'st', { Jp: 0.173333 }],
+  ['2023/2', 'st', { Jp: 0.333333, Jt: 0.433333, Jk: 0.433365 }],
+  ['2023/1', 'vr', { w2: 6, G: 12, W1: 12, W2: 36 }],
+  ['2022/2', 'vz_naprej', { alpha: 11.523177 * DEG, T: 1.0011798 }]
+];
+function runCalcTests() {
+  const res = [];
+  for (const [id, mode, exp] of CALC_EXPECT) {
+    const n = NAL[id.replace('+', '')];
+    const c = id.endsWith('+') ? n.calc.extra : n.calc;
+    const r = computeFromStrings(mode, c.vals, c.g);
+    for (const [k, v] of Object.entries(exp)) {
+      const x = r.outs && r.outs.find(q => q.k === k);
+      const got = x ? x.val : NaN;
+      const tol = Math.abs(v) < 1e-9 ? 1e-9 : Math.abs(v) * 2e-4;
+      const shown = x ? fmtOut(x) : '—';
+      res.push({ name: id + ' ' + k, exp: v, got, shown, pass: Math.abs(got - v) <= tol });
+    }
+  }
+  // rezultati NALOGE (sim) == kalkulator
+  for (const n of NALOGE) {
+    if (!n.calc || n.calc.ilustr) continue;
+    for (const rz of n.rezultati) {
+      let r = computeFromStrings(n.calc.mode, n.calc.vals, n.calc.g), x = r.outs && r.outs.find(q => q.k === rz.k);
+      if (!x && n.calc.extra) { r = computeFromStrings(n.calc.extra.mode, n.calc.extra.vals, n.calc.extra.g); x = r.outs && r.outs.find(q => q.k === rz.k); }
+      const got = x ? x.val : NaN;
+      res.push({ name: n.id + ' NALOGE.' + rz.k, exp: rz.vrednost, got, shown: x ? fmtOut(x) : '—', pass: Math.abs(got - rz.vrednost) <= Math.abs(rz.vrednost) * 2e-4 });
+    }
+  }
+  return res;
+}
+
+/* =========================================================
+   NAVIGACIJA, TEMA, ŠTEVEC
+   ========================================================= */
+const TIP_ORDER = TIPI.map(t => t.id);
+function znamCount() { return TIP_ORDER.filter(id => S.znam[id]).length; }
+function updCounter() { const e = $('#cntZnam'); if (e) e.textContent = znamCount() + '/' + TIPI.length; }
+function buildNav(active) {
+  let h = '<a href="#pregled" data-r="pregled">🏠 Pregled</a><a href="#osnove" data-r="osnove">🧰 Osnove</a><div class="sec">Tipi nalog</div>';
+  TIPI.forEach((t, i) => { h += '<a href="#tip-' + t.id + '" data-r="tip-' + t.id + '"><span class="tn">' + (i + 1) + '</span><span>' + t.kratko + '</span>' + (S.znam[t.id] ? '<span class="tick">✓</span>' : '') + '</a>'; });
+  h += '<div class="sec">Vaja</div><a href="#kviz" data-r="kviz">❓ Preveri se</a><a href="#sim" data-r="sim">⏱️ Simulacija</a><a href="#plan" data-r="plan">📅 Plan učenja</a><a href="#napake" data-r="napake">⚠️ Najpogostejše napake</a>';
+  const nav = $('#side'); nav.innerHTML = h;
+  $$('a', nav).forEach(a => { if (a.dataset.r === active) a.classList.add('active'); a.addEventListener('click', closeMenu); });
+  updCounter();
+}
+function openMenu() { $('#side').classList.add('open'); $('#backdrop').classList.add('show'); $('#menuBtn').setAttribute('aria-expanded', 'true'); }
+function closeMenu() { $('#side').classList.remove('open'); $('#backdrop').classList.remove('show'); $('#menuBtn').setAttribute('aria-expanded', 'false'); }
+const THEMES = ['system', 'light', 'dark'], THEME_TXT = { system: 'Sistem', light: 'Svetla', dark: 'Temna' };
+function applyTheme() {
+  const t = S.theme || 'system';
+  if (t === 'system') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t);
+  $('#themeBtn').textContent = '🌓 ' + THEME_TXT[t];
+}
+
+/* =========================================================
+   PREGLED
+   ========================================================= */
+function pagePregled() {
+  const m = S.moji;
+  let h = '<h1>Pregled</h1><p class="meta">Vodič za 1. kolokvij iz Mehanike in toplote (Fizika I, AE, FE UL). Osem tipov nalog s štirih kolokvijev 2022–2025, recepti, rešeni primeri, kalkulatorji, kviz in simulacija.</p>';
+  h += '<h2>Kako izgleda kolokvij (znano iz gradiva)</h2><ul class="lst">';
+  h += '<li><b>4 naloge.</b> Naslov »1. kolokvij iz Mehanike in toplote (AE)«.</li>';
+  h += '<li>Datumi prejšnjih let: november 2022, 30. 11. 2023, november 2024, 28. 11. 2025.</li>';
+  h += '<li>Mešajo se izpeljave s simboli (»izrazite s simboli«, »zahtevana je celotna izpeljava«) in numerične naloge.</li>';
+  h += '<li>Ena naloga je pogosto konceptualna z obvezno utemeljitvijo (2025/2: »brez ustrezne utemeljitve z enačbami … nič točk«).</li>';
+  h += '<li>Snov: poglavja 1–4 učbenika (kinematika; Newtonovi zakoni z gravitacijo, trenjem in trki; vrtilna količina in vztrajnostni moment; kinetična energija vrtenja in prožni trk). Nihanje, deformacije, tekočine, valovanje in termodinamika se na 1. kolokviju ne pojavijo.</li>';
+  h += '<li>Nobena naloga nima uradne rešitve – vse rešitve so preračunane ' + NEURADNO + '.</li></ul>';
+  h += '<h2>Moji podatki o kolokviju</h2><div class="card"><p class="small muted" style="margin-top:0">V gradivu teh podatkov ni – izpolni sam (shrani se). Datum se uporabi v Planu in Simulaciji.</p><div class="grid2">';
+  h += '<div class="fld"><label for="mDatum">Datum kolokvija</label><input type="date" id="mDatum" value="' + esc(m.datum || '') + '"></div>';
+  h += '<div class="fld"><label for="mTraj">Trajanje (min)</label><input type="text" inputmode="numeric" id="mTraj" placeholder="ni podatka" value="' + esc(m.trajanje || '') + '"></div>';
+  h += '<div class="fld"><label for="mTocke">Točke na nalogo</label><input type="text" id="mTocke" placeholder="ni podatka" value="' + esc(m.tocke || '') + '"></div>';
+  h += '<div class="fld"><label for="mForm">Formular dovoljen?</label><select id="mForm"><option value="da">da</option><option value="ne">ne</option><option value="ni">ni podatka</option></select></div>';
+  h += '</div><div class="small muted" id="mSaved"></div></div>';
+  h += '<h2>Tipi nalog (po pogostosti)</h2><p class="small muted">Klik na vrstico odpre stran tipa.</p><div class="tscroll"><table><thead><tr><th>#</th><th>Tip</th><th>Kolikokrat</th><th>Naloge</th><th>Ključna formula</th><th>Na formularju?</th><th>✓</th></tr></thead><tbody>';
+  TIPI.forEach((t, i) => {
+    const nl = t.naloge.slice().sort();
+    h += '<tr class="click" data-go="tip-' + t.id + '"><td>' + (i + 1) + '</td><td><b>' + tipIme(t) + '</b></td><td>' + t.n + '×</td><td>' + nl.join(', ') + '</td><td>' + t.kljucna + '</td><td class="small">' + t.naForm + '</td><td>' + (S.znam[t.id] ? '<span style="color:var(--ok);font-weight:700">✓</span>' : '') + '</td></tr>';
+  });
+  h += '</tbody></table></div>';
+  h += '<h2>Recept za vsako nalogo</h2><ol class="proc">' + RECEPT.map(r => '<li>' + r + '</li>').join('') + '</ol>';
+  return h;
+}
+function bindPregled(root) {
+  $('#mForm', root).value = S.moji.formular || 'ni';
+  const sv = () => {
+    S.moji = { datum: $('#mDatum', root).value, trajanje: $('#mTraj', root).value.trim(), tocke: $('#mTocke', root).value.trim(), formular: $('#mForm', root).value };
+    save(); $('#mSaved', root).textContent = storeOK ? 'Shranjeno.' : 'Ni shranjeno (shranjevanje ne deluje) – podatki veljajo do zaprtja strani.';
+  };
+  ['#mDatum', '#mTraj', '#mTocke', '#mForm'].forEach(s => $(s, root).addEventListener('change', sv));
+  $$('tr[data-go]', root).forEach(tr => tr.onclick = () => { location.hash = '#' + tr.dataset.go; });
+}
+
+/* =========================================================
+   OSNOVE
+   ========================================================= */
+const PRETVORI = [
+  () => { const v = [36, 54, 72, 90, 108, 120][Math.floor(Math.random() * 6)]; return { q: R`${v}\,\mathrm{km/h}`, to: 'm/s', dim: 'hitrost', ans: v / 3.6 }; },
+  () => { const v = [6400, 100, 250, 38200, 3][Math.floor(Math.random() * 5)]; return { q: R`${fmtIn(v)}\,\mathrm{km}`, to: 'm', dim: 'dolzina', ans: v * 1000 }; },
+  () => { const v = [15, 2, 80, 45, 120][Math.floor(Math.random() * 5)]; return { q: R`${v}\,\mathrm{cm}`, to: 'm', dim: 'dolzina', ans: v / 100 }; },
+  () => { const v = [9, 250, 500, 20, 1500][Math.floor(Math.random() * 5)]; return { q: R`${v}\,\mathrm{g}`, to: 'kg', dim: 'masa', ans: v / 1000 }; },
+  () => { const v = [2.5, 0.8, 12, 1.2][Math.floor(Math.random() * 4)]; return { q: R`${fmtIn(v)}\,\mathrm{kN}`, to: 'N', dim: 'sila', ans: v * 1000 }; },
+  () => { const v = [30, 40, 25, 60, 45, 90][Math.floor(Math.random() * 6)]; return { q: R`${v}^\circ`, to: 'rad', dim: 'kot', ans: v * DEG }; },
+  () => { const v = [60, 120, 30, 300, 90][Math.floor(Math.random() * 5)]; return { q: R`${v}\,\mathrm{obr/min}`, to: 'rad/s', dim: 'kotna', ans: v * 2 * Math.PI / 60 }; },
+  () => { const v = [3, 7.9, 0.5][Math.floor(Math.random() * 3)]; return { q: R`${fmtIn(v)}\,\mathrm{km/s}`, to: 'm/s', dim: 'hitrost', ans: v * 1000 }; }
+];
+let pretvoriSet = [];
+function newPretvori() { pretvoriSet = Array.from({ length: 10 }, () => PRETVORI[Math.floor(Math.random() * PRETVORI.length)]()); }
+function fmapItem(title, tex) { return '<div class="it"><i>' + title + '</i> ' + tex + '</div>'; }
+function pageOsnove() {
+  let h = '<h1>Osnove, ki jih rabiš povsod</h1>';
+  h += '<h2>1. Konstante</h2><div class="tscroll"><table><thead><tr><th>Količina</th><th>Vrednost</th><th>Kdaj</th></tr></thead><tbody>';
+  h += '<tr><td>\\(g_0\\)</td><td>\\(' + fmtIn(CONST.g) + R`\,\mathrm{m/s^2}` + '\\)</td><td>formular (privzeto)</td></tr>';
+  h += '<tr><td>\\(g_0\\)</td><td>\\(' + fmtIn(CONST.g_kol) + R`\,\mathrm{m/s^2}` + '\\)</td><td>ko jo poda naloga (2022/3, 2023/3, 2023/4)</td></tr>';
+  h += '<tr><td>\\(R\\)</td><td>\\(6400\\,\\mathrm{km}=' + fmtIn(CONST.R_Z) + '\\,\\mathrm{m}\\)</td><td>polmer Zemlje (formular in kolokviji)</td></tr>';
+  h += '<tr><td>\\(G\\)</td><td>\\(' + fmtIn(CONST.G) + R`\,\mathrm{N\,m^2/kg^2}` + '\\)</td><td>formular</td></tr></tbody></table></div>';
+  h += '<div class="note">Če naloga poda \\(g\\), uporabi njeno vrednost. Če ga ne, vzemi \\(9{,}81\\) s formularja. Razlika je šele na 3. mestu.</div>';
+  h += '<h2>2. Predpone in pretvorbe</h2><div class="tscroll"><table><thead><tr><th>Predpona</th><th>Znak</th><th>Faktor</th></tr></thead><tbody>';
+  [['mili', 'm', '10^{-3}'], ['centi', 'c', '10^{-2}'], ['deci', 'd', '10^{-1}'], ['kilo', 'k', '10^{3}'], ['mega', 'M', '10^{6}']].forEach(r => { h += '<tr><td>' + r[0] + '</td><td>\\(\\mathrm{' + r[1] + '}\\)</td><td>\\(' + r[2] + '\\)</td></tr>'; });
+  h += '</tbody></table></div><ul class="lst">';
+  h += R`<li>\(1\,\mathrm{km/h}=\tfrac{1}{3{,}6}\,\mathrm{m/s}\)</li><li>\(1\,\mathrm{km}=10^3\,\mathrm{m}\) (pri satelitih vedno km → m!)</li><li>stopinje → radiani: \(\varphi_{\mathrm{rad}}=\varphi^\circ\cdot\tfrac{\pi}{180}\) (kalkulator mora biti v DEG, ko vstavljaš stopinje)</li><li>obrati/min → rad/s: \(\omega=2\pi\cdot\tfrac{n}{60}\)</li></ul>`;
+  h += '<div class="card" id="pretvori"><b>Mini vaja »Pretvori«</b> <span class="small muted">(toleranca 0,5 %; vpiši samo število v ciljni enoti ali število z enoto)</span><div id="pretList"></div><div class="row" style="margin-top:8px"><button id="pretNew">Novih 10</button><span id="pretCnt" class="muted"></span></div></div>';
+  h += '<h2>3. Vektorji in komponente</h2><p>Snov jih rabi pri metu, klancu in vozičku.</p><ul class="lst">';
+  h += R`<li>razstavljanje: \(v_{0x}=v_0\cos\varphi\), \(v_{0y}=v_0\sin\varphi\)</li><li>velikost: \(v=\sqrt{v_x^2+v_y^2}\)</li><li>kot: \(\tan\beta=\dfrac{v_y}{v_x}\)</li><li>na klancu: \(F_d=F_g\sin\alpha\) (dolvzdolž), \(F_n=F_g\cos\alpha\) (pravokotno)</li></ul>`;
+  h += svgVektor();
+  h += '<h2>4. Ključne zveze, ki se pojavljajo v več tipih</h2><div class="grid2">';
+  const kz = [[R`v^2=v_0^2+2as`, 'tipa 2 in 5 (ustavljanje s trenjem)', 'GIBANJE – Enakomerno pospešeno'], [R`F_t=k_tF_n`, 'tipa 4 in 5', 'SILA – Trenje in lepenje'], [R`\sum F=ma`, 'tipi 4, 5, 8', 'SILA – Drugi Newtonov zakon'], [R`\Gamma=J\omega,\quad W_k=\tfrac{J\omega^2}{2}`, 'tipa 6 in 7', 'NAVOR, ENERGIJA'], [R`g_0=G\tfrac{M}{R^2}`, 'tip 3', 'SILA – Gravitacijski zakon']];
+  kz.forEach(k => { h += '<div class="fbox">\\[' + k[0] + '\\]<div class="small muted">' + k[1] + '</div><div class="src">' + fbadge(k[2]) + '</div></div>'; });
+  h += '</div>';
+  h += '<h2>5. Kje je kaj na formularju</h2><p class="small muted">Okvirji v istem vrstnem redu in z istimi naslovi kot na listu »Mehanika in termodinamika – enačbe 2017 za pisne izpite«. Sivo: ni snov 1. kolokvija.</p><div class="card fmap">';
+  h += '<h4>Stran 1, stolpec 1 – GIBANJE</h4>';
+  h += fmapItem('Enakomerno (a = 0):', R`\(s=vt\)`);
+  h += fmapItem('Enakomerno pospešeno (a = konst):', R`\(s=v_0t+\tfrac{a_0t^2}{2}\), \(v=v_0+at\), \(v^2=v_0^2+2as\), \(v=at\)`);
+  h += fmapItem('Prosti pad (a = −g):', R`\(y=h-\tfrac{gt^2}{2}\); tik preden pade: \(t=\sqrt{\tfrac{2h}{g}}\), \(v=-\sqrt{2gh}\)`);
+  h += fmapItem('Navpični met (a = −g):', R`\(y=v_0t-\tfrac{gt^2}{2}\); najvišja točka: \(t=\tfrac{v_0}{g}\), \(h=\tfrac{v_0^2}{2g}\)`);
+  h += fmapItem('Vodoravni met:', R`\(v_{x0}=v_0\), \(v_{y0}=-gt\), \(x=v_0t\), \(y=h-\tfrac{gt^2}{2}\); ko telo pade: \(t_p=\sqrt{\tfrac{2h}{g}}\), \(x=v_0\sqrt{\tfrac{2h}{g}}\)`);
+  h += fmapItem('Poševni met:', R`\(v_{x0}=v_0\cos\varphi\), \(v_{y0}=v_0\sin\varphi\), \(v_x=v_0\cos\varphi\), \(v_y=v_0\sin\varphi-gt\), \(x=\tfrac{v_0^2}{g}\sin(2\varphi)\) – domet, \(y=x\tan\varphi-\tfrac{gx^2}{2v_0^2\cos^2\varphi}\) – enačba parabole leta`);
+  h += '<h4>KROŽENJE</h4><div class="small muted" style="margin-left:10px">Ni bilo na 1. kolokviju, a je v pogl. 1.</div>';
+  h += fmapItem('', R`\(f=\tfrac1{t_0}\), \(\omega=2\pi f\), \(\omega=\tfrac{\varphi}{t}\), \(v=\tfrac{2\pi r}{t_0}=\omega r\), \(\alpha=\tfrac{\omega}{t}=\tfrac{a_t}{r}\), \(a_t=\alpha r\), \(a_r=\omega v=\tfrac{v^2}{r}=\omega^2r\), \(s=r\varphi\); enakomerno: \(\varphi=\omega_0t\); enakomerno pospešeno: \(\omega=\omega_0+\alpha_0t\), \(\omega^2=\omega_0^2+2\alpha_0\varphi\), \(\varphi=\omega_0t+\tfrac{\alpha t^2}{2}\), \(N=\tfrac{\varphi}{2\pi}\)`);
+  h += '<h4>SILA</h4>';
+  h += fmapItem('Gravitacijski zakon:', R`\(g_0=9{,}81\,\mathrm{m/s^2}\), \(R=6400\,\mathrm{km}\), \(G=6{,}67\cdot10^{-11}\,\mathrm{Nm^2/kg^2}\); \(F=G\tfrac{m_1m_2}{r^2}\), \(F_g=G\tfrac{Mm}{(R+h)^2}\), \(g_0=G\tfrac{M}{R^2}\), \(F_g=mg_0\), \(g(h)=g_0\tfrac{R^2}{(R+h)^2}\)`);
+  h += fmapItem('*satelit okoli planeta:', R`\(g=a_r=\tfrac{v^2}{r}=\tfrac{v^2}{R+h}\)`);
+  h += fmapItem('Drugi Newtnov zakon:', R`\(\sum F=ma\)`);
+  h += fmapItem('Trenje in lepenje:', R`\(F_t=k_tF_n\), \(k_l=\tan\alpha\) – ko telo zdrsne`);
+  h += fmapItem('Sile na klancu:', R`\(F_d=F_g\sin\alpha\), \(F_n=F_g\cos\alpha\), \(F_l=k_lF_n\), \(k_l=\tan\alpha\), \(a=g(\sin\varphi-k_{tr}\cos\varphi)\)`);
+  h += fmapItem('Sile pri kroženju:', R`\(F_{cf}=m\omega^2r_0\), \(F_{Cor}=-2m(\vec\omega\times\vec v_r)\), \(F_{sist}=m\omega^2r_0-2m(\omega\times v_r)\)`);
+  h += '<h4>Stolpec 2 – GIBALNA KOLIČINA</h4>';
+  h += fmapItem('', R`\(\int F\,dt\) – sunek sile, \(\int F\,dt=\Delta G=G_2-G_1\), \(G=mv\); če je sunek zunanje sile 0: \(G_1=G_2\)`);
+  h += fmapItem('popolnoma neelastični trk:', R`\(m_1v_1+0=(m_1+m_2)v\)`);
+  h += fmapItem('popolnoma elastični trk:', R`\(m_1v_1'+m_2v_2'=m_1v_1+m_2v_2\)`);
+  h += '<div class="grayblk small">streljanje izstrelkov, Sila curka, Sistem točkastih mas – <i>ni snov 1. kolokvija</i></div>';
+  h += '<h4>NAVOR</h4>' + fmapItem('', R`\(M=J\alpha\), \(M=Fr\sin\varphi\), \(\Gamma=J\omega\), \(\Gamma=rG\), \(\int M\,dt=\Delta\Gamma=\Gamma_2-\Gamma_1\), \(r\int F\,dt=\int M\,dt\)`);
+  h += fmapItem('Vztrajnostni moment:', R`Steinerjev izrek \(J=J^*+mr^{*2}\); Palica: \(J^*=\tfrac{ml^2}{12}\), \(J=\tfrac{ml^2}{3}\); Obroč: \(J=mr^2\); Valj: \(J=\tfrac{mr^2}{2}\); Točka: \(J=mr^2\); Krogla: \(J=\tfrac25mr^2\)`);
+  h += '<h4>ENERGIJA</h4>' + fmapItem('Delo:', R`\(A=Fs\cos\varphi\), \(A=M\varphi\), \(A=-p\Delta V\), \(A=\int\vec F\,d\vec r\)`);
+  h += fmapItem('Kinetična energija:', R`\(W_k=\tfrac{mv^2}{2}=\tfrac{J\omega^2}{2}\)`) + fmapItem('Potencialna:', R`\(W_p=mgh\)`) + fmapItem('Prožnostna:', R`\(W_{pr}=\tfrac{kx^2}{2}\)`) + fmapItem('Ohranitev energije:', R`\(A=\Delta W_k+\Delta W_p+\Delta W_{pr}\)`);
+  h += '<h4>MOČ</h4>' + fmapItem('', R`\(P=\tfrac{A}{t}\), \(P=Fv\), \(P=M\omega\)`);
+  ['NIHANJE (vijačna/polžasta vzmet, matematično/fizično nihalo, dušeno, vsiljeno, sklopljeno)', 'VALOVANJE', 'TLAK/NAPETOST', 'MEHANIKA TEKOČIN', 'TERMODINAMIKA'].forEach(x => { h += '<div class="grayblk"><b>' + x + '</b> <span class="badge gray">ni snov 1. kolokvija</span></div>'; });
+  h += '</div>';
+  return h;
+}
+function bindOsnove(root) {
+  if (!pretvoriSet.length) newPretvori();
+  const draw = () => {
+    const L = $('#pretList', root);
+    L.innerHTML = pretvoriSet.map((p, i) => '<div class="row" style="margin:6px 0"><span style="min-width:150px">\\(' + p.q + '\\) → \\(\\mathrm{' + p.to + '}\\)</span><input type="text" data-i="' + i + '" style="flex:1;min-width:120px" autocomplete="off" placeholder="v ' + p.to + '"><button class="small" data-c="' + i + '">Preveri</button><span class="pfb" id="pfb' + i + '"></span></div>').join('');
+    renderMath(L);
+    const chk = (i) => {
+      const p = pretvoriSet[i], inp = $('input[data-i="' + i + '"]', L), fb = $('#pfb' + i, L);
+      const q = parseQty(inp.value, p.dim);
+      if (!q.ok) { fb.innerHTML = '<span class="err">' + esc(q.msg) + '</span>'; return; }
+      const v = q.assumed ? q.val : q.si, ok = Math.abs(v - p.ans) <= 0.005 * Math.abs(p.ans);
+      if (!p.done) { p.done = true; S.pretvori.vse++; if (ok) S.pretvori.ok++; save(); }
+      fb.innerHTML = ok ? '<b style="color:var(--ok)">✓</b>' : '<b style="color:var(--bad)">✗</b> \\(' + fmtN(p.ans, 4) + '\\)';
+      renderMath(fb); cnt();
+    };
+    $$('button[data-c]', L).forEach(b => b.onclick = () => chk(+b.dataset.c));
+    $$('input[data-i]', L).forEach(inp => inp.addEventListener('keydown', e => { if (e.key === 'Enter') chk(+inp.dataset.i); }));
+  };
+  const cnt = () => { $('#pretCnt', root).textContent = 'Pravilnih: ' + S.pretvori.ok + ' / ' + S.pretvori.vse; };
+  $('#pretNew', root).onclick = () => { newPretvori(); draw(); };
+  draw(); cnt();
+}
+
+/* =========================================================
+   PRIMER (rešen, z razkrivanjem korakov)
+   ========================================================= */
+function exId(id) { return 'ex-' + id.replace('/', '-'); }
+function podatkiHTML(n) {
+  return '<div class="tscroll" style="margin:8px 0"><table style="min-width:0"><thead><tr><th>Podatek</th><th>Opomba</th></tr></thead><tbody>' + n.podatkiTab.map(r => '<tr><td>\\(' + r[0] + '\\)</td><td class="small">' + r[1] + '</td></tr>').join('') + '</tbody></table></div>';
+}
+function exHTML(n, main) {
+  const vrsta = n.simbolna ? (n.vzorcni ? 'konceptualna, z utemeljitvijo' : 'izpeljava s simboli') : 'numerična';
+  let h = '<div class="ex" id="' + exId(n.id) + '">';
+  h += '<h3 style="margin-top:0">Kolokvij ' + n.id.replace('/', ', naloga ') + ' <span class="badge cnt">' + vrsta + '</span></h3>';
+  h += '<blockquote>' + n.besedilo + '</blockquote>';
+  h += podatkiHTML(n);
+  h += drawSvg(n.svg, n.svg === 'svgMetTiri');
+  if (n.slikaOpomba) h += '<div class="small muted" style="text-align:center">' + n.slikaOpomba + '</div>';
+  if (n.calc) h += '<div class="row"><button data-try="' + n.id + '">Najprej poskusi sam → kalkulator</button></div>';
+  h += '<div class="steps">';
+  if (n.vzorcni) h += '<div class="small muted">Vzorčni odgovor – tako bi zapisal na kolokviju:</div>';
+  n.koraki.forEach((k, i) => { h += '<div class="step" style="display:none"><div><b>' + (i + 1) + '.</b> \\[' + k[0] + '\\]</div><div class="why"><b>Zakaj:</b> ' + k[1] + '</div></div>'; });
+  h += '<div class="result" style="display:none"><b>Rezultat:</b> ' + n.rezultatTex + '<div style="margin-top:6px">' + NEURADNO + '</div>' + (n.opomba ? '<div class="small" style="margin-top:6px">' + n.opomba + '</div>' : '') + '</div>';
+  if (n.predpostavka) h += '<div class="note res2" style="display:none"><b>Predpostavka:</b> ' + n.predpostavka + '</div>';
+  if (n.svg !== 'svgMetTiri') h += '<div class="res2" style="display:none"><div class="small muted" style="text-align:center;margin-top:8px">Skica z rešitvijo:</div>' + drawSvg(n.svg, true) + '</div>';
+  h += '</div><div class="row stepbtns"><button class="primary" data-next>Naslednji korak</button><button data-all>Pokaži vse</button><span class="small muted stepcnt"></span></div>';
+  h += '</div>';
+  return h;
+}
+function bindEx(root) {
+  $$('.ex', root).forEach(ex => {
+    const steps = $$('.step', ex), res = $$('.result, .res2', ex), cnt = $('.stepcnt', ex);
+    let shown = 0;
+    const upd = () => {
+      steps.forEach((s, i) => s.style.display = i < shown ? '' : 'none');
+      const done = shown >= steps.length;
+      res.forEach(r => r.style.display = done ? '' : 'none');
+      if (cnt) cnt.textContent = done ? 'vse prikazano' : (shown + '/' + steps.length + ' korakov');
+      const nb = $('[data-next]', ex); if (nb) nb.disabled = done;
+      const ab = $('[data-all]', ex); if (ab) ab.textContent = done ? 'Skrij rešitev' : 'Pokaži vse';
+    };
+    const nb = $('[data-next]', ex), ab = $('[data-all]', ex);
+    if (nb) nb.onclick = () => { shown = Math.min(steps.length, shown + 1); upd(); };
+    if (ab) ab.onclick = () => { shown = shown >= steps.length ? 0 : steps.length; upd(); };
+    upd();
+  });
+}
+
+/* =========================================================
+   STRAN TIPA
+   ========================================================= */
+function pageTip(id) {
+  const t = TIP[id], i = TIP_ORDER.indexOf(id);
+  let h = '<label class="chk toptick card" style="margin:0 0 8px 12px;padding:6px 12px"><input type="checkbox" id="znam"' + (S.znam[id] ? ' checked' : '') + '> Ta tip znam</label>';
+  h += '<h1>' + (i + 1) + '. ' + tipIme(t) + ' <span class="badge cnt">' + t.n + '×</span></h1>';
+  h += '<div class="row" style="margin:8px 0">' + t.naloge.slice().sort().map(n => '<button class="chip" data-chip="' + n + '">' + n + '</button>').join('') + '</div>';
+  h += '<details class="card"><summary>Recept za vsako nalogo</summary><ol class="proc">' + RECEPT.map(r => '<li>' + r + '</li>').join('') + '</ol></details>';
+  h += '<h2>Prepoznaš po</h2><ul class="lst">' + t.prepoznas.map(x => '<li>' + x + '</li>').join('') + '</ul>';
+  h += '<h2>Kaj računaš in zakaj</h2><p>' + t.intuicija + '</p>';
+  if (t.namig) h += '<div class="note"><b>Neelastičen ali prožen?</b> ' + t.namig + '</div>';
+  h += '<h2>Formule</h2>' + t.formule.map(f => '<div class="fbox">\\[' + f[0] + '\\]<div class="src">' + f[1] + '</div></div>').join('');
+  h += '<h2>Postopek v korakih</h2><ol class="proc">' + t.postopek.map(x => '<li>' + x + '</li>').join('') + '</ol>';
+  h += '<h2>Rešen primer s kolokvija</h2>' + exHTML(NAL[t.naloge[0]], true);
+  if (t.naloge.length > 1) {
+    h += '<h2>Drugi primeri s kolokvija</h2>';
+    t.naloge.slice(1).forEach(nid => { h += '<details class="card" id="det-' + exId(NAL[nid].id) + '"><summary>Kolokvij ' + nid + '</summary>' + exHTML(NAL[nid], false) + '</details>'; });
+  }
+  h += '<h2>Kalkulator</h2><p class="small muted">Vnašaj število z enoto (npr. <span class="kbd">72 km/h</span>, <span class="kbd">15 cm</span>, <span class="kbd">30°</span>, <span class="kbd">6,4·10^6 m</span>). Pretvorba se pokaže sproti.</p>' + calcHTML(id);
+  h += '<h2>Pasti</h2><ul class="lst">' + t.pasti.map(x => '<li>' + x + '</li>').join('') + '</ul>';
+  h += '<h2>Vaje iz avditornih vaj</h2><p class="small muted">V gradivu avditornih vaj ni. Dodaj jih sam (shranijo se).</p><div class="card"><div class="row"><input type="text" id="avdSt" placeholder="št. (npr. 3.2)" style="flex:0 0 130px"><input type="text" id="avdOpis" placeholder="enovrstični opis" style="flex:1;min-width:180px"><button id="avdAdd">Dodaj vajo</button></div><ul class="lst" id="avdList"></ul></div>';
+  h += '<h3>Zgledi iz učbenika</h3><p class="small muted">Iglič, Kralj-Iglič: <i>Mehanika in termodinamika</i> (2016)</p><ul class="lst">' + t.ucbenik.map(x => '<li>' + x + '</li>').join('') + '</ul>';
+  const prev = TIPI[i - 1], next = TIPI[i + 1];
+  h += '<div class="navbtns">' + (prev ? '<a href="#tip-' + prev.id + '"><button>← prejšnji tip</button></a>' : '<span></span>') + (next ? '<a href="#tip-' + next.id + '"><button>naslednji tip →</button></a>' : '<span></span>') + '</div>';
+  return h;
+}
+function bindTip(root, id, anchor) {
+  $('#znam', root).onchange = (e) => { S.znam[id] = e.target.checked; if (!e.target.checked) delete S.znam[id]; save(); buildNav('tip-' + id); };
+  bindEx(root);
+  bindCalc(root, id);
+  const jump = (nid) => {
+    const det = $('#det-' + exId(nid), root); if (det) det.open = true;
+    const el = $('#' + exId(nid), root); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  $$('[data-chip]', root).forEach(b => b.onclick = () => jump(b.dataset.chip));
+  $$('[data-try]', root).forEach(b => b.onclick = () => {
+    const n = NAL[b.dataset.try], L = calcLoads(id).find(l => l.id === n.id);
+    if (L) loadCalc(root, id, L);
+    $('#calc', root).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  const avd = () => {
+    const list = (S.avd[id] = S.avd[id] || []);
+    $('#avdList', root).innerHTML = list.length ? list.map((v, i) => '<li><b>' + esc(v.st) + '</b> – ' + esc(v.opis) + ' <button class="small" data-del="' + i + '" aria-label="Odstrani">✕</button></li>').join('') : '<li class="muted">Še ni vnosov.</li>';
+    $$('[data-del]', root).forEach(b => b.onclick = () => { list.splice(+b.dataset.del, 1); save(); avd(); });
+  };
+  $('#avdAdd', root).onclick = () => {
+    const st = $('#avdSt', root).value.trim(), op = $('#avdOpis', root).value.trim();
+    if (!st && !op) return;
+    (S.avd[id] = S.avd[id] || []).push({ st, opis: op }); save();
+    $('#avdSt', root).value = ''; $('#avdOpis', root).value = ''; avd();
+  };
+  avd();
+  if (anchor) setTimeout(() => jump(anchor), 50);
+}
+
+/* =========================================================
+   KVIZ »PREPOZNAJ TIP«
+   ========================================================= */
+let Q = null;
+function newQuiz() { Q = { order: shuffle(NALOGE.map(n => n.id)), i: 0, ans: {}, done: false }; }
+function pageKviz() {
+  if (!Q) newQuiz();
+  let h = '<h1>Preveri se: prepoznaj tip</h1><p class="meta">Vseh 16 nalog s kolokvijev v naključnem vrstnem redu. Izberi tip naloge.</p><div id="quiz"></div>';
+  return h;
+}
+function drawQuiz(root) {
+  const box = $('#quiz', root);
+  if (Q.done) {
+    const ok = Q.order.filter(id => Q.ans[id] === NAL[id].tip).length, miss = Q.order.filter(id => Q.ans[id] !== NAL[id].tip);
+    let h = '<div class="card"><h2 style="margin-top:0">Rezultat: ' + ok + '/16</h2>';
+    if (miss.length) h += '<p>Zgrešene naloge:</p><ul class="lst">' + miss.map(id => '<li><a href="#tip-' + NAL[id].tip + ':' + id + '">' + id + '</a> – pravilno: ' + tipIme(TIP[NAL[id].tip]) + ' (tvoj odgovor: ' + tipIme(TIP[Q.ans[id]]) + ')</li>').join('') + '</ul>';
+    else h += '<p>Vse pravilno! 🎉</p>';
+    h += '<button class="primary" id="qAgain">Znova</button></div>';
+    h += '<h3>Zadnji rezultati</h3>' + (S.kviz.length ? '<ul class="lst">' + S.kviz.slice().reverse().map(r => '<li>' + r.datum + ': <b>' + r.ok + '/16</b></li>').join('') + '</ul>' : '<p class="muted">Še ni rezultatov.</p>');
+    box.innerHTML = h; renderMath(box);
+    $('#qAgain', box).onclick = () => { newQuiz(); drawQuiz(root); };
+    return;
+  }
+  const id = Q.order[Q.i], n = NAL[id], a = Q.ans[id];
+  let h = '<div class="card"><div class="row" style="justify-content:space-between"><b>Naloga ' + (Q.i + 1) + '/16</b><span class="small muted">pravilnih do zdaj: ' + Q.order.slice(0, Q.i).filter(x => Q.ans[x] === NAL[x].tip).length + '</span></div>';
+  h += '<blockquote style="margin:10px 0;padding:8px 14px;border-left:4px solid var(--accent);background:var(--panel2);border-radius:0 10px 10px 0">' + n.besedilo + '</blockquote>';
+  h += drawSvg(n.svg, n.svg === 'svgMetTiri' ? true : false);
+  h += '<div class="qtypes">' + TIPI.map((t, i) => {
+    let cls = '';
+    if (a) { if (t.id === n.tip) cls = 'right'; else if (t.id === a) cls = 'wrong'; }
+    return '<button data-t="' + t.id + '" class="' + cls + '"' + (a ? ' disabled' : '') + '>' + (i + 1) + '. ' + tipIme(t) + '</button>';
+  }).join('') + '</div>';
+  if (a) {
+    const t = TIP[n.tip], ok = a === n.tip;
+    h += '<div class="fb ' + (ok ? 'ok' : 'bad') + '">' + (ok ? '✓ Pravilno: ' : '✗ Pravilni tip: ') + tipIme(t) + '</div>';
+    h += '<p><b>Prvi korak recepta:</b> ' + n.prviKorak + '</p><p>' + fbadge(t.okvir) + '</p>';
+    if (!ok) { const nm = namigZa(a, n.tip); if (nm) h += '<div class="note"><b>Razlikovalni namig:</b> ' + nm + '</div>'; }
+    h += '<div class="row"><button class="primary" id="qNext">' + (Q.i === 15 ? 'Rezultat' : 'Naslednja naloga →') + '</button><a href="#tip-' + n.tip + '"><button>Odpri stran tipa</button></a></div>';
+  }
+  h += '</div>';
+  box.innerHTML = h; renderMath(box);
+  $$('.qtypes button', box).forEach(b => b.onclick = () => { Q.ans[id] = b.dataset.t; drawQuiz(root); });
+  const nx = $('#qNext', box);
+  if (nx) nx.onclick = () => {
+    if (Q.i === 15) {
+      Q.done = true;
+      const ok = Q.order.filter(x => Q.ans[x] === NAL[x].tip).length;
+      S.kviz.push({ datum: new Date().toLocaleString('sl-SI'), ok }); S.kviz = S.kviz.slice(-10); save();
+    } else Q.i++;
+    drawQuiz(root); box.scrollIntoView({ block: 'start' });
+  };
+}
+
+/* =========================================================
+   SIMULACIJA KOLOKVIJA
+   ========================================================= */
+let SIM = { leto: null, run: false, el: 0, t0: 0, iv: null, vals: {}, self: {}, notes: {}, done: false };
+function simLimit() { const m = parseFloat(String(S.moji.trajanje || '').replace(',', '.')); return m > 0 ? m * 60 : null; }
+function fmtTime(s) { const neg = s < 0; s = Math.abs(Math.round(s)); const mm = Math.floor(s / 60), ss = s % 60; return (neg ? '−' : '') + mm + ':' + String(ss).padStart(2, '0'); }
+function pageSim() {
+  let h = '<h1>Simulacija kolokvija</h1><p class="meta">Izberi leto. Prikažejo se vse 4 naloge brez imen tipov. Pri številskih nalogah vpiši rezultat z enoto, pri simbolnih zapiši opombo in se preveri sam.</p>';
+  h += '<div class="row">' + [2022, 2023, 2024, 2025].map(y => '<button data-y="' + y + '" class="' + (SIM.leto === y ? 'primary' : '') + '">' + y + '</button>').join('') + '</div><div id="simBox"></div>';
+  h += '<h2>Zgodovina</h2>' + (S.sim.length ? '<ul class="lst">' + S.sim.slice().reverse().map(r => '<li>' + r.datum + ' – kolokvij ' + r.leto + ': <b>' + r.ok + '/' + r.vse + '</b> pravilnih, čas ' + r.cas + '</li>').join('') + '</ul>' : '<p class="muted">Še ni simulacij.</p>');
+  return h;
+}
+function simTick(root) {
+  const el = SIM.run ? SIM.el + (Date.now() - SIM.t0) / 1000 : SIM.el, lim = simLimit();
+  const tEl = $('#simT', root); if (!tEl) { clearInterval(SIM.iv); return; }
+  if (lim) {
+    const rem = lim - el; tEl.textContent = fmtTime(Math.max(0, rem)); tEl.classList.toggle('late', rem <= 60);
+    if (rem <= 0 && SIM.run) { SIM.el = lim; SIM.run = false; clearInterval(SIM.iv); $('#simMsg', root).innerHTML = '<div class="fb bad">⏰ Čas je potekel!</div>'; try { navigator.vibrate && navigator.vibrate(300); } catch (e) {} updTimerBtns(root); }
+  } else tEl.textContent = fmtTime(el);
+}
+function updTimerBtns(root) { const b = $('#simStart', root); if (b) b.textContent = SIM.run ? 'Pavza' : (SIM.el > 0 ? 'Nadaljuj' : 'Start'); }
+function drawSim(root) {
+  const box = $('#simBox', root);
+  if (!SIM.leto) { box.innerHTML = '<p class="muted">Izberi leto zgoraj.</p>'; return; }
+  const lim = simLimit();
+  let h = '<div class="card" style="position:sticky;top:70px;z-index:5"><div class="row"><span class="timer" id="simT">0:00</span><button class="primary" id="simStart">Start</button><button id="simReset">Ponastavi</button><span class="small muted">' + (lim ? 'odšteva od ' + (lim / 60) + ' min (iz »Moji podatki«)' : 'štoparica (trajanje vpiši v »Moji podatki« za odštevanje)') + '</span></div><div id="simMsg"></div></div>';
+  const tasks = NALOGE.filter(n => n.leto === SIM.leto);
+  tasks.forEach(n => {
+    h += '<div class="ex"><h3 style="margin-top:0">' + n.st + '. naloga</h3><blockquote>' + n.besedilo + '</blockquote>' + drawSvg(n.svg, n.svg === 'svgMetTiri');
+    if (n.rezultati.length) {
+      h += '<div class="fgrid">' + n.rezultati.map(r => '<div class="fld"><label>\\(' + r.label + '\\)</label><input type="text" autocomplete="off" data-sim="' + n.id + '|' + r.k + '" placeholder="npr. ' + esc(DIMS[r.dim].npr) + '" value="' + esc(SIM.vals[n.id + '|' + r.k] || '') + '"></div>').join('') + '</div>';
+    } else {
+      h += '<div class="fld"><label>Opomba / moj rezultat</label><textarea rows="3" data-note="' + n.id + '">' + esc(SIM.notes[n.id] || '') + '</textarea></div>';
+      h += '<div class="row"><button data-show="' + n.id + '">Pokaži rešitev</button><label class="chk"><input type="checkbox" data-self="' + n.id + '"' + (SIM.self[n.id] ? ' checked' : '') + '> Rešil sem pravilno</label></div><div class="simsol" id="sol-' + exId(n.id) + '" style="display:none"><div class="result"><b>Rešitev:</b> ' + n.rezultatTex + '<div>' + NEURADNO + '</div></div>' + n.koraki.map((k, i) => '<div class="step"><b>' + (i + 1) + '.</b> \\[' + k[0] + '\\]</div>').join('') + '</div>';
+    }
+    h += '</div>';
+  });
+  h += '<div class="row"><button class="primary" id="simEnd">Končaj in primerjaj</button></div><div id="simRes"></div>';
+  box.innerHTML = h; renderMath(box);
+  $$('[data-sim]', box).forEach(i => i.addEventListener('input', () => { SIM.vals[i.dataset.sim] = i.value; }));
+  $$('[data-note]', box).forEach(i => i.addEventListener('input', () => { SIM.notes[i.dataset.note] = i.value; }));
+  $$('[data-self]', box).forEach(i => i.onchange = () => { SIM.self[i.dataset.self] = i.checked; });
+  $$('[data-show]', box).forEach(b => b.onclick = () => { const s = $('#sol-' + exId(b.dataset.show), box); s.style.display = s.style.display === 'none' ? '' : 'none'; });
+  $('#simStart', box).onclick = () => {
+    if (SIM.run) { SIM.el += (Date.now() - SIM.t0) / 1000; SIM.run = false; clearInterval(SIM.iv); }
+    else { if (lim && SIM.el >= lim) return; SIM.t0 = Date.now(); SIM.run = true; clearInterval(SIM.iv); SIM.iv = setInterval(() => simTick(root), 250); }
+    updTimerBtns(root); simTick(root);
+  };
+  $('#simReset', box).onclick = () => { SIM.run = false; SIM.el = 0; clearInterval(SIM.iv); $('#simMsg', box).innerHTML = ''; updTimerBtns(root); simTick(root); };
+  if (SIM.run) { clearInterval(SIM.iv); SIM.iv = setInterval(() => simTick(root), 250); }
+  updTimerBtns(root); simTick(root);
+  $('#simEnd', box).onclick = () => {
+    const el = SIM.run ? SIM.el + (Date.now() - SIM.t0) / 1000 : SIM.el;
+    if (SIM.run) { SIM.el = el; SIM.run = false; clearInterval(SIM.iv); updTimerBtns(root); }
+    let ok = 0, vse = 0, rows = '';
+    tasks.forEach(n => {
+      if (n.rezultati.length) {
+        n.rezultati.forEach(r => {
+          vse++;
+          const my = SIM.vals[n.id + '|' + r.k] || '';
+          const alt = n.calc ? altValue(n.calc.mode, n.calc.vals, n.calc.g, r.k) : null;
+          const c = my.trim() ? checkResult(my, r.dim, r.vrednost, alt) : { cls: 'bad', msg: '— ni vnosa' };
+          if (c.cls === 'ok') ok++;
+          const corr = r.enota === 'deg' ? fmtN(r.vrednost / DEG) + '^\\circ' : fmtN(r.vrednost) + unitTex(r.enota);
+          rows += '<tr><td>' + n.id + ' \\(' + r.label + '\\)</td><td>' + esc(my || '—') + '</td><td>\\(' + corr + '\\)</td><td><span class="fb ' + c.cls + '" style="display:inline-block;margin:0">' + (c.cls === 'ok' ? '✓' : '✗') + '</span> <span class="small">' + c.msg + '</span></td></tr>';
+        });
+      } else {
+        vse++; if (SIM.self[n.id]) ok++;
+        rows += '<tr><td>' + n.id + ' (simbolna)</td><td class="small">' + esc(SIM.notes[n.id] || '—') + '</td><td class="small">' + n.rezultatTex + '</td><td>' + (SIM.self[n.id] ? '✓ (samoocena)' : '✗ (samoocena)') + '</td></tr>';
+      }
+    });
+    const cas = fmtTime(el);
+    $('#simRes', box).innerHTML = '<div class="card"><h3 style="margin-top:0">Primerjava</h3><p>Pravilnih: <b>' + ok + '/' + vse + '</b> · porabljen čas: <b>' + cas + '</b></p><div class="tscroll"><table><thead><tr><th>Zahtevana količina</th><th>Moj rezultat</th><th>Pravilno</th><th>✓/✗</th></tr></thead><tbody>' + rows + '</tbody></table></div><p class="small">' + NEURADNO + '</p></div>';
+    renderMath($('#simRes', box));
+    S.sim.push({ leto: SIM.leto, datum: new Date().toLocaleString('sl-SI'), ok, vse, cas }); S.sim = S.sim.slice(-20); save();
+  };
+}
+
+/* =========================================================
+   PLAN UČENJA
+   ========================================================= */
+const PLAN_BLOCKS = [
+  { id: 'b1', txt: 'Osnove (pretvorbe, mini vaja »Pretvori«, formular – kje je kaj) + tip Premo gibanje', links: [['osnove', 'Osnove'], ['tip-premo', 'Premo']] },
+  { id: 'b2', txt: 'Gravitacija', links: [['tip-grav', 'Gravitacija']] },
+  { id: 'b3', txt: 'Steinerjev izrek', links: [['tip-steiner', 'Steiner']] },
+  { id: 'b4', txt: 'Vrtilna količina', links: [['tip-vrtilna', 'Vrtilna količina']] },
+  { id: 'b5', txt: 'Trki', links: [['tip-trki', 'Trki']] },
+  { id: 'b6', txt: 'Met v 2D (najpogostejši – več časa: vsi trije primeri)', links: [['tip-met', 'Met']] },
+  { id: 'b7', txt: 'Klanec in trenje', links: [['tip-klanec', 'Klanec']] },
+  { id: 'b8', txt: 'Pospešen voziček + kviz »Prepoznaj tip« (cilj ≥ 14/16)', links: [['tip-vozicek', 'Voziček'], ['kviz', 'Kviz']] },
+  { id: 'b9', txt: 'Generalka 1: simulacija 2025 s štoparico, samo s formularjem, nato popravi napake', links: [['sim', 'Simulacija']] },
+  { id: 'b10', txt: 'Generalka 2: simulacija 2024 (ali 2023), enako', links: [['sim', 'Simulacija']] },
+  { id: 'b11', txt: 'Dan pred kolokvijem: hiter pregled tabele tipov, recepta in »Najpogostejše napake« (≤ 30 min), kviz', links: [['pregled', 'Pregled'], ['napake', 'Napake'], ['kviz', 'Kviz']] }
+];
+function mergeB(a, b, txt) { return { id: a.id + '+' + b.id, txt: txt || (a.txt + ' + ' + b.txt), links: a.links.concat(b.links.filter(l => !a.links.some(x => x[0] === l[0]))) }; }
+function buildPlan(n) {
+  // vrne {days:[block], mode}
+  const B = Object.fromEntries(PLAN_BLOCKS.map(b => [b.id, Object.assign({}, b)]));
+  if (n == null || n >= 11) return { mode: 'full', days: PLAN_BLOCKS.slice() };
+  if (n >= 6) {
+    let d1 = n <= 10 ? mergeB(B.b1, B.b2) : B.b1;
+    let rest = [];
+    rest.push(d1);
+    if (n <= 9) rest.push(mergeB(B.b3, B.b4)); else { rest.push(B.b3, B.b4); }
+    if (n <= 6) rest.push(mergeB(B.b5, B.b6)); else rest.push(B.b5, B.b6);
+    if (n <= 8) {
+      rest.push(mergeB(B.b7, { id: 'b8', txt: 'Pospešen voziček', links: [['tip-vozicek', 'Voziček']] }, 'Klanec in trenje + Pospešen voziček'));
+      rest.push({ id: 'b9', txt: B.b9.txt + ' + kviz »Prepoznaj tip« (cilj ≥ 14/16)', links: B.b9.links.concat([['kviz', 'Kviz']]) });
+    } else { rest.push(B.b7, B.b8, B.b9); }
+    if (n >= 8) rest.push(B.b10);
+    rest.push(B.b11);
+    return { mode: 'skrajsan', days: rest };
+  }
+  if (n === 5) return { mode: 'nujni', days: [
+    { id: 'n1', txt: 'Met v 2D + Premo gibanje + Gravitacija', links: [['tip-met', 'Met'], ['tip-premo', 'Premo'], ['tip-grav', 'Gravitacija']] },
+    { id: 'n2', txt: 'Trki + Klanec + Voziček', links: [['tip-trki', 'Trki'], ['tip-klanec', 'Klanec'], ['tip-vozicek', 'Voziček']] },
+    { id: 'n3', txt: 'Steinerjev izrek + Vrtilna količina', links: [['tip-steiner', 'Steiner'], ['tip-vrtilna', 'Vrtilna']] },
+    { id: 'n4', txt: 'Generalka: simulacija 2025', links: [['sim', 'Simulacija']] },
+    { id: 'b11', txt: B.b11.txt, links: B.b11.links }] };
+  return { mode: 'dve', days: [
+    { id: 'u1', txt: 'Met v 2D (3× na kolokvijih) – rešen primer in kalkulator', links: [['tip-met', 'Met']] },
+    { id: 'u2', txt: 'Po en rešen primer vsakega tipa', links: TIPI.filter(t => t.id !== 'met').map(t => ['tip-' + t.id, t.kratko]) },
+    { id: 'u3', txt: 'Najpogostejše napake', links: [['napake', 'Napake']] }] };
+}
+function pagePlan() {
+  const ex = parseDateISO(S.moji.datum), today = todayMid();
+  let n = null;
+  if (ex) n = Math.round((ex - today) / 86400000); // dni od danes do dneva pred kolokvijem, vključno z danes
+  let h = '<h1>Plan učenja</h1><div class="card"><div class="row"><div class="fld" style="flex:1;min-width:200px;margin:0"><label for="pDatum">Datum kolokvija (isti podatek kot »Moji podatki«)</label><input type="date" id="pDatum" value="' + esc(S.moji.datum || '') + '"></div></div><p class="small muted" style="margin-bottom:0">Datum kolokvija ni v gradivu. Lani je bil 28. 11. – preveri datum v e-učilnici. Hkrati se učiš za OE I (1. kolokvij predvidoma v začetku decembra), zato je plan ~1 ura na dan.</p></div>';
+  h += '<div class="note"><b>Vsak dan:</b> najprej sam reši rešeni primer (rešitev skrita) → preveri s kalkulatorjem (»Moj rezultat«) → šele nato razkrij korake in preberi »Zakaj« → preberi »Pasti« → odkljukaj »Ta tip znam« šele, ko primer rešiš brez pomoči.</div>';
+  if (ex && n <= 0) {
+    h += '<div class="fb or">Kolokvij je ' + (n === 0 ? 'danes' : 'že mimo') + '.</div>';
+  }
+  const P = buildPlan(ex ? Math.max(n, 0) : null);
+  const title = { full: ex ? 'Polni plan (11 dni)' : 'Polni plan (11 dni) – datum ni vnesen, zato številke dni', skrajsan: 'Skrajšan plan (' + n + ' dni)', nujni: 'Nujni plan (5 dni)', dve: 'Najpomembnejše v 2 urah' }[P.mode];
+  h += '<h2>' + title + '</h2>';
+  const days = P.days;
+  let dates = null;
+  if (ex && P.mode !== 'dve') {
+    dates = days.map((_, i) => { const d = new Date(today); d.setDate(d.getDate() + i); return d; });
+    const last = new Date(ex); last.setDate(last.getDate() - 1); dates[dates.length - 1] = last;
+    if (n > days.length) h += '<p class="small muted">Do kolokvija imaš ' + n + ' dni – ' + (n - days.length) + ' dni ostane za rezervo / ponavljanje šibkih tipov (pred zadnjim dnem).</p>';
+  }
+  h += '<div class="card">' + days.map((d, i) => {
+    const k = (P.mode === 'dve' ? 'u:' : '') + d.id, ch = !!S.plan[k];
+    const lbl = dates ? fmtDate(dates[i]) : (P.mode === 'dve' ? (i + 1) + '.' : 'Dan ' + (i + 1));
+    return '<div class="planday' + (ch ? ' done' : '') + '"><input type="checkbox" data-pk="' + esc(k) + '"' + (ch ? ' checked' : '') + ' aria-label="opravljeno" style="margin-top:10px"><div class="d" style="padding-top:8px">' + lbl + '</div><div style="flex:1"><div class="txt" style="padding-top:8px">' + d.txt + '</div><div class="row" style="margin-top:4px">' + d.links.map(l => '<a href="#' + l[0] + '"><button class="small">' + l[1] + ' →</button></a>').join('') + '</div></div></div>';
+  }).join('') + '</div>';
+  return h;
+}
+function bindPlan(root) {
+  $('#pDatum', root).onchange = (e) => { S.moji.datum = e.target.value; save(); route(); };
+  $$('[data-pk]', root).forEach(c => c.onchange = () => { if (c.checked) S.plan[c.dataset.pk] = true; else delete S.plan[c.dataset.pk]; save(); c.closest('.planday').classList.toggle('done', c.checked); });
+}
+
+/* =========================================================
+   NAJPOGOSTEJŠE NAPAKE
+   ========================================================= */
+function pageNapake() {
+  const all = NAPAKE.map(x => Object.assign({ moja: false }, x)).concat((S.napake || []).map((x, i) => Object.assign({ moja: true, idx: i }, x)));
+  let h = '<h1>Najpogostejše napake</h1><div class="note">Seznam je sestavljen iz kolokvijev. Napak, ki si jih delal sam, v gradivu ni – dodaj jih z gumbom »+ Dodaj napako« (shrani se v <span class="kbd">localStorage</span> in doda k arrayu).</div>';
+  h += '<ol class="proc">' + all.map(x => '<li class="card" style="list-style-position:inside">' + (x.tip !== 'vse' && TIP[x.tip] ? '<span class="badge cnt">' + TIP[x.tip].kratko + '</span> ' : '') + (x.moja ? '<span class="badge miss">moja</span> ' : '') + x.napaka + (x.kakoSeIzognes ? '<div class="small muted" style="margin-top:4px"><b>Kako se izogneš:</b> ' + x.kakoSeIzognes + '</div>' : '') + (x.moja ? ' <button class="small" data-dn="' + x.idx + '">Odstrani</button>' : '') + '</li>').join('') + '</ol>';
+  h += '<div class="card"><b>+ Dodaj napako</b><div class="grid2" style="margin-top:6px"><div class="fld"><label for="nTxt">Napaka</label><input type="text" id="nTxt"></div><div class="fld"><label for="nKako">Kako se izogneš</label><input type="text" id="nKako"></div><div class="fld"><label for="nTip">Tip</label><select id="nTip"><option value="vse">vsi tipi</option>' + TIPI.map(t => '<option value="' + t.id + '">' + t.kratko + '</option>').join('') + '</select></div></div><button class="primary" id="nAdd">+ Dodaj napako</button></div>';
+  return h;
+}
+function bindNapake(root) {
+  $('#nAdd', root).onclick = () => {
+    const t = $('#nTxt', root).value.trim(); if (!t) return;
+    (S.napake = S.napake || []).push({ tip: $('#nTip', root).value, napaka: esc(t), kakoSeIzognes: esc($('#nKako', root).value.trim()) }); save(); route();
+  };
+  $$('[data-dn]', root).forEach(b => b.onclick = () => { S.napake.splice(+b.dataset.dn, 1); save(); route(); });
+}
+
+/* =========================================================
+   TESTI (?test)
+   ========================================================= */
+function testsHTML() {
+  const pt = runParserTests(), ct = runCalcTests();
+  const pOK = pt.filter(r => r.pass).length, cOK = ct.filter(r => r.pass).length;
+  console.log('[test] razčlenjevalnik: ' + pOK + '/' + pt.length + ' · kalkulatorji: ' + cOK + '/' + ct.length);
+  pt.concat(ct).filter(r => !r.pass).forEach(r => console.error('[test] NAPAKA', r));
+  let h = '<div class="card" id="testOut"><h2 style="margin-top:0">Testi</h2><p><b class="' + (pOK === pt.length ? 'pass' : 'fail') + '">Razčlenjevalnik: ' + pOK + '/' + pt.length + '</b> · <b class="' + (cOK === ct.length ? 'pass' : 'fail') + '">Kalkulatorji: ' + cOK + '/' + ct.length + '</b></p>';
+  h += '<details><summary>Podrobnosti</summary><div class="tscroll"><table><thead><tr><th>Vnos / test</th><th>Pričakovano</th><th>Dobljeno</th><th></th></tr></thead><tbody>';
+  pt.forEach(r => { h += '<tr><td><span class="kbd">' + esc(r.inp) + '</span> (' + r.dim + ')</td><td>' + esc(String(r.exp)) + '</td><td>' + esc(String(r.got)) + '</td><td class="' + (r.pass ? 'pass' : 'fail') + '">' + (r.pass ? '✓' : '✗') + '</td></tr>'; });
+  ct.forEach(r => { h += '<tr><td>' + esc(r.name) + '</td><td>' + esc(String(r.exp)) + '</td><td>\\(' + r.shown + '\\) <span class="small muted">(' + esc(String(r.got)) + ')</span></td><td class="' + (r.pass ? 'pass' : 'fail') + '">' + (r.pass ? '✓' : '✗') + '</td></tr>'; });
+  h += '</tbody></table></div></details></div>';
+  return h;
+}
+
+/* =========================================================
+   USMERJANJE
+   ========================================================= */
+function route() {
+  const raw = (location.hash || '#pregled').slice(1);
+  const [r, anchor] = raw.split(':');
+  const main = $('#main');
+  let html, bind, key = r;
+  if (r === 'osnove') { html = pageOsnove(); bind = bindOsnove; }
+  else if (r.startsWith('tip-') && TIP[r.slice(4)]) { const id = r.slice(4); html = pageTip(id); bind = (root) => bindTip(root, id, anchor); }
+  else if (r === 'kviz') { html = pageKviz(); bind = drawQuiz; }
+  else if (r === 'sim') { html = pageSim(); bind = (root) => { $$('[data-y]', root).forEach(b => b.onclick = () => { if (SIM.leto !== +b.dataset.y) { clearInterval(SIM.iv); SIM = { leto: +b.dataset.y, run: false, el: 0, t0: 0, iv: null, vals: {}, self: {}, notes: {} }; } route(); }); drawSim(root); }; }
+  else if (r === 'plan') { html = pagePlan(); bind = bindPlan; }
+  else if (r === 'napake') { html = pageNapake(); bind = bindNapake; }
+  else { key = 'pregled'; html = pagePregled(); bind = bindPregled; }
+  if (/[?&]test\b/.test(location.search)) html = testsHTML() + html;
+  main.innerHTML = '<div class="page">' + html + '</div>';
+  const root = main.firstElementChild;
+  renderMath(root);
+  bind(root);
+  buildNav(key);
+  if (!anchor) window.scrollTo(0, 0);
+  document.title = 'Fizika I – 1. kolokvij';
+}
+
+function init() {
+  applyTheme();
+  $('#themeBtn').onclick = () => { S.theme = THEMES[(THEMES.indexOf(S.theme || 'system') + 1) % 3]; save(); applyTheme(); };
+  $('#menuBtn').onclick = () => ($('#side').classList.contains('open') ? closeMenu() : openMenu());
+  $('#backdrop').onclick = closeMenu;
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+  window.addEventListener('hashchange', route);
+  route();
+  save();
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+</script>
+</body>
+</html>
